@@ -1,0 +1,219 @@
+\documentclass[12pt, atypical, journal]{article}
+
+% --- Paquetes Requeridos para Formato APA 7 y Estilo Profesional ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\geometry{letterpaper, margin=2.54cm} % Margen APA estándar (1 pulgada)
+\usepackage{times} % Tipografía estándar Times New Roman
+\usepackage{setspace}
+\onehalfspacing % Interlineado 1.5 según especificación institucional
+\usepackage{graphicx}
+\usepackage{booktabs} % Para tablas estilizadas y profesionales
+\usepackage{longtable}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{caption}
+
+% --- Paquete para sangría francesa en Referencias (APA) ---
+\newenvironment{hangparas}[2]{\setlength{\parindent}{-#1}\setlength{\leftmargin}{#1}\everypar{\hangindent=#1}}{\par}
+
+% --- Configuración de Enlaces e Hipervínculos ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,      
+    urlcolor=blue,
+    citecolor=black
+}
+
+% --- Configuración de Formato de Títulos (Estilo APA/Institucional) ---
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries\itshape}{\thesubsubsection.}{0.5em}{}
+
+\begin{document}
+
+% ==============================================================================
+% 1. PORTADA
+% ==============================================================================
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        
+        {\Large\bfseries UNIVERSIDAD POLITÉCNICA DE CHIAPAS} \\[0.5cm]
+        {\large\bfseries INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN E INNOVACIÓN DIGITAL} \\[1.5cm]
+        
+        \vfill
+        
+        {\Large\bfseries REPORTE DE PROYECTO INTEGRADOR II} \\[1cm]
+        
+        \textbf{Nombre del Proyecto:} \\
+        {\large Aplicación Web de Lectura Métrica} \\[1.5cm]
+        
+        \vfill
+        
+        \textbf{Integrantes:} \\
+        {\large Clemente Chacón Patricia Alejandra} \\
+        {\large Perez Gonzales Ninive Argelia} \\
+        {\large Velazquez Garcia Monica Jamileth} \\[1.5cm]
+        
+        \textbf{Docente:} \\
+        {\large Hernandez Camacho Rocio Crystal} \\[1.5cm]
+        
+        \vfill
+        
+        \textbf{Fecha de entrega:} \\
+        {\large 10 de junio de 2026}
+        
+        \vspace*{1cm}
+    \end{center}
+\end{titlepage}
+
+\newpage
+
+% ==============================================================================
+% ÍNDICES
+% ==============================================================================
+\tableofcontents
+\newpage
+
+\listoffigures
+\newpage
+
+\listoftables
+\newpage
+
+% ==============================================================================
+% 2. RESUMEN
+% ==============================================================================
+\section{Resumen}
+Este proyecto presenta el desarrollo de una aplicación web dedicada a la lectura métrica y optimización de procesos mediante la recopilación, almacenamiento y visualización de indicadores clave de rendimiento. El sistema fue concebido para mitigar los errores derivados del registro manual y la falta de centralización de la información en entornos organizacionales. 
+
+Arquitectónicamente (poner contennido w). 
+
+\vspace{0.5cm}
+\noindent \textbf{Palabras clave:} Aplicación Web
+
+\newpage
+
+% ==============================================================================
+% 3. INTRODUCCIÓN
+% ==============================================================================
+\section{Introducción}
+Poner contenido
+
+\newpage
+
+% ==============================================================================
+% 4. PLANTEAMIENTO DEL PROBLEMA
+% ==============================================================================
+\section{Planteamiento del problema}
+
+\subsection{Descripción del problema en su contexto}
+Copiar el docu anterior
+
+\subsection{Antecedentes y evidencia}
+Creo que tambien copiar del docu anterior
+
+\subsection{Declaración clara del problema}
+Buscar info
+
+\subsection{Consecuencias del problema}
+Ihhhh
+
+\subsection{Delimitación del problema}
+Copiar del documento anterior
+
+\subsection{Preguntas de investigación}
+\begin{enumerate}
+    \item Copiar
+    \item del forms
+\end{enumerate}
+
+\subsection{Justificación del desarrollo del proyecto}
+Creo que tambien lo pusimos en el docu.
+
+\newpage
+
+% ==============================================================================
+% 5. OBJETIVOS
+% ==============================================================================
+\section{Objetivos}
+
+\subsection{Objetivo General}
+Tambien quedo en el documento
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}
+    \item Documento
+    \item Copiar
+    \item Obhetivos 
+\end{enumerate}
+
+\newpage
+
+% ==============================================================================
+% 6. MARCO TEÓRICO
+% ==============================================================================
+\section{Marco teórico}
+
+\subsection{Antecedentes teóricos y tecnológicos}
+Info de Ninis
+
+\subsection{Definición de conceptos clave}
+\begin{itemize}
+    \item \textbf{Back-end:} Segmento lógico de una aplicación informática que se ejecuta en el servidor y procesa las reglas de negocio, la comunicación con la base de datos y la seguridad, permaneciendo invisible al usuario final.
+    \item \textbf{Front-end:} Entorno visual y de presentación de la aplicación interactiva con la que el usuario final tiene contacto directo a través de navegadores web.
+    \item \textbf{Base de Datos Relacional:} Sistema de organización de datos estructurados en filas y columnas que se interconectan mediante llaves primarias y foráneas asegurando la integridad referencial.
+    \item \textbf{API REST:} Interfaz de programación de aplicaciones que utiliza los métodos del protocolo HTTP para intercambiar datos de manera ligera y estandarizada, usualmente en formato JSON.
+\end{itemize}
+
+\subsection{Explicación de tecnologías y herramientas utilizadas}
+\begin{itemize}
+    \item \textbf{Spring Boot:} Framework del ecosistema Java diseñado para simplificar la configuración y el despliegue de aplicaciones empresariales. Su enfoque de ``convención sobre configuración'' y servidores embebidos agiliza la creación de microservicios y APIs robustas.
+    \item \textbf{Postgres:} Motor de base de datos de código abierto altamente confiable, caracterizado por su alto rendimiento, soporte multiusuario y estricto cumplimiento de las propiedades ACID.
+    \item \textbf{JavaScript / Bootstrap:} Lenguaje de programación del lado del cliente acoplado con una librería de diseño responsivo que permite la creación de vistas adaptables a múltiples resoluciones de pantalla y dispositivos móviles.
+\end{itemize}
+
+\subsection{Relación entre teoría y proyecto}
+Ohno
+
+\subsection{Referencias académicas y técnicas}
+Creo q entra en info de mi Ninisve
+
+\newpage
+
+% ==============================================================================
+% 7. NORMATIVAS
+% ==============================================================================
+\section{Normativas}
+El diseño arquitectónico, la implementación lógica y el tratamiento de datos de la presente aplicación web de lectura métrica se alinean estrictamente con el marco jurídico nacional regulado por la Ley Federal del Derecho de Autor (LFDA) de México. Debido a las características particulares del sistema ---el cual opera como una biblioteca centralizada de indicadores sin almacenamiento ni distribución de archivos de obras protegidas---, se identifican y aplican las siguientes disposiciones normativas específicas:
+
+\begin{itemize}
+    \item \textbf{Protección del Contenido Generado por el Usuario (Módulo de Notas y Acotaciones):} Con base en el \textbf{Artículo 14, Fracción VIII}, el sistema reconoce que las anotaciones, interpretaciones, comentarios y revisiones literarias que los usuarios registren de forma individual en la plataforma constituyen obras protegidas, ya que entrañan la creación de un trabajo original diferenciado. Asimismo, la recopilación de fragmentos textuales para la crítica e investigación científica o literaria queda amparada bajo el \textbf{Artículo 148, Fracción III}, obligando al sistema a proveer los campos necesarios para citar invariablemente la fuente original.
+    
+    \item \textbf{Exclusión de Protección en Mecánicas lógicas (Módulo de Gamificación):} Las reglas del sistema, fórmulas de puntaje, algoritmos de progresión y los esquemas lógicos diseñados para la gamificación de la lectura métrica no constituyen objeto de protección por derecho de autor según lo estipulado en el \textbf{Artículo 14, Fracciones I y III}. Por ende, la protección legal de este módulo se restringe de forma exclusiva a la codificación imperativa del software (\textit{back-end} y \textit{front-end}) y no a las ideas metodológicas subyacentes.
+    
+    \item \textbf{Libre Indexación de Metadatos (Buzón de Recomendaciones y Comunidad):} El catálogo comunitario de recomendaciones opera de manera legítima bajo el \textbf{Artículo 14, Fracción V}, el cual determina que los nombres y títulos aislados de las obras no son objeto de protección autoral. Esto faculta a la base de datos relacional para almacenar, listar y desplegar libremente los títulos de los libros recomendados por los usuarios dentro de la comunidad asíncrona.
+    
+    \item \textbf{Interoperabilidad y Pruebas de Seguridad en la Infraestructura:} La arquitectura lógica del sistema observa las flexibilidades de los \textbf{Artículos 114 Quáter (Fracciones I y III)} y \textbf{114 Quinquies}. Estas normas facultan la realización de procesos de ingeniería inversa de buena fe destinados exclusivamente a lograr la interoperabilidad de la aplicación web con otros programas de software de lectura externa, así como la ejecución de pruebas y auditorías destinadas a corregir la seguridad de la base de datos centralizada.
+    
+    \item \textbf{Ausencia de Actos de Reproducción o Distribución Patrimonial:} En estricto apego al \textbf{Artículo 16 (Fracciones II, V y VI)}, la plataforma se exime de la solicitud de licencias de explotación de obras o del pago de remuneraciones compensatorias descritas en el \textbf{Artículo 40}, en virtud de que la infraestructura web centralizada no realiza copias, reproducciones temporales, almacenamiento provisional, ni distribución al público de los contenidos íntegros de los libros, limitándose únicamente al procesamiento de métricas cuantitativas de lectura.
+\end{itemize}
+
+\newpage
+
+% ==============================================================================
+% REFERENCIAS (MANTENIDAS PARA LA CONSISTENCIA DEL TRABAJO ACADÉMICO)
+% ==============================================================================
+\section{Referencias}
+\begin{hangparas}{.5in}{1}
+Oracle. (2024). \textit{MySQL Documentation}. \url{https://dev.mysql.com/doc/}
+
+Sommerville, I. (2016). \textit{Ingeniería de software} (10a ed.). Pearson.
+
+Spring Framework Team. (2025). \textit{Spring Boot Reference Documentation}. Core Software Press. \url{https://spring.io/projects/spring-boot}
+\end{hangparas}
+
+\end{document}
