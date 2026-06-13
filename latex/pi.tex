@@ -177,17 +177,22 @@ Info de Ninis
 
 \subsection{Definición de conceptos clave}
 \begin{itemize}
-    \item \textbf{Back-end:} Segmento lógico de una aplicación informática que se ejecuta en el servidor y procesa las reglas de negocio, la comunicación con la base de datos y la seguridad, permaneciendo invisible al usuario final.
-    \item \textbf{Front-end:} Entorno visual y de presentación de la aplicación interactiva con la que el usuario final tiene contacto directo a través de navegadores web.
-    \item \textbf{Base de Datos Relacional:} Sistema de organización de datos estructurados en filas y columnas que se interconectan mediante llaves primarias y foráneas asegurando la integridad referencial.
-    \item \textbf{API REST:} Interfaz de programación de aplicaciones que utiliza los métodos del protocolo HTTP para intercambiar datos de manera ligera y estandarizada, usualmente en formato JSON.
+   \item \textbf{Back-end:} Segmento lógico de una aplicación informática que se ejecuta en el servidor y procesa las reglas de negocio, la comunicación con la base de datos y la seguridad, permaneciendo invisible al usuario final.
+   \item \textbf{Front-end:} Entorno visual y de presentación de la aplicación interactiva con la que el usuario final tiene contacto directo a través de navegadores web.
+   \item \textbf{Base de Datos Relacional:} Sistema de organización de datos estructurados en filas y columnas que se interconectan mediante llaves primarias y foráneas asegurando la integridad referencial.
+   \item \textbf{API REST:} Interfaz de programación de aplicaciones que utiliza los métodos del protocolo HTTP para intercambiar datos de manera ligera y estandarizada, usualmente en formato JSON.
+   \item \textbf{Ingesta Híbrida de Datos:} Arquitectura de software que combina múltiples fuentes de extracción de información en tiempo real, tales como el consumo estructurado de APIs RESTful externas y la ejecución dirigida de rastreadores web o arañas informáticas (\textit{Web Spiders}) para consolidar un registro unificado de metadatos.
+   \item \textbf{Gamificación Asíncrona:} Integración de mecánicas, dinámicas y componentes de diseño de juegos en entornos que no son de juego, estructurada bajo ciclos diferidos en el tiempo (como sistemas de bloqueo/apertura programados) para incentivar el retorno diario basado en la curiosidad y el factor sorpresa.
+   \item \textbf{Arquitectura Desacoplada:} Patrón de diseño de sistemas donde el \textit{front-end} (capa de presentación) y el \textit{back-end} (capa lógica) operan de manera independiente en servidores autónomos, comunicándose exclusivamente a través de peticiones HTTP e intercambiando objetos ligeros de datos (JSON).
+   \item \textbf{Formulario Psicográfico:} Herramienta de recolección de datos iniciales (\textit{onboarding}) diseñada para capturar variables cualitativas de comportamiento, gustos, preferencias y rasgos de interés del usuario con el fin de parametrizar algoritmos de personalización en el servidor.
 \end{itemize}
 
 \subsection{Explicación de tecnologías y herramientas utilizadas}
 \begin{itemize}
-    \item \textbf{Spring Boot:} Framework del ecosistema Java diseñado para simplificar la configuración y el despliegue de aplicaciones empresariales. Su enfoque de ``convención sobre configuración'' y servidores embebidos agiliza la creación de microservicios y APIs robustas.
-    \item \textbf{Postgres:} Motor de base de datos de código abierto altamente confiable, caracterizado por su alto rendimiento, soporte multiusuario y estricto cumplimiento de las propiedades ACID.
-    \item \textbf{JavaScript / Bootstrap:} Lenguaje de programación del lado del cliente acoplado con una librería de diseño responsivo que permite la creación de vistas adaptables a múltiples resoluciones de pantalla y dispositivos móviles.
+   \item \textbf{Next.js y React:} Framework de desarrollo \textit{front-end} basado en JavaScript que permite la renderización eficiente de interfaces de usuario basadas en componentes. Su gestión nativa de estados dinámicos es óptima para la construcción de gráficos estadísticos interactivos y tableros analíticos en tiempo real.
+   \item \textbf{Java y Spring Boot:} Lenguaje de programación fuertemente tipado acoplado a un framework robusto para el desarrollo del \textit{back-end}. Su motor de inversión de control (IoC) e inyección de dependencias permite aislar rígidamente las reglas de negocio del motor de gamificación y la seguridad del servidor.
+   \item \textbf{Spring Data JPA e Hibernate:} Tecnologías de mapeo objeto-relacional (ORM) que abstraen la capa de datos en Java, transformando las entidades de software en tablas de bases de datos relacionales y automatizando las consultas transaccionales de alta velocidad.
+   \item \textbf{PostgreSQL:} Sistema de gestión de bases de datos relacionales (RDBMS) de código abierto, seleccionado por su alta integridad cuantitativa, soporte avanzado para tipos de datos complejos y eficiencia en el almacenamiento seguro de variables métricas acumuladas.
 \end{itemize}
 
 \subsection{Relación entre teoría y proyecto}
