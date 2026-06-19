@@ -218,9 +218,18 @@ El diseño arquitectónico, la implementación lógica y el tratamiento de datos
     
     \item \textbf{Interoperabilidad y Pruebas de Seguridad en la Infraestructura:} La arquitectura lógica del sistema observa las flexibilidades de los \textbf{Artículos 114 Quáter (Fracciones I y III)} y \textbf{114 Quinquies}. Estas normas facultan la realización de procesos de ingeniería inversa de buena fe destinados exclusivamente a lograr la interoperabilidad de la aplicación web con otros programas de software de lectura externa, así como la ejecución de pruebas y auditorías destinadas a corregir la seguridad de la base de datos centralizada.
     
-    \item \textbf{Ausencia de Actos de Reproducción o Distribución Patrimonial:} En estricto apego al \textbf{Artículo 16 (Fracciones II, V y VI)}, la plataforma se exime de la solicitud de licencias de explotación de obras o del pago de remuneraciones compensatorias descritas en el \textbf{Artículo 40}, en virtud de que la infraestructura web centralizada no realiza copias, reproducciones temporales, almacenamiento provisional, ni distribución al público de los contenidos íntegros de los libros, limitándose únicamente al procesamiento de métricas cuantitativas de lectura.
-\end{itemize}
-
+    \item \textbf{Ausencia de Actos de Reproducción o Distribución Patrimonial:} En estricto apego al \textbf{Artículo 16 (Fracciones II, V y VI)}, la plataforma se exime de la solicitud de licencias de explotación de obras o del pago de remuneraciones compensatorias descritas en el \textbf{Artículo 40}, en virtud de que la infraestructura web centralizada no realiza copias, reproducciones temporales, almacenamiento provisional, ni distribución al público de los contenidos íntegros de los libros, limitándose únicamente al procesamiento de métricas cuantitativas de lectura. [ref 1, pag 189]
+    
+    \item \textbf{Módulo 1: Registro e Incorporación de Usuarios (Onboarding):} El diseño de la interfaz en las vistas de registro de cuenta e introducción de preferencias literarias da cumplimiento estricto a las obligaciones dispuestas en los Artículos 15 y 16 de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), así como a los Artículos 22, 23 y 24 de la Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Chiapas. La lógica de desarrollo de la aplicación prohíbe el almacenamiento de datos sin el consentimiento previo del titular. Por ello, la vista bloquea el envío de los datos identificativos primarios (nombre y correo electrónico) hacia la API centralizada hasta que el usuario ejecute una acción afirmativa que valide el conocimiento de las finalidades del tratamiento. Esto asegura que el flujo de datos inicie de manera lícita bajo el amparo normativo local y federal, garantizando que el usuario conozca la identidad del responsable antes de la recolección.
+    
+    \item \textbf{Módulo 2: Panel de Identidad y Autenticación (Login):} El módulo de autenticación e inicio de sesión implementa las directrices técnicas de mitigación de riesgos descritas en el Artículo 19 de la LFPDPPP y los Artículos 32 y 35 de la Ley de Protección de Datos Personales del Estado de Chiapas. Las credenciales de acceso se consideran vectores críticos de seguridad. Los artículos citados obligan al responsable de la aplicación a adoptar medidas de seguridad técnicas y administrativas para evitar el acceso no autorizado, la pérdida o la alteración de datos de carácter personal. La interfaz frontend mitiga estas vulnerabilidades mediante el enmascaramiento visual de caracteres sensibles en el campo de contraseña y fuerza la transmisión cifrada de los tokens de acceso hacia la base de datos centralizada.
+    
+    \item \textbf{Módulo 3: Captura Manual de Metadatos (Agregar Libro):} La arquitectura del formulario para la adición manual o indexación de textos por parte del usuario se rige bajo los principios de calidad y proporcionalidad mandatados por el Artículo 6 de la LFPDPPP y los Artículos 16 y 18 de la Ley de Protección de Datos Personales del Estado de Chiapas. La ley estipula que los sistemas de información solo deben recabar los datos que sean estrictamente necesarios, pertinentes y correctos para la finalidad que justifica su tratamiento. Las vistas del formulario restringen la captura de información exclusivamente a campos cuantitativos de control lector (como título, autor y número de páginas), absteniéndose de solicitar datos excesivos, accesorios o ajenos a la naturaleza del software, garantizando una base de datos optimizada y legalmente limpia.
+    
+    \item \textbf{Módulo 4: Dashboard General y Visualización de Métricas (Perfil de Usuario):} Las interfaces persistentes que muestran el nombre del perfil activo y los módulos gráficos de estadísticas operan como el canal de ejecución inmediata para el ejercicio del Derecho de Acceso, fundamentado en el Artículo 22 de la LFPDPPP y el Artículo 51 de la Ley de Protección de Datos Personales del Estado de Chiapas. El derecho de Acceso dicta que el titular tiene la facultad constitucional de conocer, de manera comprensible y en tiempo real, qué datos específicos tiene el sistema sobre él y cómo se están procesando. Al renderizar permanentemente la identidad del usuario, su historial de racha y las métricas acumuladas, el diseño del frontend automatiza el cumplimiento de este derecho ARCO sin obligar al usuario a realizar trámites administrativos complejos.
+    
+    \item \textbf{Módulo 5: Interacción de Recomendaciones (Buzón Literario):} El flujo operativo de la sección destinada al envío e intercambio de cartas y recomendaciones literarias observa rigurosamente las restricciones de transferencia de datos y confidencialidad señaladas en el Artículo 36 de la LFPDPPP y los Artículos 11, 65 y 71 de la Ley de Protección de Datos Personales del Estado de Chiapas. La ley prohíbe la transferencia o revelación de datos personales a terceros sin un consentimiento explícito. Dado que la funcionalidad de la pantalla promete un entorno de intercambio ``anónimo'', la interfaz gráfica asegura que el contenido de la recomendación se desvincule por completo de los datos de identidad digital del remitente en el backend antes de ser distribuido a otros lectores. Este proceso de disociación técnica sostiene el principio de confidencialidad y evita filtraciones o transferencias ilícitas dentro de la red de usuarios.
+   \end{itemize}
 \newpage
 
 % ==============================================================================
@@ -228,11 +237,17 @@ El diseño arquitectónico, la implementación lógica y el tratamiento de datos
 % ==============================================================================
 \section{Referencias}
 \begin{hangparas}{.5in}{1}
-Oracle. (2024). \textit{MySQL Documentation}. \url{https://dev.mysql.com/doc/}
+1. Cámara de Diputados del H. Congreso de la Unión. (2010). \textit{Ley Federal de Protección de Datos Personales en Posesión de los Particulares}. (LFPDPPP). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf}
 
-Sommerville, I. (2016). \textit{Ingeniería de software} (10a ed.). Pearson.
+2. Cámara de Diputados del H. Congreso de la Unión. (2020). \textit{Ley Federal del Derecho de Autor}. (LFDA). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
 
-Spring Framework Team. (2025). \textit{Spring Boot Reference Documentation}. Core Software Press. \url{https://spring.io/projects/spring-boot}
+3. Congreso del Estado de Chiapas. (2017). \textit{Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Chiapas}. Periódico Oficial del Estado. \url{https://www.asechiapas.gob.mx/download/leyes/LEY_PROTECCION_DATOS_PERSONALES.pdf}
+
+4. Oracle. (2024). \textit{MySQL Documentation}. \url{https://dev.mysql.com/doc/}
+
+5. Sommerville, I. (2016). \textit{Ingeniería de software} (10a ed.). Pearson.
+
+6. Spring Framework Team. (2025). \textit{Spring Boot Reference Documentation}. Core Software Press. \url{https://spring.io/projects/spring-boot}
 \end{hangparas}
 
 \end{document}
