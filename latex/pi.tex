@@ -210,16 +210,17 @@ Creo q entra en info de mi Ninisve
 El diseño arquitectónico, la implementación lógica y el tratamiento de datos de la presente aplicación web de lectura métrica se alinean estrictamente con el marco jurídico nacional regulado por la Ley Federal del Derecho de Autor (LFDA) de México. Debido a las características particulares del sistema ---el cual opera como una biblioteca centralizada de indicadores sin almacenamiento ni distribución de archivos de obras protegidas---, se identifican y aplican las siguientes disposiciones normativas específicas:
 
 \begin{itemize}
-    \item \textbf{Protección del Contenido Generado por el Usuario (Módulo de Notas y Acotaciones):} Con base en el \textbf{Artículo 14, Fracción VIII}, el sistema reconoce que las anotaciones, interpretaciones, comentarios y revisiones literarias que los usuarios registren de forma individual en la plataforma constituyen obras protegidas, ya que entrañan la creación de un trabajo original diferenciado. Asimismo, la recopilación de fragmentos textuales para la crítica e investigación científica o literaria queda amparada bajo el \textbf{Artículo 148, Fracción III}, obligando al sistema a proveer los campos necesarios para citar invariablemente la fuente original.
     
-    \item \textbf{Exclusión de Protección en Mecánicas lógicas (Módulo de Gamificación):} Las reglas del sistema, fórmulas de puntaje, algoritmos de progresión y los esquemas lógicos diseñados para la gamificación de la lectura métrica no constituyen objeto de protección por derecho de autor según lo estipulado en el \textbf{Artículo 14, Fracciones I y III}. Por ende, la protección legal de este módulo se restringe de forma exclusiva a la codificación imperativa del software (\textit{back-end} y \textit{front-end}) y no a las ideas metodológicas subyacentes.
+   \item \textbf{Protección de las Notas y Comentarios de los Usuarios:} De acuerdo con el \textbf{Artículo 14 (Fracción VIII)}, la ley no protege los textos legales en sí, pero sí protege las anotaciones, comentarios, estudios y críticas originales que alguien escriba sobre ellos. Por eso, el sistema reconoce que los apuntes y opiniones literarias que los usuarios registren en la plataforma son de su propiedad intelectual por ser creaciones originales. Por otra parte, el \textbf{Artículo 148 (Fracción III)} permite copiar fragmentos de libros sin pedir permiso siempre que sea para fines de crítica o investigación, con la condición obligatoria de citar al autor original; debido a esto, la aplicación incluye campos específicos para que el usuario registre siempre la fuente de sus lecturas \cite{lfda2026}.
     
-    \item \textbf{Libre Indexación de Metadatos (Buzón de Recomendaciones y Comunidad):} El catálogo comunitario de recomendaciones opera de manera legítima bajo el \textbf{Artículo 14, Fracción V}, el cual determina que los nombres y títulos aislados de las obras no son objeto de protección autoral. Esto faculta a la base de datos relacional para almacenar, listar y desplegar libremente los títulos de los libros recomendados por los usuarios dentro de la comunidad asíncrona.
+    \item \textbf{Límites en las Reglas de Juego (Módulo de Gamificación):} El \textbf{Artículo 14 (Fracciones I y III)} aclara que los derechos de autor no protegen las ideas puras, los métodos, los sistemas de puntuación ni las reglas de los juegos o dinámicas mentales. Esto significa que las fórmulas de puntos, niveles y lógicas que usamos para motivar la lectura no son exclusivas por ley. Lo que sí queda protegido legalmente es el código de programación real (tanto el \textit{back-end} como el \textit{front-end}) que da vida a esas funciones, pero no la idea conceptual del juego en sí \cite{lfda2026}.
     
-    \item \textbf{Interoperabilidad y Pruebas de Seguridad en la Infraestructura:} La arquitectura lógica del sistema observa las flexibilidades de los \textbf{Artículos 114 Quáter (Fracciones I y III)} y \textbf{114 Quinquies}. Estas normas facultan la realización de procesos de ingeniería inversa de buena fe destinados exclusivamente a lograr la interoperabilidad de la aplicación web con otros programas de software de lectura externa, así como la ejecución de pruebas y auditorías destinadas a corregir la seguridad de la base de datos centralizada.
+    \item \textbf{Uso Libre de Nombres y Títulos de Libros:} El \textbf{Artículo 14 (Fracción V)} establece de forma directa que los nombres propios, títulos aislados o frases sueltas de las obras no cuentan con protección de derecho de autor. Gracias a esto, la base de datos de la plataforma puede guardar, mostrar y organizar libremente una lista con los títulos de los libros que los usuarios recomiendan en los espacios comunitarios, sin temor a infringir ninguna norma \cite{lfda2026}.
     
-    \item \textbf{Ausencia de Actos de Reproducción o Distribución Patrimonial:} En estricto apego al \textbf{Artículo 16 (Fracciones II, V y VI)}, la plataforma se exime de la solicitud de licencias de explotación de obras o del pago de remuneraciones compensatorias descritas en el \textbf{Artículo 40}, en virtud de que la infraestructura web centralizada no realiza copias, reproducciones temporales, almacenamiento provisional, ni distribución al público de los contenidos íntegros de los libros, limitándose únicamente al procesamiento de métricas cuantitativas de lectura. [ref 1, pag 189]
+    \item \textbf{Compatibilidad y Pruebas de Seguridad en el Sistema:} Según los \textbf{Artículos 114 Quáter (Fracciones I y III)} y \textbf{114 Quinquies}, no se considera una violación a la ley cuando se analizan o adaptan programas informáticos de buena fe. La legislación nos permite aplicar ingeniería inversa con el único objetivo de que nuestra plataforma pueda conectarse e interactuar correctamente con otras aplicaciones externas de lectura. Asimismo, nos autoriza a realizar pruebas y auditorías para revisar, detectar fallas y mejorar la seguridad de nuestra base de datos centralizada \cite{lfda2026}.
     
+    \item \textbf{No Distribución de Contenido Protegido:} El \textbf{Artículo 16 (Fracciones II, V y VI)} define formalmente qué significa publicar, distribuir o reproducir una obra de forma digital (como almacenarla de forma temporal o permanente en servidores). Como nuestra aplicación se limita exclusivamente a calcular y registrar métricas numéricas de lectura (páginas leídas, tiempos, etc.) y jamás guarda, copia ni distribuye los archivos de los libros completos al público, el sistema no realiza ninguna actividad de explotación y queda libre de pagar regalías o tramitar licencias especiales \cite{lfda2026}.
+
     \item \textbf{Módulo 1: Registro e Incorporación de Usuarios (Onboarding):} El diseño de la interfaz en las vistas de registro de cuenta e introducción de preferencias literarias da cumplimiento estricto a las obligaciones dispuestas en los Artículos 15 y 16 de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), así como a los Artículos 22, 23 y 24 de la Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Chiapas. La lógica de desarrollo de la aplicación prohíbe el almacenamiento de datos sin el consentimiento previo del titular. Por ello, la vista bloquea el envío de los datos identificativos primarios (nombre y correo electrónico) hacia la API centralizada hasta que el usuario ejecute una acción afirmativa que valide el conocimiento de las finalidades del tratamiento. Esto asegura que el flujo de datos inicie de manera lícita bajo el amparo normativo local y federal, garantizando que el usuario conozca la identidad del responsable antes de la recolección.
     
     \item \textbf{Módulo 2: Panel de Identidad y Autenticación (Login):} El módulo de autenticación e inicio de sesión implementa las directrices técnicas de mitigación de riesgos descritas en el Artículo 19 de la LFPDPPP y los Artículos 32 y 35 de la Ley de Protección de Datos Personales del Estado de Chiapas. Las credenciales de acceso se consideran vectores críticos de seguridad. Los artículos citados obligan al responsable de la aplicación a adoptar medidas de seguridad técnicas y administrativas para evitar el acceso no autorizado, la pérdida o la alteración de datos de carácter personal. La interfaz frontend mitiga estas vulnerabilidades mediante el enmascaramiento visual de caracteres sensibles en el campo de contraseña y fuerza la transmisión cifrada de los tokens de acceso hacia la base de datos centralizada.
@@ -236,18 +237,31 @@ El diseño arquitectónico, la implementación lógica y el tratamiento de datos
 % REFERENCIAS (MANTENIDAS PARA LA CONSISTENCIA DEL TRABAJO ACADÉMICO)
 % ==============================================================================
 \section{Referencias}
-\begin{hangparas}{.5in}{1}
-1. Cámara de Diputados del H. Congreso de la Unión. (2010). \textit{Ley Federal de Protección de Datos Personales en Posesión de los Particulares}. (LFPDPPP). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf}
 
-2. Cámara de Diputados del H. Congreso de la Unión. (2020). \textit{Ley Federal del Derecho de Autor}. (LFDA). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
+\begin{thebibliography}{6}
 
-3. Congreso del Estado de Chiapas. (2017). \textit{Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Chiapas}. Periódico Oficial del Estado. \url{https://www.asechiapas.gob.mx/download/leyes/LEY_PROTECCION_DATOS_PERSONALES.pdf}
+\bibitem{lfpdppp}
+Cámara de Diputados del H. Congreso de la Unión. (2010). \textit{Ley Federal de Protección de Datos Personales en Posesión de los Particulares}. (LFPDPPP). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf}
 
-4. Oracle. (2024). \textit{MySQL Documentation}. \url{https://dev.mysql.com/doc/}
+\bibitem{lfda2026}
+Cámara de Diputados del H. Congreso de la Unión. (2020). \textit{Ley Federal del Derecho de Autor}. (LFDA). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
 
-5. Sommerville, I. (2016). \textit{Ingeniería de software} (10a ed.). Pearson.
+\bibitem{chiapas2017}
+Congreso del Estado de Chiapas. (2017). \textit{Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Chiapas}. Periódico Oficial del Estado. \url{https://www.asechiapas.gob.mx/download/leyes/LEY_PROTECCION_DATOS_PERSONALES.pdf}
 
-6. Spring Framework Team. (2025). \textit{Spring Boot Reference Documentation}. Core Software Press. \url{https://spring.io/projects/spring-boot}
-\end{hangparas}
+
+\bibitem{lfda2026}
+Ley Federal del Derecho de Autor. (2026). \textit{Diario Oficial de la Federación}. Última reforma publicada el 14 de mayo de 2026. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
+
+\bibitem{oracle2024}
+Oracle. (2024). \textit{MySQL Documentation}. \url{https://dev.mysql.com/doc/}
+
+\bibitem{sommerville2016}
+Sommerville, I. (2016). \textit{Ingeniería de software} (10a ed.). Pearson.
+
+\bibitem{spring2025}
+Spring Framework Team. (2025). \textit{Spring Boot Reference Documentation}. Core Software Press. \url{https://spring.io/projects/spring-boot}
+
+\end{thebibliography}
 
 \end{document}
