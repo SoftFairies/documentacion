@@ -89,19 +89,19 @@
 % 2. RESUMEN
 % ==============================================================================
 \section{Resumen}
-Este proyecto presenta el desarrollo de una aplicación web dedicada a la lectura métrica y optimización de procesos mediante la recopilación, almacenamiento y visualización de indicadores clave de rendimiento. El sistema fue concebido para mitigar los errores derivados del registro manual y la falta de centralización de la información en entornos organizacionales. 
 
-Arquitectónicamente (poner contennido w). 
+Este proyecto presenta el desarrollo de una aplicación web dedicada a la lectura métrica y la optimización de procesos mediante la recopilación, almacenamiento y visualización de indicadores clave de rendimiento. El sistema fue concebido para mitigar los errores derivados del registro manual y solucionar la falta de centralización de la información en entornos organizacionales.
+
+Arquitectónicamente, el desarrollo se basa en una estructura modular y desacoplada que garantiza la escalabilidad y mantenibilidad del sistema. El \textit{frontend}, construido con Next.js y React, proporciona una interfaz de usuario reactiva y optimizada mediante Tailwind CSS, mientras que el \textit{backend} implementa una arquitectura limpia (\textit{Clean Architecture}) utilizando Java, Spring Boot y Hibernate. Este diseño permite una clara separación entre la lógica de negocio y la infraestructura, apoyándose en PostgreSQL para asegurar la integridad y persistencia de los datos.
 
 \vspace{0.5cm}
-\noindent \textbf{Palabras clave:} Aplicación Web
-
-\newpage
+\noindent \textbf{Palabras clave:} Aplicación Web, Hábitos de Lectura, Seguimiento, Arquitectura Limpia.
 
 % ==============================================================================
 % 3. INTRODUCCIÓN
 % ==============================================================================
 \section{Introducción}
+
 \subsection{Breve explicación del entorno del problema}
 En el entorno contemporáneo del aprendizaje y el bienestar personal, el desarrollo o mantenimiento de la disciplina lectora se enfrenta de manera constante a la falta de herramientas tecnológicas accesibles que cuantifiquen el rendimiento de forma automática. La ausencia de soluciones centralizadas genera dos escenarios críticos en el público general: por un lado, los lectores novatos experimentan desmotivación y aislamiento prematuro debido a la pesadez de los registros manuales; por otro lado, los lectores recurrentes y consumidores avanzados de formatos complejos como el manga o las novelas gráficas fragmentan su información al carecer de un repositorio único para controlar grandes volúmenes de capítulos. Como consecuencia, el hábito de la lectura tiende a volverse desorganizado, inconsistente y propenso al abandono.
 
@@ -145,6 +145,9 @@ Este proyecto se delimita estrictamente al desarrollo de una plataforma web para
 \subsection{Justificación del desarrollo del proyecto}
 El desarrollo de LecturaMétrica se justifica tecnológicamente al proveer una solución que transforma datos estáticos en estímulos de comportamiento lector a través de procesos automatizados en el servidor. Al automatizar la organización de la biblioteca mediante APIs (como Open Library API), se elimina la carga operativa del usuario. Socialmente, el proyecto introduce una innovación nativa mediante el ``Buzón del Lector'', un intercambio asíncrono y anónimo de micro-reseñas en ciclos cerrados de 24 horas, diseñado para mitigar el aislamiento del lector moderno sin los riesgos de moderación de una red social tradicional. Desde la perspectiva científica de la asignatura, el proyecto se fundamenta en un enfoque cuantitativo experimental que busca validar de manera matemática el incremento de al menos un 20\% en el tiempo promedio de lectura diario durante un periodo de pruebas de 20 días naturales con una muestra mínima de 40 usuarios reales.
 
+\subsection{Hipótesis}
+Si los usuarios cuentan con una plataforma web que centraliza y visualiza métricas de rendimiento en tiempo real, automatiza el registro de obras mediante el consumo de APIs y mitiga el aislamiento lector a través de una mecánica interactiva de "Buzón de Recomendaciones Anónimas" de formato corto (con un ciclo cerrado de envío-espera de 24 horas), entonces se incrementará al menos un 20% el tiempo promedio de lectura diario y la retención activa de los usuarios durante un periodo de 20 días, dado que la reducción del esfuerzo operativo combinada con el factor sorpresa, la curiosidad comunitaria y las recompensas de gamificación asíncrona disminuyen la resistencia cognitiva, incrementando la motivación intrínseca y la disciplina en actividades de lectura.
+
 \newpage
 
 % ==============================================================================
@@ -173,7 +176,7 @@ Desarrollar una plataforma web llamada LecturaMétrica que permita optimizar el 
 \section{Marco teórico}
 
 \subsection{Antecedentes teóricos y tecnológicos}
-Info de Ninis
+<- lo de las aplicaciones parecidas w, corrgit luego
 
 \subsection{Definición de conceptos clave}
 \begin{itemize}
@@ -234,11 +237,169 @@ El diseño arquitectónico, la implementación lógica y el tratamiento de datos
 \newpage
 
 % ==============================================================================
+% 8. METODOLOGÍA
+% ==============================================================================
+\section{Metodología}
+
+\subsection{Tipo de investigación}
+Este proyecto se clasifica como una \textbf{investigación aplicada de tipo tecnológico} con un \textbf{enfoque cuantitativo y experimental}. 
+
+Es \textit{tecnológica} y \textit{aplicada} puesto que su objetivo principal es la creación de una solución de software funcional para resolver una problemática real. Asimismo, adopta un \textit{enfoque cuantitativo} al fundamentarse en la recopilación y análisis estadístico de variables medibles, como el tiempo promedio de lectura diario, la frecuencia de sesiones y la consistencia de las rachas (\textit{streaks}) del usuario. Finalmente, es \textit{experimental} ya que el desarrollo se sustenta en la validación de una hipótesis, donde se introducen variables controladas (automatización de registros y mecánicas de gamificación) para medir su impacto directo en el comportamiento lector de una muestra controlada de 40 usuarios, buscando una correlación positiva validada mediante datos empíricos.
+
+\subsection{Enfoque metodológico del desarrollo}
+Para la construcción del sistema se adoptó un modelo híbrido. A nivel macro, se utilizó un enfoque en \textit{Cascada} (Waterfall) para el cumplimiento de las fases de análisis, diseño, desarrollo, pruebas e implementación, garantizando la alineación con los hitos académicos del proyecto. A nivel micro (desarrollo operativo), se implementó la metodología ágil \textit{SCRUM}, organizando el trabajo en \textit{sprints} de dos semanas. Esto permitió al equipo gestionar el \textit{backlog} de requerimientos mediante historias de usuario, realizar reuniones de sincronización semanales y ejecutar entregas incrementales que facilitaron la corrección técnica y la mejora continua del producto.
+
+\subsection{Fases del proyecto}
+El desarrollo del proyecto se estructuró en cinco fases cronológicas:
+\begin{itemize}
+    \item \textbf{Análisis de requerimientos:} Identificación del problema mediante la observación del comportamiento lector y la revisión de limitaciones en herramientas existentes, estableciendo las necesidades del usuario final.
+    \item \textbf{Diseño del sistema:} Elaboración de la arquitectura de \textit{software} (Clean Architecture), definición del esquema relacional de la base de datos en PostgreSQL y diseño de la interfaz de usuario.
+    \item \textbf{Implementación:} Construcción modular del \textit{backend} en Java con Spring Boot y el \textit{frontend} en Next.js, utilizando flujos de trabajo en Git con aislamiento de ramas por funcionalidades.
+    \item \textbf{Pruebas y validación:} Ejecución de pruebas unitarias y de integración para asegurar la robustez de los \textit{endpoints} y la correcta persistencia de los datos.
+    \item \textbf{Documentación y entrega:} Generación de los reportes técnicos, manuales y presentación final del producto bajo los estándares académicos requeridos.
+\end{itemize}
+
+\subsection{Herramientas y tecnologías utilizadas}
+
+\begin{table}[h]
+\centering
+\caption{Stack tecnológico y herramientas del proyecto}
+\label{tab:tecnologias}
+\begin{tabular}{ll}
+\toprule
+\textbf{Actividad} & \textbf{Herramienta / Tecnología} \\
+\midrule
+Desarrollo Back-end & Java 21, Spring Boot, Hibernate, JPA \\
+Interfaz de usuario & Next.js, React, Tailwind CSS \\
+Base de datos & PostgreSQL \\
+Control de versiones & Git, GitHub CLI \\
+Pruebas & Jmeter, Postman, Selenium (Web Testing) \\
+Gestión de proyecto & Metodología SCRUM, Jira \\
+Contenedorización & Docker \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Técnicas de recopilación de información}
+Para la definición de los requerimientos se emplearon técnicas de investigación documental y análisis de campo. Se realizó una revisión de literatura sobre gamificación y hábitos lectores, complementada con encuestas de opinión y formularios de \textit{feedback} para capturar las expectativas del usuario. Asimismo, se analizaron flujos de trabajo manuales previos para identificar los puntos críticos de fricción que el sistema debía automatizar.
+
+\subsection{Validación y evaluación del sistema}
+La validación del sistema se llevó a cabo mediante un enfoque de pruebas en capas. En el \textit{backend}, se aplicaron pruebas unitarias para verificar la lógica de los casos de uso y la integridad de los datos. A nivel de comunicación, se utilizaron pruebas de integración con Postman para validar los \textit{endpoints} REST. Finalmente, se diseñó un protocolo de evaluación con usuarios reales, consistente en un periodo de prueba de 20 días naturales con una muestra de 40 usuarios, cuyo objetivo es validar estadísticamente el incremento del tiempo promedio de lectura y la retención activa, utilizando el \textit{dashboard} de métricas como herramienta de verificación principal.
+
+\newpage
+% ==============================================================================
+% 8. ANÁLISIS DEL SISTEMA
+% ==============================================================================
+\section{Análisis del sistema}
+
+\subsection{Requerimientos funcionales}
+% Escribir aquí las acciones que realiza el sistema (ej. El sistema debe...)
+
+\subsection{Requerimientos no funcionales}
+% Escribir aquí rendimiento, seguridad, usabilidad, etc.
+
+\subsection{Identificación de los actores del sistema}
+% Presentar tabla con los roles (Administrador, Usuario, etc.)
+
+\subsection{Diagramas de casos de uso (UML)}
+% Insertar diagrama (Draw.io/Lucidchart) y descripción breve
+
+\subsection{Narrativas de casos de uso}
+% Describir paso a paso los escenarios principales
+
+\subsection{Modelo de datos preliminar (modelo ER)}
+% Presentar entidad-relación y descripción de tablas
+
+\subsection{Reglas del negocio}
+% Condiciones lógicas o restricciones de negocio
+
+\newpage
+
+% ==============================================================================
+% 9. DISEÑO DEL SISTEMA
+% ==============================================================================
+\section{Diseño del sistema}
+
+\subsection{Arquitectura del sistema}
+% Descripción de capas (Presentation, Business, Data)
+
+\subsection{Diseño de base de datos}
+% Esquema relacional, llaves, tipos de datos
+
+\subsection{Diseño del backend}
+% Diagramas de clases, definición de endpoints
+
+\subsection{Diseño del frontend}
+% Mockups y flujo de navegación
+
+\newpage
+
+% ==============================================================================
+% 10. IMPLEMENTACIÓN
+% ==============================================================================
+\section{Implementación}
+
+\subsection{Estructura de carpetas}
+% Árbol de directorios del proyecto
+
+\subsection{Fragmentos de código clave}
+% Ejemplos de implementación de lógica relevante
+
+\subsection{Evidencia visual}
+% Capturas de pantalla de la aplicación funcional
+
+\newpage
+
+% ==============================================================================
+% 11. PRUEBAS
+% ==============================================================================
+\section{Pruebas}
+
+\subsection{Casos de prueba}
+% Tabla con caso, acción, resultado esperado y obtenido
+
+\subsection{Métodos de validación}
+% Descripción de herramientas (JUnit, Postman)
+
+\newpage
+
+% ==============================================================================
+% 12. RESULTADOS
+% ==============================================================================
+\section{Resultados}
+
+\subsection{Indicadores de éxito}
+% Funcionalidad, cumplimiento de objetivos
+
+\subsection{Retroalimentación de usuarios}
+% Resultados de pruebas con usuarios reales
+
+\subsection{Impacto esperado}
+% Mejora en procesos, eficiencia, etc.
+
+\newpage
+
+% ==============================================================================
+% 13. CONCLUSIONES
+% ==============================================================================
+\section{Conclusiones}
+% Logros, lecciones aprendidas, relevancia del proyecto
+
+\newpage
+
+% ==============================================================================
+% 14. RECOMENDACIONES
+% ==============================================================================
+\section{Recomendaciones}
+% Propuestas de mejora, continuidad del proyecto
+
+
+\newpage
+% ==============================================================================
 % REFERENCIAS (MANTENIDAS PARA LA CONSISTENCIA DEL TRABAJO ACADÉMICO)
 % ==============================================================================
-\section{Referencias}
 
-\begin{thebibliography}{6}
+\begin{thebibliography}{7}
 
 \bibitem{lfpdppp}
 Cámara de Diputados del H. Congreso de la Unión. (2010). \textit{Ley Federal de Protección de Datos Personales en Posesión de los Particulares}. (LFPDPPP). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf}
@@ -249,8 +410,7 @@ Cámara de Diputados del H. Congreso de la Unión. (2020). \textit{Ley Federal d
 \bibitem{chiapas2017}
 Congreso del Estado de Chiapas. (2017). \textit{Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Chiapas}. Periódico Oficial del Estado. \url{https://www.asechiapas.gob.mx/download/leyes/LEY_PROTECCION_DATOS_PERSONALES.pdf}
 
-
-\bibitem{lfda2026}
+\bibitem{lfda2026_oficial}  % <--- ESTE NOMBRE ES EL QUE DEBES CAMBIAR
 Ley Federal del Derecho de Autor. (2026). \textit{Diario Oficial de la Federación}. Última reforma publicada el 14 de mayo de 2026. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
 
 \bibitem{oracle2024}
