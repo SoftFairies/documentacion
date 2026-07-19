@@ -302,7 +302,16 @@ La validación del sistema se llevó a cabo mediante un enfoque de pruebas en ca
 % Presentar tabla con los roles (Administrador, Usuario, etc.)
 
 \subsection{Diagramas de casos de uso (UML)}
-% Insertar diagrama (Draw.io/Lucidchart) y descripción breve
+El diagrama de casos de uso modela el comportamiento del sistema LecturaMétrica, identificando dos actores principales: el \textit{Lector}, quien interactúa con los módulos funcionales de usuario, biblioteca, buzón social y estadísticas; y el \textit{Super Administrador}, quien posee privilegios de supervisión sobre el rendimiento y estadísticas globales de la plataforma. 
+
+La estructura funcional se organiza en cinco módulos principales que encapsulan la lógica de negocio, utilizando relaciones de \textit{include} para procesos obligatorios (como la validación de preferencias tras la creación de cuenta o la adición de sesiones a un libro) y relaciones de \textit{extend} para funcionalidades opcionales o dependientes (como la configuración de seguridad 2 pasos o la búsqueda automatizada por API).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{./fotos/uc/image.png}
+    \caption{Diagrama de casos de uso del sistema LecturaMétrica.}
+    \label{fig:casos_de_uso}
+\end{figure}
 
 \subsection{Narrativas de casos de uso}
 % Describir paso a paso los escenarios principales
@@ -410,7 +419,7 @@ Cámara de Diputados del H. Congreso de la Unión. (2020). \textit{Ley Federal d
 \bibitem{chiapas2017}
 Congreso del Estado de Chiapas. (2017). \textit{Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Chiapas}. Periódico Oficial del Estado. \url{https://www.asechiapas.gob.mx/download/leyes/LEY_PROTECCION_DATOS_PERSONALES.pdf}
 
-\bibitem{lfda2026_oficial}  % <--- ESTE NOMBRE ES EL QUE DEBES CAMBIAR
+\bibitem{lfda2026_oficial}  %
 Ley Federal del Derecho de Autor. (2026). \textit{Diario Oficial de la Federación}. Última reforma publicada el 14 de mayo de 2026. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
 
 \bibitem{oracle2024}
