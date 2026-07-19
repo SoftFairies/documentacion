@@ -176,7 +176,40 @@ Desarrollar una plataforma web llamada LecturaMétrica que permita optimizar el 
 \section{Marco teórico}
 
 \subsection{Antecedentes teóricos y tecnológicos}
-<- lo de las aplicaciones parecidas w, corrgit luego
+
+Para fundamentar el valor tecnológico de \textbf{LecturaMétrica}, se analizaron aplicaciones existentes en el mercado. Actualmente, las aplicaciones de lectura se dividen en tres grandes categorías con enfoques muy marcados:
+
+\begin{enumerate}
+    \item \textbf{Gestores masivos de bibliotecas (Goodreads, StoryGraph):} Plataformas enfocadas en la catalogación exhaustiva y la reseña literaria. Aunque cuentan con bases de datos inmensas, carecen de herramientas de seguimiento en tiempo real (como temporizadores en web). Además, su principal base de usuarios y diseño nativo se centra en el idioma inglés.
+    \item \textbf{Medidores de hábitos y sesiones (Bookmory, Bookly):} Son las herramientas funcionalmente más cercanas al propósito de este proyecto, ya que integran temporizadores, calendarios y estadísticas detalladas. Sin embargo, su enfoque es estrictamente individualista y cerrado, aislando al lector. Aplicaciones como Bookly suelen bloquear funciones hasta pagar una suscripción, mientras que Bookmory carece de mecánicas de interacción comunitaria.
+    \item \textbf{Plataformas de autoedición y consumo serializado (Wattpad, Webtoon, Lilithum):} Su núcleo no es la medición del hábito, sino la publicación y el consumo de contenido original. Su componente social es síncrono, directo y a menudo invasivo (comentarios por párrafo o capítulo), lo cual no fomenta la disciplina lectora de obras externas, sino la permanencia dentro de su propio ecosistema de contenido.
+\end{enumerate}
+
+A pesar de la popularidad de estas herramientas, el usuario hispanohablante se enfrenta a barreras de idioma o a la falta de una plataforma que equilibre el seguimiento cuantitativo con una motivación comunitaria sana.
+
+\begin{table}[htpb]
+\centering
+\caption{Análisis comparativo de plataformas de gestión y fomento de lectura}
+\label{tab:comparativa_apps}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\textbf{Plataforma} & \textbf{Registro por API} & \textbf{Temporizador} & \textbf{Analíticas} & \textbf{Gamificación} & \textbf{Interacción Social} & \textbf{Idioma Nativo} \\
+\midrule
+\textbf{Goodreads} & Manual / ISBN & No & Básicas & Reto Anual & Foros abiertos & Inglés \\
+\textbf{StoryGraph} & Manual / ISBN & No & Avanzadas & Reto Anual & Seguidores & Inglés \\
+\textbf{Bookly} & Manual / ISBN & Sí & Avanzadas & Insignias & Nula & Inglés \\
+\textbf{Bookmory} & Manual / ISBN & Sí & Avanzadas & Rachas / Calendario & Nula & Multi (Traducido) \\
+\textbf{Wattpad / Webtoon / Lilithum} & N/A (Interno) & No & N/A & N/A & Comentarios directos & Español / Multi \\
+\midrule
+\textbf{LecturaMétrica (Propuesta)} & \textbf{Sí} & \textbf{Sí} & \textbf{Avanzadas} & \textbf{Rachas / Insignias} & \textbf{Buzón Asíncrono} & \textbf{Español} \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Como se observa en la comparativa, \textbf{LecturaMétrica} se posiciona como una solución superior en su nicho al tomar las mejores mecánicas de medición (presentes en aplicaciones como Bookmory) y potenciarlas mediante la inyección de un componente social controlado. El modelo del ``Buzón del Lector'' introduce un intercambio asíncrono y anónimo que genera expectativa y curiosidad sin la presión de las redes sociales tradicionales. Sumado a su arquitectura de ingesta automatizada y su diseño nativo en español, la plataforma elimina la resistencia cognitiva, garantizando una mayor retención del usuario.
+
 
 \subsection{Definición de conceptos clave}
 \begin{itemize}
