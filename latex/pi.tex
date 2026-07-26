@@ -1,24 +1,21 @@
 \documentclass[12pt, atypical, journal]{article}
 
-% --- Paquetes Requeridos para Formato APA 7 y Estilo Profesional ---
 \usepackage[utf8]{inputenc}
 \usepackage[spanish,es-tabla]{babel}
 \usepackage{geometry}
-\geometry{letterpaper, margin=2.54cm} % Margen APA estándar (1 pulgada)
-\usepackage{times} % Tipografía estándar Times New Roman
+\geometry{letterpaper, margin=2.54cm}
+\usepackage{times}
 \usepackage{setspace}
-\onehalfspacing % Interlineado 1.5 según especificación institucional
+\onehalfspacing
 \usepackage{graphicx}
-\usepackage{booktabs} % Para tablas estilizadas y profesionales
+\usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{titlesec}
 \usepackage{hyperref}
 \usepackage{caption}
 
-% --- Paquete para sangría francesa en Referencias (APA) ---
 \newenvironment{hangparas}[2]{\setlength{\parindent}{-#1}\setlength{\leftmargin}{#1}\everypar{\hangindent=#1}}{\par}
 
-% --- Configuración de Enlaces e Hipervínculos ---
 \hypersetup{
    colorlinks=true,
    linkcolor=black,
@@ -27,10 +24,22 @@
    citecolor=black
 }
 
-% --- Configuración de Formato de Títulos (Estilo APA/Institucional) ---
 \titleformat{\section}{\normalfont\Large\bfseries}{\thesection.}{0.5em}{}
 \titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{0.5em}{}
 \titleformat{\subsubsection}{\normalfont\normalsize\bfseries\itshape}{\thesubsubsection.}{0.5em}{}
+
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    tabsize=2,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1
+}
 
 \begin{document}
 
@@ -146,7 +155,7 @@ Este proyecto se delimita estrictamente al desarrollo de una plataforma web para
 El desarrollo de LecturaMétrica se justifica tecnológicamente al proveer una solución que transforma datos estáticos en estímulos de comportamiento lector a través de procesos automatizados en el servidor. Al automatizar la organización de la biblioteca mediante APIs (como Open Library API), se elimina la carga operativa del usuario. Socialmente, el proyecto introduce una innovación nativa mediante el ``Buzón del Lector'', un intercambio asíncrono y anónimo de micro-reseñas en ciclos cerrados de 24 horas, diseñado para mitigar el aislamiento del lector moderno sin los riesgos de moderación de una red social tradicional. Desde la perspectiva científica de la asignatura, el proyecto se fundamenta en un enfoque cuantitativo experimental que busca validar de manera matemática el incremento de al menos un 20\% en el tiempo promedio de lectura diario durante un periodo de pruebas de 20 días naturales con una muestra mínima de 40 usuarios reales.
 
 \subsection{Hipótesis}
-Si los usuarios cuentan con una plataforma web que centraliza y visualiza métricas de rendimiento en tiempo real, automatiza el registro de obras mediante el consumo de APIs y mitiga el aislamiento lector a través de una mecánica interactiva de "Buzón de Recomendaciones Anónimas" de formato corto (con un ciclo cerrado de envío-espera de 24 horas), entonces se incrementará al menos un 20% el tiempo promedio de lectura diario y la retención activa de los usuarios durante un periodo de 20 días, dado que la reducción del esfuerzo operativo combinada con el factor sorpresa, la curiosidad comunitaria y las recompensas de gamificación asíncrona disminuyen la resistencia cognitiva, incrementando la motivación intrínseca y la disciplina en actividades de lectura.
+Si los usuarios cuentan con una plataforma web que centraliza y visualiza métricas de rendimiento en tiempo real, automatiza el registro de obras mediante el consumo de APIs y mitiga el aislamiento lector a través de una mecánica interactiva de "Buzón de Recomendaciones Anónimas" de formato corto (con un ciclo cerrado de envío-espera de 24 horas), entonces se incrementará al menos un 20\% el tiempo promedio de lectura diario y la retención activa de los usuarios durante un periodo de 20 días, dado que la reducción del esfuerzo operativo combinada con el factor sorpresa, la curiosidad comunitaria y las recompensas de gamificación asíncrona disminuyen la resistencia cognitiva, incrementando la motivación intrínseca y la disciplina en actividades de lectura.
 
 \newpage
 
@@ -162,7 +171,7 @@ Desarrollar una plataforma web llamada LecturaMétrica que permita optimizar el 
 \begin{enumerate}
    \item Diseñar e implementar el módulo de biblioteca personal mediante operaciones CRUD de obras, optimizándolo a través de una arquitectura híbrida de ingesta de datos que combine el consumo de APIs externas de metadatos y rastreadores web para automatizar la extracción de portadas, capítulos y géneros, eliminando la fricción del registro manual.
    \item Desarrollar un componente interactivo de cuantificación de progreso en el \textit{front-end} que ofrezca un flujo dual de captura: un temporizador en tiempo real para la medición automatizada de sesiones activas, y un formulario de registro manual retroactivo para asegurar la flexibilidad de recolección de datos sin importar el entorno del usuario.
-   \item Programar la lógica algorítmica para la gestión de un motor de gamificación que procese el cálculo automatizado de rachas consecutivas de días leyendo (\textit{streaks}), récords históricos, asignación de insignias y la inyección automatizada de un ``Radar de Curiosidades'' basado en las preferencias psicográficas del usuario.
+   \item Programar la lógica algorítmica para la gestión de un motor de gamificación que procese el cálculo automatizado de rachas consecutivas de días leyendo (\textit{streaks}), récords históricos, asignación de insignias y la inyección automatizada de un ``Radar de Curiosidades'' basado en las preferencias del usuario.
    \item Construir el sistema de mensajería asíncrona ``Buzón del Lector'', implementando las reglas de negocio y filtros necesarios en el servidor para la distribución aleatoria y anónima de micro-reseñas en ciclos controlados de bloqueo y apertura de 24 horas.
    \item Estructurar un \textit{dashboard} analítico dinámico utilizando componentes gráficos interactivos en Next.js para representar la distribución de lectura por géneros literarios, promedios de velocidad lectora real, estimaciones predictivas de finalización de obras y líneas de tiempo de metas cumplidas.
    \item Evaluar el impacto y usabilidad de la plataforma mediante la recolección de datos cuantitativos en una muestra de un mínimo de 40 usuarios reales durante un periodo de 20 días naturales, validando estadísticamente el incremento del tiempo promedio de lectura diario y la tasa de retención activa.
@@ -217,15 +226,15 @@ Como se observa en la comparativa, \textbf{LecturaMétrica} se posiciona como un
    \item \textbf{Front-end:} Entorno visual y de presentación de la aplicación interactiva con la que el usuario final tiene contacto directo a través de navegadores web.
    \item \textbf{Base de Datos Relacional:} Sistema de organización de datos estructurados en filas y columnas que se interconectan mediante llaves primarias y foráneas asegurando la integridad referencial.
    \item \textbf{API REST:} Interfaz de programación de aplicaciones que utiliza los métodos del protocolo HTTP para intercambiar datos de manera ligera y estandarizada, usualmente en formato JSON.
-   \item \textbf{Ingesta Híbrida de Datos:} Arquitectura de software que combina múltiples fuentes de extracción de información en tiempo real, tales como el consumo estructurado de APIs RESTful externas y la ejecución dirigida de rastreadores web o arañas informáticas (\textit{Web Spiders}) para consolidar un registro unificado de metadatos.
-   \item \textbf{Gamificación Asíncrona:} Integración de mecánicas, dinámicas y componentes de diseño de juegos en entornos que no son de juego, estructurada bajo ciclos diferidos en el tiempo (como sistemas de bloqueo/apertura programados) para incentivar el retorno diario basado en la curiosidad y el factor sorpresa.
+   \item \textbf{Ingesta Híbrida de Datos:} Arquitectura de software que combina fuentes de extracción de información en tiempo real, tales como el consumo estructurado de APIs RESTful externas.
+   \item \textbf{Gamificación Asíncrona:} Integración de mecánicas, dinámicas y componentes de diseño, estructurada bajo ciclos diferidos en el tiempo (como sistemas de bloqueo/apertura programados) para incentivar el retorno diario basado en la curiosidad y el factor sorpresa.
    \item \textbf{Arquitectura Desacoplada:} Patrón de diseño de sistemas donde el \textit{front-end} (capa de presentación) y el \textit{back-end} (capa lógica) operan de manera independiente en servidores autónomos, comunicándose exclusivamente a través de peticiones HTTP e intercambiando objetos ligeros de datos (JSON).
-   \item \textbf{Formulario Psicográfico:} Herramienta de recolección de datos iniciales (\textit{onboarding}) diseñada para capturar variables cualitativas de comportamiento, gustos, preferencias y rasgos de interés del usuario con el fin de parametrizar algoritmos de personalización en el servidor.
+   \item \textbf{Formulario:} Herramienta de recolección de datos iniciales (\textit{onboarding}) diseñada para capturar variables cualitativas de comportamiento, gustos, preferencias y rasgos de interés del usuario con el fin de parametrizar algoritmos de personalización en el servidor.
 \end{itemize}
 
 \subsection{Explicación de tecnologías y herramientas utilizadas}
 \begin{itemize}
-   \item \textbf{Next.js y React:} Framework de desarrollo \textit{front-end} basado en JavaScript que permite la renderización eficiente de interfaces de usuario basadas en componentes. Su gestión nativa de estados dinámicos es óptima para la construcción de gráficos estadísticos interactivos y tableros analíticos en tiempo real.
+   \item \textbf{Next.js, React y Tailwind CSS:} Framework de desarrollo \textit{front-end} basado en JavaScript y biblioteca de estilos que permite la renderización eficiente de interfaces de usuario basadas en componentes. Su gestión nativa de estados dinámicos combinada con un diseño ágil y adaptable facilita la construcción de gráficos estadísticos interactivos y tableros analíticos en tiempo real.
    \item \textbf{Java y Spring Boot:} Lenguaje de programación fuertemente tipado acoplado a un framework robusto para el desarrollo del \textit{back-end}. Su motor de inversión de control (IoC) e inyección de dependencias permite aislar rígidamente las reglas de negocio del motor de gamificación y la seguridad del servidor.
    \item \textbf{Spring Data JPA e Hibernate:} Tecnologías de mapeo objeto-relacional (ORM) que abstraen la capa de datos en Java, transformando las entidades de software en tablas de bases de datos relacionales y automatizando las consultas transaccionales de alta velocidad.
    \item \textbf{PostgreSQL:} Sistema de gestión de bases de datos relacionales (RDBMS) de código abierto, seleccionado por su alta integridad cuantitativa, soporte avanzado para tipos de datos complejos y eficiencia en el almacenamiento seguro de variables métricas acumuladas.
@@ -306,7 +315,7 @@ Desarrollo Back-end & Java 21, Spring Boot, Hibernate, JPA \\
 Interfaz de usuario & Next.js, React, Tailwind CSS \\
 Base de datos & PostgreSQL \\
 Control de versiones & Git, GitHub CLI \\
-Pruebas & Jmeter, Postman, Selenium (Web Testing) \\
+Pruebas & Insosmina, Postman  \\ % Jmeter, Selenium (Web Testing)
 Gestión de proyecto & Metodología SCRUM, Jira \\
 Contenedorización & Docker \\
 \bottomrule
@@ -337,9 +346,9 @@ La validación del sistema se llevó a cabo mediante un enfoque de pruebas en ca
 \subsection{Diagramas de casos de uso (UML)}
 El diagrama de casos de uso modela el comportamiento del sistema LecturaMétrica, identificando dos actores principales: el \textit{Lector}, quien interactúa con los módulos funcionales de usuario, biblioteca, buzón social y estadísticas; y el \textit{Super Administrador}, quien posee privilegios de supervisión sobre el rendimiento y estadísticas globales de la plataforma. 
 
-La estructura funcional se organiza en cinco módulos principales que encapsulan la lógica de negocio, utilizando relaciones de \textit{include} para procesos obligatorios (como la validación de preferencias tras la creación de cuenta o la adición de sesiones a un libro) y relaciones de \textit{extend} para funcionalidades opcionales o dependientes (como la configuración de seguridad 2 pasos o la búsqueda automatizada por API).
+La estructura funcional se organiza en cinco módulos principales que encapsulan la lógica de negocio, utilizando relaciones de \textit{include} para procesos obligatorios (como la validación de preferencias tras la creación de cuenta o la adición de sesiones a un libro) y relaciones de \textit{extend} para funcionalidades opcionales o dependientes (como dar like o dislike a un buzón o la búsqueda automatizada por API).
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{./fotos/uc/image.png}
     \caption{Diagrama de casos de uso del sistema LecturaMétrica.}
@@ -402,21 +411,7 @@ Adicionalmente, se configuró un manejador global de excepciones (\textit{Global
 
 \newpage
 
-% ==============================================================================
-% 10. IMPLEMENTACIÓN
-% ==============================================================================
-\section{Implementación}
 
-\subsection{Estructura de carpetas}
-% Árbol de directorios del proyecto
-
-\subsection{Fragmentos de código clave}
-% Ejemplos de implementación de lógica relevante
-
-\subsection{Evidencia visual}
-% Capturas de pantalla de la aplicación funcional
-
-\newpage
 
 % ==============================================================================
 % 11. PRUEBAS
