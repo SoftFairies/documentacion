@@ -482,7 +482,8 @@ Las reglas del negocio definen las condiciones lógicas, restricciones y políti
 	\item \textbf{RN-04:} Cuando el progreso actual alcance exactamente la extensión total de la obra (equivalente al 100\%), el estado de la lectura debe actualizarse automáticamente a \textit{Completado}.
 	\item \textbf{RN-05:} Se considera que un día computa para la contabilización de la racha (\textit{streak}) si el usuario registra un incremento en el progreso de lectura mayor a cero dentro de dicho período.
 	\item \textbf{RN-06:} Unicidad de credenciales: no pueden existir dos cuentas de usuario registradas con el mismo correo electrónico en la base de datos.
-	\item \textbf{RN-07:} Si una obra se clasifica bajo el estado \textit{Abandonado}, el sistema mantendrá y conservará el registro histórico del progreso alcanzado hasta ese momento.
+	\item \textbf{RN-07:} En caso de que un usuario ejecute la eliminación de su cuenta, el sistema debe efectuar un borrado en cascada de todas sus sesiones de lectura y notas asociadas, garantizando la privacidad de los datos y la integridad referencial.
+	\item \textbf{RN-08:} Si una obra se clasifica bajo el estado \textit{Abandonado}, el sistema mantendrá y conservará el registro histórico del progreso alcanzado hasta ese momento.
 \end{itemize}
 
 \newpage
@@ -1077,28 +1078,77 @@ La correcta funcionalidad de los endpoints del backend se validó a través de h
 \end{figure}
 
 % ==============================================================================
-% ESPACIO RESERVADO PARA EL FRONTEND
-% ==============================================================================
-\subsubsection{Interfaz Gráfica (Frontend)}
-% \begin{figure}[H]
-%     \centering
-%     % \includegraphics[width=0.9\textwidth]{img/vista-dashboard.png}
-%     \caption{Vista principal del tablero de usuario en la aplicación.}
-%     \label{fig:front_dashboard}
-% \end{figure}
-
-\newpage
-
-% ==============================================================================
 % 11. PRUEBAS
 % ==============================================================================
 \section{Pruebas}
 
 \subsection{Casos de prueba}
-% Tabla con caso, acción, resultado esperado y obtenido
+En esta sección se describen los escenarios de prueba ejecutados sobre el sistema para validar el funcionamiento de los módulos principales, el cumplimiento de las reglas del negocio y el manejo de respuestas del servidor:
+
+\begin{table}[h]
+	\centering
+	\small
+	\caption{Matriz de ejecución de casos de prueba del sistema}
+	\label{tab:casos_prueba}
+	\begin{tabular}{p{1.2cm}p{2.3cm}p{3.2cm}p{3.5cm}p{3.5cm}}
+		\toprule
+		\textbf{ID} & \textbf{Módulo} & \textbf{Caso de Prueba} & \textbf{Acción / Entrada} & \textbf{Resultado Esperado} \\
+		\midrule
+		\textbf{CP-01} & Autenticación & Inicio de sesión exitoso de un Administrador. & Ingresar correo y contraseña válidos en \texttt{app/(auth)} y enviar el formulario. & El \textit{backend} responde con HTTP 200 y token JWT. El cliente almacena el token y redirige a \texttt{app/dashboard}. \\
+		\addlinespace
+		\textbf{CP-02} & Catálogo & Registro de una nueva obra con extensión total y formato. & Enviar formulario desde el panel para crear un Manga especificando 120 capítulos e imagen de portada. & El \textit{backend} procesa la imagen (vía Cloudinary), guarda el registro en la BD y retorna HTTP 201 Created. \\
+		\addlinespace
+		\textbf{CP-03} & Seguimiento & Validación de límite de progreso (Regla RN-04). & Intentar actualizar la lectura de un libro de 300 páginas ingresando un progreso de 350 páginas. & El \textit{backend} responde con un error HTTP 400 Bad Request (\textit{``El progreso no puede exceder el total de la obra''}). \\
+		\addlinespace
+		\textbf{CP-04} & Seguimiento & Cambio automático de estado a Completado (Regla RN-06). & Registrar el capítulo 120/120 en un Manga que estaba en estado \textit{Leyendo}. & El \textit{backend} actualiza automáticamente el estado a \textit{Completado}. \\
+		\addlinespace
+		\textbf{CP-05} & Métricas & Carga de métricas globales de actividad en tiempo real. & Navegar a para consultar gráficos de lectura. & El controlador en \texttt{modules/} calcula y devuelve las estadísticas agregadas en formato JSON en $< 300$~ms. \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \subsection{Métodos de validación}
-% Descripción de herramientas (JUnit, Postman)
+Para garantizar el correcto funcionamiento del sistema, la integridad de los datos, se emplearon las siguientes herramientas de validación y pruebas:
+
+\begin{itemize}
+	\item \textbf{Postman e insomnia:} Empleado para la validación y consumo de las APIs RESTful, verificando los estados HTTP de respuesta, la estructura JSON, los tiempos de latencia y la seguridad en los \textit{endpoints}.
+\end{itemize}
+
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabular}{|c|l|p{3.5cm}|p{3.5cm}|p{3.5cm}|c|}
+		\hline
+		\textbf{ID} & \textbf{Módulo} & \textbf{Caso de Prueba} & \textbf{Acción / Entrada} & \textbf{Resultado Esperado} & \textbf{Resultado} \\ \hline
+		
+		\textbf{CP-01} & Lectura & 
+		Registro de sesión de lectura con cronómetro. & 
+		Seleccionar obra, iniciar cronómetro (4 min), sumar 2 páginas y guardar. & 
+		Guarda la sesión, incrementa el tiempo total en estadísticas y actualiza la racha diaria. & 
+		\textbf{Exitoso} \\ \hline
+		
+		\textbf{CP-02} & Biblioteca & 
+		Filtrado dinámico por estado de obra. & 
+		Hacer clic en la pestaña "Terminado" en  \texttt{/biblioteca}. & 
+		La vista filtra dinámicamente mostrando únicamente las obras completadas & 
+		\textbf{Exitoso} \\ \hline
+		
+		\textbf{CP-03} & Buzón & 
+		Envío de carta de recomendación anónima. & 
+		Seleccionar libro, redactar opinión y presionar "Enviar carta". & 
+		Transmite la carta al buzón general de manera anónima y activa la \textit{racha} de 24 horas. & 
+		\textbf{Exitoso} \\ \hline
+		
+		\textbf{CP-04} & Estadísticas & 
+		Cálculo de progreso de meta anual. & 
+		Completar tantos libros con una meta configurada de cierta cantidad de libros. & 
+		Actualiza la barra de progreso el \% y muestra "x libros restantes". & 
+		\textbf{Exitoso} \\ \hline
+		
+	\end{tabular}
+	\caption{Matriz de pruebas funcionales y de validación del sistema.}
+	\label{tab:casos_prueba}
+\end{table}
 
 \newpage
 
@@ -1108,13 +1158,47 @@ La correcta funcionalidad de los endpoints del backend se validó a través de h
 \section{Resultados}
 
 \subsection{Indicadores de éxito}
-% Funcionalidad, cumplimiento de objetivos
+Se cumplió con los requerimientos funcionales y objetivos core establecidos para el proyecto, logrando integrar la gestión multiformato de lecturas con mecánicas de gamificación.
+
+\begin{itemize}
+	\item \textbf{Gestión Multiformato Integrada:} El sistema permite catalogar y dar seguimiento preciso a obras en formatos de Libro Tradicional, Manga, Webtoon y comics, adaptando las unidades de avance (páginas y capítulos) según corresponda.
+	
+	\item \textbf{Sesiones de Lectura Interactivas:} Se implementó exitosamente el cronómetro en tiempo real para sesiones activas, permitiendo el registro incremental de páginas/capítulos leídos junto con notas y acotaciones asociadas a puntos específicos de la obra.
+	
+	\item \textbf{Métricas y Visualización de Datos:} El panel de estadísticas procesa en tiempo real métricas de lectura (minutos totales registrados, páginas, avance en la meta anual y distribución por estados de biblioteca).
+	
+	\item \textbf{Gamificación y Perfil:} Se logró el cálculo dinámico de rachas de lectura (\textit{streaks}) y la asignación automática de insignias en el perfil del usuario tras alcanzar hitos de lectura.
+	
+	\item \textbf{Buzón Anónimo:} Se implementó el módulo de intercambio de cartas anónimas con restricción de envío (24 horas) e interacciones dinámicas (\textit{like}, \textit{dislike} y agregar a biblioteca).
+\end{itemize}
 
 \subsection{Retroalimentación de usuarios}
-% Resultados de pruebas con usuarios reales
+Durante las sesiones de prueba con usuarios reales, se recopilaron diversas observaciones y sugerencias orientadas a mejorar la experiencia:
+
+\begin{itemize}
+	\item \textbf{Notificaciones de racha:} Implementar alertas o recordatorios visuales para ayudar al usuario a no perder su racha diaria de lectura.
+	\item \textbf{Autocompletado en búsquedas:} Mejorar el motor de búsqueda incorporando sugerencias automáticas y autocompletado al escribir.
+	\item \textbf{Interacción en cartas:} Habilitar la capacidad de responder o dejar un comentario directo en la carta anónima recibida a través del buzón.
+	\item \textbf{Flexibilidad en el buzón:} Modificar las restricciones actuales para permitir el envío de más de una recomendación o carta al buzón general en el mismo día.
+	\item \textbf{Exportación de reportes:} Añadir la funcionalidad de descargar el historial completo de lectura y las métricas del panel de estadísticas en formato PDF.
+	\item \textbf{Foro:} Tener un foro donde se pueda interactuar con otros usuarios y contar con chat en vivo.
+\end{itemize}
 
 \subsection{Impacto esperado}
-% Mejora en procesos, eficiencia, etc.
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|p{8.5cm}|p{4.5cm}|}
+		\hline
+		\textbf{Nivel de Impacto} & \textbf{Área de Mejora / Descripción} \\ \hline
+		\textbf{Alto} & Reducción del tiempo de registro manual de obras populares.\\ \hline
+		\textbf{Medio-Alto} & Dinamización del flujo de contenido y participación activa. \\ \hline
+		\textbf{Medio} & Retención de usuarios y fomento de la constancia de lectura. \\ \hline
+		\textbf{Medio} & Sentido de comunidad entre lectores mediante buzón y recomendaciones. \\ \hline
+		\textbf{Bajo} & Generación de información útil para respaldos personales. \\ \hline
+	\end{tabular}
+	\caption{Matriz de impacto esperado por funcionalidad implementada.}
+	\label{tab:impacto_esperado}
+\end{table}
 
 \newpage
 
@@ -1122,7 +1206,33 @@ La correcta funcionalidad de los endpoints del backend se validó a través de h
 % 13. CONCLUSIONES
 % ==============================================================================
 \section{Conclusiones}
-% Logros, lecciones aprendidas, relevancia del proyecto
+
+\subsection{Logros alcanzados}
+\begin{description}
+	\item[\textbf{Arquitectura robusta e integración completa:}] 
+	Se construyó una plataforma funcional combinando un backend estructurado en Spring Boot con un frontend responsivo y moderno en Next.js, logrando comunicaciones eficientes mediante APIs REST desplegadas en entornos de producción.
+	
+	\item[\textbf{Consolidación de métricas y gamificación:}] 
+	Se implementó con éxito un motor de estadísticas en tiempo real capaz de procesar rachas de lectura, metas anuales, registros semanales e insignias dinámicas dentro del perfil del usuario.
+\end{description}
+
+\subsection{Lecciones aprendidas}
+\begin{description}
+	\item[\textbf{Modelado de dominio flexible:}] 
+	Diseñar una base de datos preparada para manejar múltiples tipos de obras desde las etapas iniciales evitó refactorizaciones complejas al integrar mangas y webtoons junto con libros convencionales.
+	
+	\item[\textbf{Diseño orientado al feedback del usuario:}] 
+	Las pruebas con usuarios reales demostraron que restricciones muy rígidas pueden limitar la interacción.
+	
+	\item[\textbf{Optimización de despliegues en la nube:}] 
+	Configurar correctamente los entornos de ejecución en servicios de la nube (como Railway y Supabase) permitió identificar rápidamente cuellos de botella en peticiones HTTP e integrar eficientemente servicios de terceros para el manejo de archivos multimedia.
+\end{description}
+
+\subsection{Impacto y reflexión final}
+
+El proyecto demuestra cómo el uso estratégico de la tecnología, las métricas visuales y la gamificación puede transformar una actividad tradicionalmente solitaria en un hábito constante, interactivo y motivador.
+
+LecturaMétrica cobra relevancia al llenar el vacío existente entre los gestores de lectura tradicionales (pensados para libros en formato físico) y la realidad de los lectores modernos, quienes consumen contenido digital en formatos variados. Al combinar el seguimiento de hábitos con dinámicas comunitarias anónimas y la proyección a futuro de espacios de discusión directa (foros y chats), el sistema se posiciona no solo como una herramienta de registro, sino como una plataforma integral para el fomento de la lectura.
 
 \newpage
 
@@ -1130,8 +1240,15 @@ La correcta funcionalidad de los endpoints del backend se validó a través de h
 % 14. RECOMENDACIONES
 % ==============================================================================
 \section{Recomendaciones}
-% Propuestas de mejora, continuidad del proyecto
+Con la finalidad de dar continuidad al proyecto y potenciar el impacto de la plataforma a futuro, se sugieren las siguientes propuestas de mejora tecnológica y funcional:
 
+\begin{itemize}
+	\item \textbf{Módulo de Notificaciones y Recordatorios Automatizados:} Implementar un sistema de notificaciones push enfocado en la retención del usuario, enviando alertas periódicas que incentiven la continuidad del hábito (ej. ``¡No pierdas tu racha diario!'').
+	\item \textbf{Gestión de Listas y Colecciones Personalizadas:} Ampliar la flexibilidad de la biblioteca personal mediante la creación de listas temáticas organizadas por el usuario, con la posibilidad de con la comunidad.
+	\item \textbf{Subida y Personalización de Avatares/Fotos de Perfil:} Integrar un servicio de almacenamiento de objetos (como Amazon S3) para gestionar la carga y procesamiento de imágenes de perfil personalizadas, reforzando la identidad digital de cada lector.
+	\item \textbf{Salas de Chat y Espacios de Discusión Dinámicos:} Incorporar salas de conversación síncronas o foros temáticos para enriquecer el flujo social de la plataforma y fomentar debates sobre lecturas compartidas.
+	\item \textbf{Ampliación de Frecuencia en el Buzón de Lectura:} Permitir el envío y recepción de múltiples micro-reseñas o cartas diarias en el ``Buzón del Lector'', flexibilizando los ciclos actuales de 24 horas sin perder la esencia asíncrona y anónima del módulo.
+\end{itemize}
 
 \newpage
 % ==============================================================================
