@@ -351,13 +351,55 @@ La validación del sistema se llevó a cabo mediante un enfoque de pruebas en ca
 \section{Análisis del sistema}
 
 \subsection{Requerimientos funcionales}
-% Escribir aquí las acciones que realiza el sistema (ej. El sistema debe...)
+Los requerimientos funcionales especifican las capacidades, comportamientos y acciones concretas que el sistema debe ejecutar para responder a las necesidades de los usuarios y garantizar la correcta gestión de la plataforma:
+
+\begin{itemize}
+	\item \textbf{RF-01:} El sistema debe permitir el registro de nuevos usuarios mediante correo electrónico y contraseña cifrada.
+	\item \textbf{RF-02:} El sistema debe permitir el inicio de sesión y el manejo de sesiones activas de forma segura.
+	\item \textbf{RF-03:} El sistema debe permitir la consulta y actualización de la información básica del perfil de usuario.
+	\item \textbf{RF-04:} El sistema debe permitir registrar nuevas obras especificando obligatoriamente su formato de lectura: Libro, Manga, Manhwa, Cómic o Novela Gráfica.
+	\item \textbf{RF-05:} El sistema debe permitir asociar metadatos detallados a cada obra, incluyendo título, autor(es) y género(s).
+	\item \textbf{RF-06:} El sistema debe permitir clasificar el estado de cada obra dentro de la biblioteca personal del usuario (Pendiente, Leyendo, Completado, Pausado o Abandonado).
+	\item \textbf{RF-07:} El sistema debe permitir actualizar el progreso de lectura de manera incremental mediante sesiones de lectura diarias o periódicas.
+	\item \textbf{RF-08:} El sistema debe calcular y visualizar métricas del usuario, tales como el total de obras finalizadas.
+	\item \textbf{RF-09:} El sistema debe mostrar reportes de ritmo de lectura (páginas o capítulos leídos por semana).
+	\item \textbf{RF-10:} El sistema debe calcular indicadores de constancia, como rachas de lectura.
+	\item \textbf{RF-11:} El sistema debe permitir redactar notas o marcadores de texto vinculados a capítulos o páginas específicas dentro del seguimiento de una obra.
+\end{itemize}
 
 \subsection{Requerimientos no funcionales}
-% Escribir aquí rendimiento, seguridad, usabilidad, etc.
+Los requerimientos no funcionales definen los criterios de calidad, restricciones técnicas, atributos de rendimiento y estándares de seguridad que rigen la operación interna de la plataforma:
+
+\begin{itemize}
+	\item \textbf{RNF-01:} El tiempo de respuesta de la API para consultas del catálogo y progreso no debe superar los 300 ms en condiciones normales de carga.
+	\item \textbf{RNF-02:} Las contraseñas de los usuarios deben almacenarse mediante un algoritmo de hashing seguro (como BCrypt).
+	\item \textbf{RNF-03:} El acceso a los endpoints del sistema debe estar protegido mediante tokens de sesión (JWT).
+	\item \textbf{RNF-04:} Todas las solicitudes que alteren la base de datos deben incluir validaciones estrictas de entrada para prevenir inyecciones SQL.
+	\item \textbf{RNF-05:} El sistema debe mantener una disponibilidad del 99.5\% durante el tiempo de operación.
+	\item \textbf{RNF-06:} La arquitectura de la base de datos debe estar estructurada e indexada para soportar el crecimiento constante del historial de lectura sin degradar el rendimiento.
+	\item \textbf{RNF-07:} La interfaz de usuario debe ser totalmente adaptable a diferentes tamaños de pantalla (dispositivos móviles, tabletas y computadoras de escritorio).
+	\item \textbf{RNF-08:} El registro de progreso de lectura (actualizar páginas o capítulos) debe poder completarse en un máximo de tres clics o interacciones desde la pantalla principal.
+	\item \textbf{RNF-09:} El código debe seguir una arquitectura modular bien definida para facilitar su mantenimiento.
+	\item \textbf{RNF-10:} La API backend debe contar con documentación clara (por ejemplo, especificación OpenAPI/Swagger) para la consulta de rutas y payloads de respuesta.
+\end{itemize}
 
 \subsection{Identificación de los actores del sistema}
-% Presentar tabla con los roles (Administrador, Usuario, etc.)
+En esta sección se definen los roles principales que interactúan con la plataforma, delimitando sus responsabilidades:
+
+\begin{table}[h]
+	\centering
+	\caption{Actores del sistema y descripción de roles}
+	\label{tab:actores_sistema}
+	\begin{tabular}{lp{11cm}}
+		\toprule
+		\textbf{Actor} & \textbf{Descripción y Responsabilidades} \\
+		\midrule
+		\textbf{Lector / Usuario Registrado} & Es el usuario final del sistema. Interactúa con la plataforma para gestionar su biblioteca personal, registrar su actividad diaria de lectura y consultar sus métricas. \\
+		\addlinespace
+		\textbf{Administrador del Sistema} & Encargado de mantener la integridad global de la aplicación, gestionar cuentas de usuario, supervisar la consistencia de los metadatos y asegurar el correcto funcionamiento del entorno. \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \subsection{Diagramas de casos de uso (UML)}
 El diagrama de casos de uso modela el comportamiento del sistema LecturaMétrica, identificando dos actores principales: el \textit{Lector}, quien interactúa con los módulos funcionales de usuario, biblioteca, buzón social y estadísticas; y el \textit{Super Administrador}, quien posee privilegios de supervisión sobre el rendimiento y estadísticas globales de la plataforma. 
@@ -431,7 +473,17 @@ En su estructura original (modelo preliminar), el sistema agrupaba los elementos
 
 
 \subsection{Reglas del negocio}
-% Condiciones lógicas o restricciones de negocio
+Las reglas del negocio definen las condiciones lógicas, restricciones y políticas operativas que debe validar y hacer cumplir de manera estricta para asegurar la integridad de los datos y el correcto comportamiento del sistema:
+
+\begin{itemize}
+	\item \textbf{RN-01:} Toda obra agregada al catálogo debe asociarse obligatoriamente a un único formato principal (Libro, Manga, Manhwa, Cómic o Novela Gráfica).
+	\item \textbf{RN-02:} La extensión total de una obra (expresada en páginas o capítulos) debe ser un número entero mayor a cero.
+	\item \textbf{RN-03:} El progreso de lectura registrado por el usuario no puede exceder la extensión total definida para la obra ($0 \le \textit{Progreso Actual} \le \textit{Progreso Total}$).
+	\item \textbf{RN-04:} Cuando el progreso actual alcance exactamente la extensión total de la obra (equivalente al 100\%), el estado de la lectura debe actualizarse automáticamente a \textit{Completado}.
+	\item \textbf{RN-05:} Se considera que un día computa para la contabilización de la racha (\textit{streak}) si el usuario registra un incremento en el progreso de lectura mayor a cero dentro de dicho período.
+	\item \textbf{RN-06:} Unicidad de credenciales: no pueden existir dos cuentas de usuario registradas con el mismo correo electrónico en la base de datos.
+	\item \textbf{RN-07:} Si una obra se clasifica bajo el estado \textit{Abandonado}, el sistema mantendrá y conservará el registro histórico del progreso alcanzado hasta ese momento.
+\end{itemize}
 
 \newpage
 
