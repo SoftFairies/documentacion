@@ -411,7 +411,192 @@ Adicionalmente, se configuró un manejador global de excepciones (\textit{Global
 
 \newpage
 
+% ==============================================================================
+% 10. IMPLEMENTACIÓN
+% ==============================================================================
+\section{Implementación}
 
+La implementación del sistema comprende el desarrollo integral de la plataforma, dividiéndose en la construcción de la API RESTful (Backend) y la interfaz de usuario (Frontend).
+
+\subsection{Estructura de carpetas}
+
+\subsubsection{Frontend}
+
+\subsubsection{Backend (API REST)}
+El backend está desarrollado en Java con Spring Boot, estructurado bajo una arquitectura modular orientada al dominio. Cada módulo agrupa las capas de aplicación (casos de uso), dominio (modelos) e infraestructura (controladores, repositorios y clientes externos).
+
+\begin{lstlisting}[language=bash, basicstyle=\ttfamily\footnotesize, breaklines=true, frame=single, showstringspaces=false, extendedchars=true]
+src/main/java/com/fairies/api/proyecto/
+|-- Application.java
+|-- common
+|   |-- application
+|   |   `-- security      # Interfaces y contratos.
+|   |-- domain
+|   |   `-- service       # Contratos de servicios de almacenamiento
+|   `-- infrastructure
+|       |-- config        # Configuraciones generales y OpenAPI/Swagger
+|       |-- rest          # Manejo global de excepciones y DTOs comunes
+|       |-- security      # Filtros JWT y cifrado BCrypt
+|       `-- service       # Implementación de Cloudinary
+`-- modules/              # Módulos del sistema
+   |-- auth/              # Autenticación y registro (Login/Sign-up)
+   |-- author/            # Gestión de autores
+   |-- badge              # Gestión de insignias
+   |-- book               # Catálogo de libros
+   |   `-- infrastructure
+   |       `-- client     # Consumo de API externa (OpenLibrary)
+   |-- Curiosityradar     # Recomendador aleatorio de curiosidades
+   |-- format             # Gestión de formatos de lectura
+   |-- gamification       # Asignación de insignias al usuario
+   |-- gender             # Gestión géneros literarios
+   |-- library            # Biblioteca personal y notas de lectura
+   |-- mailbox            # Intercambio de cartas asincronas
+   |-- picture            # Gestión de avatares
+   |-- readingsession     # Sesiones, páginas y tiempo de lectura
+   |-- readingStatus      # Gestión de estados de lectura 
+   |-- recommendation     # Preferencias de lectura
+   |-- reports            # Proyecciones y métricas del dashboard
+   |-- streak             # Control de racha continua y eventos
+   `-- user               # Gestión de usuarios y roles
+\end{lstlisting}
+
+Cada uno de los módulos de negocio mantiene una separación estricta de responsabilidades.
+\begin{itemize}\sloppy
+    \item \textbf{domain/}: Contiene los modelos de entidad (ej. \path{Book}, \path{UserLibrary}) y eventos de dominio (\path{StreakTriggerEvent}).
+    \item \textbf{application/}: Aloja los casos de uso (\textit{Use Cases}) con la lógica de negocio pura (ej. \path{AddReadingSessionUseCase}, \path{AwardBadgeUseCase}).
+    \item \textbf{infrastructure/}: Implementa la persistencia (\path{JPARepository}), controladores REST (\path{Routing}), mappers (\path{MapStruct}) y DTOs de entrada/salida.
+\end{itemize}
+
+
+
+\subsection{Fragmentos de código clave}
+
+\subsubsection{Consumo de Servicios e Interfaz (Frontend)}
+
+\subsection{Fragmentos de código clave}
+
+\subsubsection{Consumo de API Externa (\texttt{OpenLibraryClient})}
+El cliente gestiona la petición HTTP a la API de Open Library y procesa la respuesta mediante registros internos para extraer los metadatos esenciales de forma eficiente:
+
+\begin{lstlisting}[language=Java, basicstyle=\ttfamily\footnotesize, breaklines=true, frame=single]
+@Override
+public List<CreateBookRequest> searchExternalBooks(String query) {
+    String url = "https://openlibrary.org/search.json?q=" + query +
+            "&limit=5&fields=title,author_name,isbn,subject,cover_i";
+    List<CreateBookRequest> results = new ArrayList<>();
+    
+    try {
+        var response = restTemplate.getForObject(url, OpenLibraryResponse.class);
+        if (response != null && response.docs() != null) {
+            for (Doc info : response.docs()) {
+                String isbn = (info.isbn() != null && !info.isbn().isEmpty())
+                        ? info.isbn().get(0) : "EXT-" + UUID.randomUUID().toString().substring(0, 8);
+                
+                String cover = info.cover_i() != null ?
+                        "https://covers.openlibrary.org/b/id/" + info.cover_i() + "-M.jpg" : null;
+
+                results.add(new CreateBookRequest(isbn, info.title(), null, null, cover));
+            }
+        }
+    } catch (Exception e) {
+        System.err.println("Error al consumir OpenLibrary API: " + e.getMessage());
+    }
+    return results;
+}
+\end{lstlisting}
+
+\subsubsection{Control y Actualización de Rachas (\texttt{UpdateUserStreakUseCase})}
+Este algoritmo compara la fecha actual con la última actividad registrada para incrementar o reiniciar de forma atómica la racha de lectura del usuario:
+
+\begin{lstlisting}[language=Java, basicstyle=\ttfamily\footnotesize, breaklines=true, frame=single]
+@Transactional(propagation = Propagation.REQUIRES_NEW)
+public void execute(UUID userId) {
+    LocalDate today = dateProvider.getToday();
+    UserStreak streak = userStreakRepository.findByUserId(userId)
+            .orElseGet(() -> createInitialStreak(userId));
+
+    if (streak.getLastActivityDate() == null) {
+        streak.setCurrentStreak(1);
+        streak.setMaxStreak(1);
+    } else if (streak.getLastActivityDate().equals(today)) {
+        return; // Ya registró actividad hoy
+    } else if (streak.getLastActivityDate().equals(today.minusDays(1))) {
+        streak.setCurrentStreak(streak.getCurrentStreak() + 1);
+        if (streak.getCurrentStreak() > streak.getMaxStreak()) {
+            streak.setMaxStreak(streak.getCurrentStreak());
+        }
+    } else {
+        streak.setCurrentStreak(1); // Racha rota
+    }
+
+    streak.setLastActivityDate(today);
+    userStreakRepository.save(streak);
+}
+\end{lstlisting}
+
+\subsubsection{Lógica de Negocio y Progreso (\texttt{AddReadingSessionUseCase})}
+Este componente procesa el avance de páginas y capítulos, evalúa si el libro ha sido completado y dispara de forma asíncrona los eventos para actualizar la racha y otorgar insignias:
+
+\begin{lstlisting}[language=Java, basicstyle=\ttfamily\footnotesize, breaklines=true, frame=single]
+@Transactional
+public ReadingSession execute(UUID userId, UUID libraryId, ReadingSessionRequest request) {
+    UserLibrary userLibrary = libraryRepository.findById(libraryId)
+            .filter(lib -> lib.getUser().getId().equals(userId))
+            .orElseThrow(() -> new ResourceNotFoundException("Library not found."));
+
+    userLibrary.setCurrentPage(userLibrary.getCurrentPage() + request.pagesRead());
+    
+    if (userLibrary.getCurrentPage() >= userLibrary.getTotalPage()) {
+        var completedStatus = readingStatusRepository.findById(3L).orElseThrow();
+        userLibrary.setReadingStatus(completedStatus);
+        userLibrary.setFinishedAt(LocalDate.now());
+    }
+
+    ReadingSession session = sessionRepository.save(ReadingSession.builder()
+            .userLibrary(userLibrary)
+            .date(request.date() != null ? request.date() : LocalDate.now())
+            .secondsRead(request.secondsRead())
+            .pagesRead(request.pagesRead())
+            .build());
+
+    eventPublisher.publishEvent(new StreakTriggerEvent(userId));
+    return session;
+}
+\end{lstlisting}
+
+
+
+\subsection{Evidencia visual}
+
+\subsubsection{Pruebas y Documentación de API (Backend)}
+La correcta funcionalidad de los endpoints del backend se validó a través de herramientas de prueba de peticiones HTTP y la interfaz interactiva de documentación OpenAPI / Swagger UI:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./fotos/swagger/swagger-docs.png}
+    \caption{Documentación de endpoints del backend en Swagger UI.}
+    \label{fig:swagger_docs}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./fotos/swagger/uno.png}
+    \caption{Vista de documentación de 4 recursos del backend en Swagger UI.}
+    \label{fig:swagger_docs}
+\end{figure}
+
+% ==============================================================================
+% ESPACIO RESERVADO PARA EL FRONTEND
+% ==============================================================================
+\subsubsection{Interfaz Gráfica (Frontend)}
+% \begin{figure}[H]
+%     \centering
+%     % \includegraphics[width=0.9\textwidth]{img/vista-dashboard.png}
+%     \caption{Vista principal del tablero de usuario en la aplicación.}
+%     \label{fig:front_dashboard}
+% \end{figure}
+
+\newpage
 
 % ==============================================================================
 % 11. PRUEBAS
