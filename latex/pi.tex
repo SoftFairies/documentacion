@@ -243,24 +243,28 @@ Como se observa en la comparativa, \textbf{LecturaMétrica} se posiciona como un
 \end{itemize}
 
 \subsection{Relación entre teoría y proyecto}
-Ohno
+La elección de las teorías y herramientas descritas en este marco se justifica por su aplicación directa en la construcción y funcionamiento de \textbf{LecturaMétrica}:
+
+\begin{itemize}
+    \item \textbf{Arquitectura Limpia y Desacoplada:} La decisión de separar la interfaz visual (\textit{frontend} con Next.js) de la lógica del servidor (\textit{backend} con Spring Boot) se justifica porque facilita el mantenimiento, la escalabilidad y la organización del código \cite{martin2018, nextjs2025}. Esta separación permite que el navegador del usuario se encargue únicamente de mostrar las pantallas y el temporizador, mientras que el servidor procesa los datos y la seguridad de forma independiente \cite{spring2025}.
+    
+    \item \textbf{Desarrollo del Backend y Comunicación REST:} El uso de Spring Boot en Java resulta ideal para el proyecto porque permite crear de forma rápida controladores REST que se comunican con la aplicación web mediante formato JSON. Gracias a esto, el sistema puede enviar y recibir información sobre el progreso de los libros, perfiles y rachas en tiempo real sin tener que recargar la página completa.
+    
+    \item \textbf{Almacenamiento Relacional con PostgreSQL:} Se eligió una base de datos relacional porque la información del sistema (usuarios, catálogo literario, sesiones de lectura e insignias) se encuentra altamente conectada entre sí \cite{postgres2025}. Utilizar tablas con relaciones e integridad referencial asegura que el cálculo del progreso y el historial de lectura se guarden de manera exacta y sin pérdida de datos.
+    
+    \item \textbf{Consumo de APIs para Reducir el Esfuerzo:} El consumo de la API externa de \textit{Open Library} se relaciona directamente con la solución al problema planteado: evita que el usuario pierda tiempo llenando formularios tediosos a mano, autocompletando al instante las portadas, autores y generos de sus libros.
+    
+    \item \textbf{Teoría de Gamificación en las Funciones del Sistema:} Los conceptos sobre motivación y fomento de hábitos se llevaron a la práctica mediante la programación del cálculo de rachas continuas (\textit{streaks}) y la creación del "Buzón del Lector".
+\end{itemize}
 
 \subsection{Referencias académicas y técnicas}
+Para la construcción del marco teórico y la justificación de las decisiones arquitectónicas de \textbf{LecturaMétrica}, se consultaron diversas fuentes de rigor científico, estadístico y técnico, las cuales se encuentran desglosadas con sus respectivos enlaces y datos de publicación en la sección general de \textbf{Referencias} al final del presente documento.
+
+De manera conceptual, el soporte bibliográfico que fundamenta este proyecto se divide en tres ejes principales:
 \begin{itemize}
-	\item \textbf{INEGI.} (2025). \textit{Módulo sobre Lectura (MOLEC)}. \\
-	Enlace: \url{https://share.google/oSIT0jhQy8hLjdmqe}
-	
-	\item \textbf{Dialnet.} (2024). \textit{Factores que afectan el hábito de la lectura: un problema de la sociedad actual}. \\
-	Enlace: \url{https://share.google/RAG5lluZnsl7iiICb}
-	
-	\item \textbf{Revista OCNOS.} (2009). \textit{Aunque lea poco, yo sé que estoy listo}. \\
-	Enlace: \url{https://share.google/1MDzQisS2FaRMtEf9}
-	
-	\item \textbf{E-Ciencias de la Información.} (2020). \textit{Hábitos de lectura en alumnos de primer ingreso de psicología educativa de la Universidad Pedagógica Nacional (UPN), México}. Vol. 10, N° 1. \\
-	Enlace: \url{https://www.scielo.sa.cr/scielo.php?script=sci_arttext&pid=S1659-41422020000100231}
-	
-	\item \textbf{RIDE. Revista Iberoamericana para la Investigación y Desarrollo Educativo.} (2025). \textit{Las creencias de estudiantes de secundaria sobre la lectura}. Vol. 15, N° 30. \\
-	Enlace: \url{https://www.scielo.org.mx/scielo.php?script=sci_arttext&pid=S2007-74672025000100135}
+    \item \textbf{Fundamentación técnica y de ingeniería de software:} Se utilizó literatura especializada en metodologías de desarrollo y arquitectura de sistemas \cite{sommerville2016, martin2018}, así como la documentación oficial del framework de \textit{back-end} \cite{spring2025}, la plataforma \textit{front-end} \cite{nextjs2025} y el motor de base de datos relacional \cite{postgres2025}.
+    \item \textbf{Fundamentación socioeducativa y estadística:} Para sustentar la problemática del hábito lector y justificar la necesidad de la gamificación y el "Buzón del Lector", se tomaron como base los informes oficiales del Módulo sobre Lectura \cite{inegi2025} y diversas investigaciones académicas sobre el comportamiento lector en jóvenes y universitarios \cite{dialnet2024, ocnos2009, eciencias2020}.
+    \item \textbf{Marco legal y normativo:} Las decisiones sobre la privacidad del usuario, el borrado suave (\textit{soft delete}) y el manejo de derechos de autor se rigen bajo las legislaciones vigentes de protección de datos personales y propiedad intelectual \cite{lfpdppp, lfda2026, chiapas2017}.
 \end{itemize}
 
 \newpage
@@ -1256,28 +1260,52 @@ Con la finalidad de dar continuidad al proyecto y potenciar el impacto de la pla
 % REFERENCIAS (MANTENIDAS PARA LA CONSISTENCIA DEL TRABAJO ACADÉMICO)
 % ==============================================================================
 
-\begin{thebibliography}{7}
+\begin{thebibliography}{15}
 
+% --- LEYES AND NORMATIVAS ---
 \bibitem{lfpdppp}
-Cámara de Diputados del H. Congreso de la Unión. (2010). \textit{Ley Federal de Protección de Datos Personales en Posesión de los Particulares}. (LFPDPPP). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf}
+Cámara de Diputados del H. Congreso de la Unión. (2010). \textit{Ley Federal de Protección de Datos Personales en Posesión de los Particulares} (LFPDPPP). Texto vigente. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf}
 
 \bibitem{lfda2026}
-Cámara de Diputados del H. Congreso de la Unión. (2020). \textit{Ley Federal del Derecho de Autor}. (LFDA). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
+Cámara de Diputados del H. Congreso de la Unión. (2020). \textit{Ley Federal del Derecho de Autor} (LFDA). Texto vigente. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
 
 \bibitem{chiapas2017}
 Congreso del Estado de Chiapas. (2017). \textit{Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Chiapas}. Periódico Oficial del Estado. \url{https://www.asechiapas.gob.mx/download/leyes/LEY_PROTECCION_DATOS_PERSONALES.pdf}
 
-\bibitem{lfda2026_oficial}  %
+\bibitem{lfda2026_oficial}
 Ley Federal del Derecho de Autor. (2026). \textit{Diario Oficial de la Federación}. Última reforma publicada el 14 de mayo de 2026. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
 
-\bibitem{oracle2024}
-Oracle. (2024). \textit{MySQL Documentation}. \url{https://dev.mysql.com/doc/}
-
+% --- INGENIERÍA DE SOFTWARE Y TECNOLOGÍAS ---
 \bibitem{sommerville2016}
 Sommerville, I. (2016). \textit{Ingeniería de software} (10a ed.). Pearson.
 
+\bibitem{martin2018}
+Martin, R. C. (2018). \textit{Clean Architecture: A Craftsman's Guide to Software Structure and Design}. Prentice Hall.
+
 \bibitem{spring2025}
 Spring Framework Team. (2025). \textit{Spring Boot Reference Documentation}. Core Software Press. \url{https://spring.io/projects/spring-boot}
+
+\bibitem{nextjs2025}
+Vercel. (2025). \textit{Next.js Documentation: Building Your Application}. Vercel Inc. \url{https://nextjs.docs/docs}
+
+\bibitem{postgres2025}
+The PostgreSQL Global Development Group. (2025). \textit{PostgreSQL 16 Official Documentation}. \url{https://www.postgresql.org/docs/16/index.html}
+
+% --- ESTADÍSTICAS Y ARTÍCULOS SOCIOEDUCATIVOS ---
+\bibitem{inegi2025}
+Instituto Nacional de Estadística y Geografía (INEGI). (2025). \textit{Módulo sobre Lectura (MOLEC)}. \url{https://share.google/oSIT0jhQy8hLjdmqe}
+
+\bibitem{dialnet2024}
+Dialnet. (2024). \textit{Factores que afectan el hábito de la lectura: un problema de la sociedad actual}. \url{https://share.google/RAG5lluZnsl7iiICb}
+
+\bibitem{ocnos2009}
+Revista OCNOS. (2009). \textit{Aunque lea poco, yo sé que estoy listo}. \url{https://share.google/1MDzQisS2FaRMtEf9}
+
+\bibitem{eciencias2020}
+E-Ciencias de la Información. (2020). \textit{Hábitos de lectura en alumnos de primer ingreso de psicología educativa de la Universidad Pedagógica Nacional (UPN), México}. Vol. 10, N° 1. \url{https://www.scielo.sa.cr/scielo.php?script=sci_arttext&pid=S1659-41422020000100231}
+
+\bibitem{ride2025}
+RIDE. Revista Iberoamericana para la Investigación y Desarrollo Educativo. (2025). \textit{Las creencias de estudiantes de secundaria sobre la lectura}. Vol. 15, N° 30. \url{https://www.scielo.org.mx/scielo.php?script=sci_arttext&pid=S2007-74672025000100135}
 
 \end{thebibliography}
 
