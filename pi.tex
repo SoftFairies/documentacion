@@ -14,6 +14,7 @@
 \usepackage{titlesec}
 \usepackage{hyperref}
 \usepackage{caption}
+\usepackage{float}
 
 % --- Paquete para sangría francesa en Referencias (APA) ---
 \newenvironment{hangparas}[2]{\setlength{\parindent}{-#1}\setlength{\leftmargin}{#1}\everypar{\hangindent=#1}}{\par}
@@ -393,7 +394,7 @@ La estructura funcional se organiza en cinco módulos principales que encapsulan
 
 \subsection{Modelo de datos preliminar (modelo ER)}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{bd.png}
 	\caption{Modelo de datos preliminar (Modelo Entidad-Relación).}
@@ -406,164 +407,71 @@ A continuación, se detalla la estructura y propósito de cada una de las tablas
 
 \paragraph{1. Tabla: \texttt{users}}
 Almacena la información principal de los usuarios registrados.
-\begin{itemize}
-	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador único del usuario.
-	\item \textbf{name} (\texttt{varchar}): Nombre del usuario.
-	\item \textbf{lastname} (\texttt{varchar}): Apellido del usuario.
-	\item \textbf{email} (\texttt{varchar}): Correo electrónico.
-	\item \textbf{password} (\texttt{varchar}): Contraseña del usuario.
-	\item \textbf{annual\_goal} (\texttt{int4}): Meta anual de lectura establecida por el usuario.
-	\item \textbf{picture\_id} (\texttt{int8}, Foreign Key): Referencia a la foto de perfil en \texttt{pictures}.
-	\item \textbf{role\_id} (\texttt{uuid}, Foreign Key): Referencia al rol en \texttt{roles}.
-	\item \textbf{deleted} (\texttt{bool}) / \textbf{deleted\_at} (\texttt{timestamp}): Control de borrado lógico.
-\end{itemize}
+
 
 \paragraph{2. Tabla: \texttt{roles}}
 Define los roles y permisos del sistema.
-\begin{itemize}
-	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador del rol.
-	\item \textbf{name} (\texttt{varchar}): Nombre del rol.
-\end{itemize}
 
 \paragraph{3. Tabla: \texttt{books}}
 Contiene el catálogo general de libros y obras.
-\begin{itemize}
-	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador del libro.
-	\item \textbf{title} (\texttt{varchar}): Título de la obra.
-	\item \textbf{isbn} (\texttt{varchar}): Código ISBN del libro.
-	\item \textbf{cover} (\texttt{varchar}): Ruta o enlace de la portada del libro.
-	\item \textbf{created\_at} / \textbf{updated\_at} (\texttt{timestamp}): Marcas de tiempo de creación y actualización.
-	\item \textbf{deleted} (\texttt{bool}) / \textbf{deleted\_at} (\texttt{timestamp}): Registro de borrado lógico.
-\end{itemize}
+
 
 \paragraph{4. Tabla: \texttt{authors}}
 Almacena el registro de autores.
-\begin{itemize}
-	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador único del autor.
-	\item \textbf{name} (\texttt{varchar}): Nombre del autor.
-	\item \textbf{description} (\texttt{varchar}): Biografía o descripción breve.
-	\item \textbf{created\_at}, \textbf{updated\_at}, \textbf{deleted}, \textbf{deleted\_at}: Control de metadatos y borrado.
-\end{itemize}
 
 \paragraph{5. Tabla: \texttt{book\_authors}}
 Tabla intermedia que gestiona la relación muchos a muchos entre libros y autores.
-\begin{itemize}
-	\item \textbf{book\_id} (\texttt{uuid}, Foreign Key): Referencia a \texttt{books}.
-	\item \textbf{author\_id} (\texttt{int8}, Foreign Key): Referencia a \texttt{authors}.
-\end{itemize}
 
 \paragraph{6. Tabla: \texttt{genders}}
 Contiene los géneros o categorías literarias.
-\begin{itemize}
-	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador del género.
-	\item \textbf{name} (\texttt{varchar}): Nombre del género.
-	\item \textbf{description} (\texttt{varchar}): Descripción del género.
-\end{itemize}
 
 \paragraph{7. Tabla: \texttt{book\_genres}}
 Relaciona los libros con sus respectivos géneros literarios.
-\begin{itemize}
-	\item \textbf{book\_id} (\texttt{uuid}, Foreign Key): Referencia a \texttt{books}.
-	\item \textbf{gender\_id} (\texttt{int8}, Foreign Key): Referencia a \texttt{genders}.
-\end{itemize}
 
 \paragraph{8. Tabla: \texttt{formats}}
-Registra los diferentes formatos disponibles para la lectura (ej. físico, digital, audiolibro).
-\begin{itemize}
-	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador del formato.
-	\item \textbf{name} (\texttt{varchar}): Nombre del formato.
-	\item \textbf{description} (\texttt{varchar}): Descripción breve del formato.
-\end{itemize}
+Registra los diferentes formatos disponibles para la lectura (ej. físico, digital).
+
 
 \paragraph{9. Tabla: \texttt{reading\_status}}
 Define los estados posibles del progreso de lectura (ej. por leer, en curso, finalizado).
-\begin{itemize}
-	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador del estado.
-	\item \textbf{name} (\texttt{varchar}): Nombre del estado.
-	\item \textbf{description} (\texttt{varchar}): Descripción del estado.
-\end{itemize}
 
 \paragraph{10. Tabla: \texttt{user\_library}}
 Lleva el control de la biblioteca personal de cada usuario y su progreso de lectura.
-\begin{itemize}
-	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador de la entrada en la biblioteca.
-	\item \textbf{user\_id} (\texttt{uuid}, Foreign Key): Referencia al usuario.
-	\item \textbf{book\_id} (\texttt{uuid}, Foreign Key): Referencia al libro.
-	\item \textbf{format\_id} (\texttt{int8}, Foreign Key): Formato de la obra.
-	\item \textbf{reading\_status\_id} (\texttt{int8}, Foreign Key): Estado actual de la lectura.
-	\item \textbf{current\_page} (\texttt{int4}) / \textbf{total\_page} (\texttt{int4}): Control de páginas leídas y totales.
-	\item \textbf{current\_chapter} (\texttt{int4}) / \textbf{total\_chapter} (\texttt{int4}): Control de capítulos.
-	\item \textbf{is\_favorite} (\texttt{bool}): Indicador de si el libro está marcado como favorito.
-	\item \textbf{finished\_at} (\texttt{date}): Fecha de finalización del libro.
-\end{itemize}
 
 \paragraph{11. Tabla: \texttt{library\_notes}}
 Guarda notas o apuntes tomados por el usuario durante la lectura.
-\begin{itemize}
-	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador de la nota.
-	\item \textbf{user\_library\_id} (\texttt{uuid}, Foreign Key): Registro de la biblioteca al que pertenece la nota.
-	\item \textbf{chapter} (\texttt{int4}) / \textbf{page} (\texttt{int4}): Capítulo o página referenciada.
-	\item \textbf{content} (\texttt{text}): Contenido en texto de la nota.
-	\item \textbf{created\_at} (\texttt{timestamp}): Fecha y hora de creación.
-\end{itemize}
 
 \paragraph{12. Tabla: \texttt{reading\_sessions}}
 Registra las sesiones individuales de lectura para generar métricas de tiempo y avance.
-\begin{itemize}
-	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador de la sesión.
-	\item \textbf{user\_library\_id} (\texttt{uuid}, Foreign Key): Libro/registro en lectura asociado.
-	\item \textbf{pages\_read} (\texttt{int4}) / \textbf{chapters\_read} (\texttt{int4}): Cantidad leída durante la sesión.
-	\item \textbf{seconds\_read} (\texttt{int4}): Duración total de la sesión en segundos.
-	\item \textbf{date} (\texttt{date}): Fecha en que se llevó a cabo.
-	\item \textbf{is\_flagged} (\texttt{bool}) / \textbf{flag\_reason} (\texttt{varchar}): Sistema de reporte/alerta de la sesión.
-\end{itemize}
 
 \paragraph{13. Tabla: \texttt{badges}}
 Catálogo de insignias o reconocimientos.
-\begin{itemize}
-	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador de la insignia.
-	\item \textbf{name} (\texttt{varchar}): Nombre de la insignia.
-	\item \textbf{description} (\texttt{varchar}): Criterios o descripción.
-	\item \textbf{public\_id} (\texttt{varchar}) / \textbf{url} (\texttt{varchar}): Imagen asociada a la insignia.
-\end{itemize}
 
 \paragraph{14. Tabla: \texttt{user\_badges}}
 Relaciona a los usuarios con las insignias que han obtenido.
-\begin{itemize}
-	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador del logro.
-	\item \textbf{user\_id} (\texttt{uuid}, Foreign Key): Usuario beneficiario.
-	\item \textbf{badge\_id} (\texttt{int8}, Foreign Key): Insignia otorgada.
-	\item \textbf{created\_at} (\texttt{timestamp}): Fecha de obtención.
-\end{itemize}
 
 \paragraph{15. Tabla: \texttt{user\_streaks}}
 Monitorea las rachas continuas de lectura activa de los usuarios.
-\begin{itemize}
-	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador de la racha.
-	\item \textbf{user\_id} (\texttt{uuid}, Foreign Key): Usuario al que pertenece.
-	\item \textbf{current\_streak} (\texttt{int4}): Días seguidos actuales de lectura.
-	\item \textbf{max\_streak} (\texttt{int4}): Racha máxima histórica alcanzada.
-	\item \textbf{last\_activity\_date} (\texttt{date}): Último día registrado.
-\end{itemize}
 
 \paragraph{16. Tablas de preferencias (\texttt{user\_pref\_formats} y \texttt{user\_pref\_genres})}
 Almacenan los formatos e intereses literarios favoritos del usuario para personalización.
-\begin{itemize}
-	\item \textbf{user\_pref\_formats}: Asocia un `user\_preference\_id` con un `formats\_id`.
-	\item \textbf{user\_pref\_genres}: Asocia un `user\_preference\_id` con un `genres\_id`.
-\end{itemize}
 
 \paragraph{17. Tablas de interacción y comunidad (\texttt{recommendations}, \texttt{recommendation\_contents}, \texttt{letters}, \texttt{curiosities}, \texttt{pictures})}
 Módulos complementarios para dinamizar la experiencia del usuario dentro de la plataforma:
-\begin{itemize}
-	\item \textbf{recommendations} y \textbf{recommendation\_contents}: Gestión de recomendaciones de libros compartidas entre usuarios.
-	\item \textbf{letters}: Envío de mensajes o cartas virtuales entre receptores y emisores dentro de la aplicación.
-	\item \textbf{curiosities}: Datos curiosos o hechos literarios destacados.
-	\item \textbf{pictures}: Almacenamiento de archivos multimedia e imágenes públicas.
-\end{itemize}
 
 \subsection{Reglas del negocio}
-% Condiciones lógicas o restricciones de negocio
+Las reglas del negocio definen las condiciones lógicas, restricciones y políticas operativas que debe validar y hacer cumplir de manera estricta para asegurar la integridad de los datos y el correcto comportamiento del sistema:
+
+\begin{itemize}
+	\item \textbf{RN-01:} Toda obra agregada al catálogo debe asociarse obligatoriamente a un único formato principal (Libro, Manga, Manhwa, Cómic o Novela Gráfica).
+	\item \textbf{RN-02:} La extensión total de una obra (expresada en páginas o capítulos) debe ser un número entero mayor a cero.
+	\item \textbf{RN-03:} El progreso de lectura registrado por el usuario no puede exceder la extensión total definida para la obra ($0 \le \textit{Progreso Actual} \le \textit{Progreso Total}$).
+	\item \textbf{RN-04:} Cuando el progreso actual alcance exactamente la extensión total de la obra (equivalente al 100\%), el estado de la lectura debe actualizarse automáticamente a \textit{Completado}.
+	\item \textbf{RN-05:} Se considera que un día computa para la contabilización de la racha (\textit{streak}) si el usuario registra un incremento en el progreso de lectura mayor a cero dentro de dicho período.
+	\item \textbf{RN-06:} Unicidad de credenciales: no pueden existir dos cuentas de usuario registradas con el mismo correo electrónico en la base de datos.
+	\item \textbf{RN-07:} En caso de que un usuario ejecute la eliminación de su cuenta, el sistema debe efectuar un borrado en cascada de todas sus sesiones de lectura y notas asociadas, garantizando la privacidad de los datos y la integridad referencial.
+	\item \textbf{RN-08:} Si una obra se clasifica bajo el estado \textit{Abandonado}, el sistema mantendrá y conservará el registro histórico del progreso alcanzado hasta ese momento.
+\end{itemize}
 
 \newpage
 
@@ -576,8 +484,346 @@ Módulos complementarios para dinamizar la experiencia del usuario dentro de la 
 % Descripción de capas (Presentation, Business, Data)
 
 \subsection{Diseño de base de datos}
-% Esquema relacional, llaves, tipos de datos
+A continuación, se define la estructura técnica detallada de cada una de las tablas del modelo relacional, especificando el tipo de dato, las restricciones y las llaves correspondientes (PK = Primary Key, FK = Foreign Key):
 
+\paragraph{1. Tabla: \texttt{users}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador único del usuario. \\ \hline
+		name & VARCHAR & - & Nombre del usuario. \\ \hline
+		lastname & VARCHAR & - & Apellido del usuario. \\ \hline
+		email & VARCHAR & UNIQUE & Correo electrónico único. \\ \hline
+		password & VARCHAR & - & Hash de la contraseña. \\ \hline
+		annual\_goal & INT4 & - & Meta anual de lectura. \\ \hline
+		picture\_id & INT8 & FK & Referencia a \texttt{pictures(id)}. \\ \hline
+		role\_id & UUID & FK & Referencia a \texttt{roles(id)}. \\ \hline
+		deleted & BOOL & - & Estado de borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha/hora de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{users}.}
+\end{table}
+
+\paragraph{2. Tabla: \texttt{roles}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador único del rol. \\ \hline
+		name & VARCHAR & - & Nombre del rol (ej. Lector, Admin). \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{roles}.}
+\end{table}
+
+\paragraph{3. Tabla: \texttt{books}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador único de la obra. \\ \hline
+		title & VARCHAR & - & Título del libro. \\ \hline
+		isbn & VARCHAR & - & Código de identificación ISBN. \\ \hline
+		cover & VARCHAR & - & URL o ruta de la portada. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{books}.}
+\end{table}
+
+\paragraph{4. Tabla: \texttt{authors}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador único del autor. \\ \hline
+		name & VARCHAR & - & Nombre completo del autor. \\ \hline
+		description & VARCHAR & - & Biografía breve. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{authors}.}
+\end{table}
+
+\paragraph{5. Tabla: \texttt{book\_authors}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		book\_id & UUID & PK, FK & Referencia a \texttt{books(id)}. \\ \hline
+		author\_id & INT8 & PK, FK & Referencia a \texttt{authors(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla intermedia \texttt{book\_authors}.}
+\end{table}
+
+\paragraph{6. Tabla: \texttt{genders}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador del género. \\ \hline
+		name & VARCHAR & - & Nombre del género literario. \\ \hline
+		description & VARCHAR & - & Descripción del género. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{genders}.}
+\end{table}
+
+\paragraph{7. Tabla: \texttt{book\_genres}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		book\_id & UUID & PK, FK & Referencia a \texttt{books(id)}. \\ \hline
+		gender\_id & INT8 & PK, FK & Referencia a \texttt{genders(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla intermedia \texttt{book\_genres}.}
+\end{table}
+
+\paragraph{8. Tabla: \texttt{formats}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador único del formato. \\ \hline
+		name & VARCHAR & - & Nombre del formato (físico, digital, etc.). \\ \hline
+		description & VARCHAR & - & Descripción del formato. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{formats}.}
+\end{table}
+
+\paragraph{9. Tabla: \texttt{reading\_status}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador del estado de lectura. \\ \hline
+		name & VARCHAR & - & Nombre del estado (ej. leyendo, por leer). \\ \hline
+		description & VARCHAR & - & Descripción breve del estado. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{reading\_status}.}
+\end{table}
+
+\paragraph{10. Tabla: \texttt{user\_library}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador único del registro. \\ \hline
+		user\_id & UUID & FK & Referencia a \texttt{users(id)}. \\ \hline
+		book\_id & UUID & FK & Referencia a \texttt{books(id)}. \\ \hline
+		format\_id & INT8 & FK & Referencia a \texttt{formats(id)}. \\ \hline
+		reading\_status\_id & INT8 & FK & Referencia a \texttt{reading\_status(id)}. \\ \hline
+		current\_page & INT4 & - & Página actual. \\ \hline
+		total\_page & INT4 & - & Total de páginas del libro. \\ \hline
+		current\_chapter & INT4 & - & Capítulo actual. \\ \hline
+		total\_chapter & INT4 & - & Total de capítulos. \\ \hline
+		is\_favorite & BOOL & - & Indicador de favorito. \\ \hline
+		finished\_at & DATE & - & Fecha en que se finalizó. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{user\_library}.}
+\end{table}
+
+\paragraph{11. Tabla: \texttt{library\_notes}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador de la nota. \\ \hline
+		user\_library\_id & UUID & FK & Referencia a \texttt{user\_library(id)}. \\ \hline
+		chapter & INT4 & - & Capítulo referenciado. \\ \hline
+		page & INT4 & - & Página referenciada. \\ \hline
+		content & TEXT & - & Contenido de la nota. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{library\_notes}.}
+\end{table}
+
+\paragraph{12. Tabla: \texttt{reading\_sessions}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador de la sesión de lectura. \\ \hline
+		user\_library\_id & UUID & FK & Referencia a \texttt{user\_library(id)}. \\ \hline
+		pages\_read & INT4 & - & Páginas leídas en la sesión. \\ \hline
+		chapters\_read & INT4 & - & Capítulos leídos en la sesión. \\ \hline
+		seconds\_read & INT4 & - & Duración en segundos. \\ \hline
+		date & DATE & - & Fecha de la sesión. \\ \hline
+		is\_flagged & BOOL & - & Indicador de anomalía/alerta. \\ \hline
+		flag\_reason & VARCHAR & - & Motivo del reporte/alerta. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{reading\_sessions}.}
+\end{table}
+
+\paragraph{13. Tabla: \texttt{badges}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador de la insignia. \\ \hline
+		name & VARCHAR & - & Nombre del logro/insignia. \\ \hline
+		description & VARCHAR & - & Descripción de la insignia. \\ \hline
+		public\_id & VARCHAR & - & ID público del recurso gráfico. \\ \hline
+		url & VARCHAR & - & URL de la imagen de la insignia. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{badges}.}
+\end{table}
+
+\paragraph{14. Tabla: \texttt{user\_badges}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador del registro. \\ \hline
+		user\_id & UUID & FK & Referencia a \texttt{users(id)}. \\ \hline
+		badge\_id & INT8 & FK & Referencia a \texttt{badges(id)}. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha en que se obtuvo la insignia. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{user\_badges}.}
+\end{table}
+
+\paragraph{15. Tabla: \texttt{user\_streaks}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador de la racha. \\ \hline
+		user\_id & UUID & FK & Referencia a \texttt{users(id)}. \\ \hline
+		current\_streak & INT4 & - & Racha actual de días consecutivos. \\ \hline
+		max\_streak & INT4 & - & Racha máxima alcanzada. \\ \hline
+		last\_activity\_date & DATE & - & Fecha de última actividad registrada. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{user\_streaks}.}
+\end{table}
+
+\paragraph{16. Tabla: \texttt{user\_pref\_formats}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		user\_preference\_id & UUID & PK, FK & Identificador de preferencia. \\ \hline
+		formats\_id & INT8 & PK, FK & Referencia a \texttt{formats(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{user\_pref\_formats}.}
+\end{table}
+
+\paragraph{17. Tabla: \texttt{user\_pref\_genres}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		user\_preference\_id & UUID & PK, FK & Identificador de preferencia. \\ \hline
+		genres\_id & INT8 & PK, FK & Referencia a \texttt{genders(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{user\_pref\_genres}.}
+\end{table}
+
+\paragraph{18. Tabla: \texttt{recommendations}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador de la recomendación. \\ \hline
+		user\_id & UUID & FK & Referencia a \texttt{users(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{recommendations}.}
+\end{table}
+
+\paragraph{19. Tabla: \texttt{recommendation\_contents}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador del contenido. \\ \hline
+		content & VARCHAR & - & Texto del contenido. \\ \hline
+		sender\_id & UUID & FK & Referencia al remitente \texttt{users(id)}. \\ \hline
+		book\_id & UUID & FK & Referencia a \texttt{books(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{recommendation\_contents}.}
+\end{table}
+
+\paragraph{20. Tabla: \texttt{letters}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador de la carta. \\ \hline
+		receiver\_id & UUID & FK & Referencia al destinatario \texttt{users(id)}. \\ \hline
+		recommendation\_content\_id & INT8 & FK & Referencia a \texttt{recommendation\_contents(id)}. \\ \hline
+		claimed\_at & TIMESTAMP & - & Fecha de reclamo o recepción. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{letters}.}
+\end{table}
+
+\paragraph{21. Tabla: \texttt{curiosities}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador de la curiosidad. \\ \hline
+		title & VARCHAR & - & Título del dato curioso. \\ \hline
+		fact & TEXT & - & Explicación o hecho curioso. \\ \hline
+		genre & VARCHAR & - & Género asociado. \\ \hline
+		book\_reference & VARCHAR & - & Referencia al libro. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{curiosities}.}
+\end{table}
+
+\paragraph{22. Tabla: \texttt{pictures}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador de la imagen. \\ \hline
+		name & VARCHAR & - & Nombre del archivo. \\ \hline
+		description & VARCHAR & - & Descripción de la imagen. \\ \hline
+		public\_id & VARCHAR & - & Identificador público del hosting. \\ \hline
+		url & VARCHAR & - & Enlace directo a la imagen. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{pictures}.}
+\end{table}
 \subsection{Diseño del backend}
 
 El diseño del servidor de \textbf{LecturaMétrica} se fundamenta en los principios de la Arquitectura Limpia (\textit{Clean Architecture}) y el Desarrollo Guiado por el Dominio (\textit{Domain-Driven Design, DDD}). Esta decisión arquitectónica se tomó para desacoplar completamente la lógica central del negocio de las dependencias externas (como bases de datos, frameworks web y servicios de terceros), garantizando así un sistema escalable, mantenible y altamente testeable
