@@ -987,7 +987,47 @@ En esta sección se describen los escenarios de prueba ejecutados sobre el siste
 \end{table}
 
 \subsection{Métodos de validación}
-% Descripción de herramientas (JUnit, Postman)
+Para garantizar el correcto funcionamiento del sistema, la integridad de los datos, se emplearon las siguientes herramientas de validación y pruebas:
+
+\begin{itemize}
+	\item \textbf{Postman e insomnia:} Empleado para la validación y consumo de las APIs RESTful, verificando los estados HTTP de respuesta, la estructura JSON, los tiempos de latencia y la seguridad en los \textit{endpoints}.
+\end{itemize}
+
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabular}{|c|l|p{3.5cm}|p{3.5cm}|p{3.5cm}|c|}
+		\hline
+		\textbf{ID} & \textbf{Módulo} & \textbf{Caso de Prueba} & \textbf{Acción / Entrada} & \textbf{Resultado Esperado} & \textbf{Resultado} \\ \hline
+		
+		\textbf{CP-01} & Lectura & 
+		Registro de sesión de lectura con cronómetro. & 
+		Seleccionar obra, iniciar cronómetro (4 min), sumar 2 páginas y guardar. & 
+		Guarda la sesión, incrementa el tiempo total en estadísticas y actualiza la racha diaria. & 
+		\textbf{Exitoso} \\ \hline
+		
+		\textbf{CP-02} & Biblioteca & 
+		Filtrado dinámico por estado de obra. & 
+		Hacer clic en la pestaña "Terminado" en  \texttt{/biblioteca}. & 
+		La vista filtra dinámicamente mostrando únicamente las obras completadas & 
+		\textbf{Exitoso} \\ \hline
+		
+		\textbf{CP-03} & Buzón & 
+		Envío de carta de recomendación anónima. & 
+		Seleccionar libro, redactar opinión y presionar "Enviar carta". & 
+		Transmite la carta al buzón general de manera anónima y activa la \textit{racha} de 24 horas. & 
+		\textbf{Exitoso} \\ \hline
+		
+		\textbf{CP-04} & Estadísticas & 
+		Cálculo de progreso de meta anual. & 
+		Completar tantos libros con una meta configurada de cierta cantidad de libros. & 
+		Actualiza la barra de progreso el \% y muestra "x libros restantes". & 
+		\textbf{Exitoso} \\ \hline
+		
+	\end{tabular}
+	\caption{Matriz de pruebas funcionales y de validación del sistema.}
+	\label{tab:casos_prueba}
+\end{table}
 
 \newpage
 
@@ -997,7 +1037,19 @@ En esta sección se describen los escenarios de prueba ejecutados sobre el siste
 \section{Resultados}
 
 \subsection{Indicadores de éxito}
-% Funcionalidad, cumplimiento de objetivos
+Se cumplió con los requerimientos funcionales y objetivos core establecidos para el proyecto, logrando integrar la gestión multiformato de lecturas con mecánicas de gamificación.
+
+\begin{itemize}
+	\item \textbf{Gestión Multiformato Integrada:} El sistema permite catalogar y dar seguimiento preciso a obras en formatos de Libro Tradicional, Manga, Webtoon y Novela Gráfica, adaptando las unidades de avance (páginas y capítulos) según corresponda.
+	
+	\item \textbf{Sesiones de Lectura Interactivas:} Se implementó exitosamente el cronómetro en tiempo real para sesiones activas, permitiendo el registro incremental de páginas/capítulos leídos junto con notas y acotaciones asociadas a puntos específicos de la obra.
+	
+	\item \textbf{Métricas y Visualización de Datos:} El panel de estadísticas procesa en tiempo real métricas de lectura (minutos totales registrados, páginas/día, hábitos semanales, avance en la meta anual y distribución por estados de biblioteca).
+	
+	\item \textbf{Gamificación y Riqueza de Perfil:} Se logró el cálculo dinámico de rachas de lectura (\textit{streaks}) y la asignación automática de insignias en el perfil del usuario tras alcanzar hitos de lectura.
+	
+	\item \textbf{Interacción Social y Buzón Anónimo:} Se implementó el módulo de intercambio de cartas anónimas con restricción de envío (24 horas) e interacciones dinámicas (\textit{like}, \textit{dislike} y agregar a biblioteca).
+\end{itemize}
 
 \subsection{Retroalimentación de usuarios}
 % Resultados de pruebas con usuarios reales
