@@ -1064,7 +1064,20 @@ Durante las sesiones de prueba con usuarios reales, se recopilaron diversas obse
 \end{itemize}
 
 \subsection{Impacto esperado}
-% Mejora en procesos, eficiencia, etc.
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|p{8.5cm}|p{4.5cm}|}
+		\hline
+		\textbf{Nivel de Impacto} & \textbf{Área de Mejora / Descripción} \\ \hline
+		\textbf{Alto} & Reducción del tiempo de registro manual de obras populares.\\ \hline
+		\textbf{Medio-Alto} & Dinamización del flujo de contenido y participación activa. \\ \hline
+		\textbf{Medio} & Retención de usuarios y fomento de la constancia de lectura. \\ \hline
+		\textbf{Medio} & Sentido de comunidad entre lectores mediante buzón y recomendaciones. \\ \hline
+		\textbf{Bajo} & Generación de información útil para respaldos personales. \\ \hline
+	\end{tabular}
+	\caption{Matriz de impacto esperado por funcionalidad implementada.}
+	\label{tab:impacto_esperado}
+\end{table}
 
 \newpage
 
@@ -1072,7 +1085,33 @@ Durante las sesiones de prueba con usuarios reales, se recopilaron diversas obse
 % 13. CONCLUSIONES
 % ==============================================================================
 \section{Conclusiones}
-% Logros, lecciones aprendidas, relevancia del proyecto
+
+\subsection{Logros alcanzados}
+\begin{description}
+	\item[\textbf{Arquitectura robusta e integración completa:}] 
+	Se construyó una plataforma funcional combinando un backend estructurado en Spring Boot con un frontend responsivo y moderno en Next.js, logrando comunicaciones eficientes mediante APIs REST desplegadas en entornos de producción.
+	
+	\item[\textbf{Consolidación de métricas y gamificación:}] 
+	Se implementó con éxito un motor de estadísticas en tiempo real capaz de procesar rachas de lectura, metas anuales, registros semanales e insignias dinámicas dentro del perfil del usuario.
+\end{description}
+
+\subsection{Lecciones aprendidas}
+\begin{description}
+	\item[\textbf{Modelado de dominio flexible:}] 
+	Diseñar una base de datos preparada para manejar múltiples tipos de obras desde las etapas iniciales evitó refactorizaciones complejas al integrar mangas y webtoons junto con libros convencionales.
+	
+	\item[\textbf{Diseño orientado al feedback del usuario:}] 
+	Las pruebas con usuarios reales demostraron que restricciones muy rígidas pueden limitar la interacción.
+	
+	\item[\textbf{Optimización de despliegues en la nube:}] 
+	Configurar correctamente los entornos de ejecución en servicios de la nube (como Railway y Supabase) permitió identificar rápidamente cuellos de botella en peticiones HTTP e integrar eficientemente servicios de terceros para el manejo de archivos multimedia.
+\end{description}
+
+\subsection{Impacto y reflexión final}
+
+El proyecto demuestra cómo el uso estratégico de la tecnología, las métricas visuales y la gamificación puede transformar una actividad tradicionalmente solitaria en un hábito constante, interactivo y motivador.
+
+LecturaMétrica cobra relevancia al llenar el vacío existente entre los gestores de lectura tradicionales (pensados para libros en formato físico) y la realidad de los lectores modernos, quienes consumen contenido digital en formatos variados. Al combinar el seguimiento de hábitos con dinámicas comunitarias anónimas y la proyección a futuro de espacios de discusión directa (foros y chats), el sistema se posiciona no solo como una herramienta de registro, sino como una plataforma integral para el fomento de la lectura.
 
 \newpage
 
