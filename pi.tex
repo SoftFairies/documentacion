@@ -383,7 +383,7 @@ La estructura funcional se organiza en cinco módulos principales que encapsulan
 
 \begin{figure}[h]
     \centering
-   % \includegraphics[width=1.0\textwidth]{./fotos/uc/image.png}
+   %\includegraphics[width=1.0\textwidth]{./fotos/uc/image.png}
     \caption{Diagrama de casos de uso del sistema LecturaMétrica.}
     \label{fig:casos_de_uso}
 \end{figure}
@@ -392,7 +392,175 @@ La estructura funcional se organiza en cinco módulos principales que encapsulan
 % Describir paso a paso los escenarios principales
 
 \subsection{Modelo de datos preliminar (modelo ER)}
-% Presentar entidad-relación y descripción de tablas
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.0\textwidth]{bd.png}
+	\caption{Modelo de datos preliminar (Modelo Entidad-Relación).}
+	\label{fig:modelo_er}
+\end{figure}
+
+\subsubsection{Descripción del modelo de datos}
+
+A continuación, se detalla la estructura y propósito de cada una de las tablas registradas en el diagrama entidad-relación del sistema:
+
+\paragraph{1. Tabla: \texttt{users}}
+Almacena la información principal de los usuarios registrados.
+\begin{itemize}
+	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador único del usuario.
+	\item \textbf{name} (\texttt{varchar}): Nombre del usuario.
+	\item \textbf{lastname} (\texttt{varchar}): Apellido del usuario.
+	\item \textbf{email} (\texttt{varchar}): Correo electrónico.
+	\item \textbf{password} (\texttt{varchar}): Contraseña del usuario.
+	\item \textbf{annual\_goal} (\texttt{int4}): Meta anual de lectura establecida por el usuario.
+	\item \textbf{picture\_id} (\texttt{int8}, Foreign Key): Referencia a la foto de perfil en \texttt{pictures}.
+	\item \textbf{role\_id} (\texttt{uuid}, Foreign Key): Referencia al rol en \texttt{roles}.
+	\item \textbf{deleted} (\texttt{bool}) / \textbf{deleted\_at} (\texttt{timestamp}): Control de borrado lógico.
+\end{itemize}
+
+\paragraph{2. Tabla: \texttt{roles}}
+Define los roles y permisos del sistema.
+\begin{itemize}
+	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador del rol.
+	\item \textbf{name} (\texttt{varchar}): Nombre del rol.
+\end{itemize}
+
+\paragraph{3. Tabla: \texttt{books}}
+Contiene el catálogo general de libros y obras.
+\begin{itemize}
+	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador del libro.
+	\item \textbf{title} (\texttt{varchar}): Título de la obra.
+	\item \textbf{isbn} (\texttt{varchar}): Código ISBN del libro.
+	\item \textbf{cover} (\texttt{varchar}): Ruta o enlace de la portada del libro.
+	\item \textbf{created\_at} / \textbf{updated\_at} (\texttt{timestamp}): Marcas de tiempo de creación y actualización.
+	\item \textbf{deleted} (\texttt{bool}) / \textbf{deleted\_at} (\texttt{timestamp}): Registro de borrado lógico.
+\end{itemize}
+
+\paragraph{4. Tabla: \texttt{authors}}
+Almacena el registro de autores.
+\begin{itemize}
+	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador único del autor.
+	\item \textbf{name} (\texttt{varchar}): Nombre del autor.
+	\item \textbf{description} (\texttt{varchar}): Biografía o descripción breve.
+	\item \textbf{created\_at}, \textbf{updated\_at}, \textbf{deleted}, \textbf{deleted\_at}: Control de metadatos y borrado.
+\end{itemize}
+
+\paragraph{5. Tabla: \texttt{book\_authors}}
+Tabla intermedia que gestiona la relación muchos a muchos entre libros y autores.
+\begin{itemize}
+	\item \textbf{book\_id} (\texttt{uuid}, Foreign Key): Referencia a \texttt{books}.
+	\item \textbf{author\_id} (\texttt{int8}, Foreign Key): Referencia a \texttt{authors}.
+\end{itemize}
+
+\paragraph{6. Tabla: \texttt{genders}}
+Contiene los géneros o categorías literarias.
+\begin{itemize}
+	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador del género.
+	\item \textbf{name} (\texttt{varchar}): Nombre del género.
+	\item \textbf{description} (\texttt{varchar}): Descripción del género.
+\end{itemize}
+
+\paragraph{7. Tabla: \texttt{book\_genres}}
+Relaciona los libros con sus respectivos géneros literarios.
+\begin{itemize}
+	\item \textbf{book\_id} (\texttt{uuid}, Foreign Key): Referencia a \texttt{books}.
+	\item \textbf{gender\_id} (\texttt{int8}, Foreign Key): Referencia a \texttt{genders}.
+\end{itemize}
+
+\paragraph{8. Tabla: \texttt{formats}}
+Registra los diferentes formatos disponibles para la lectura (ej. físico, digital, audiolibro).
+\begin{itemize}
+	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador del formato.
+	\item \textbf{name} (\texttt{varchar}): Nombre del formato.
+	\item \textbf{description} (\texttt{varchar}): Descripción breve del formato.
+\end{itemize}
+
+\paragraph{9. Tabla: \texttt{reading\_status}}
+Define los estados posibles del progreso de lectura (ej. por leer, en curso, finalizado).
+\begin{itemize}
+	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador del estado.
+	\item \textbf{name} (\texttt{varchar}): Nombre del estado.
+	\item \textbf{description} (\texttt{varchar}): Descripción del estado.
+\end{itemize}
+
+\paragraph{10. Tabla: \texttt{user\_library}}
+Lleva el control de la biblioteca personal de cada usuario y su progreso de lectura.
+\begin{itemize}
+	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador de la entrada en la biblioteca.
+	\item \textbf{user\_id} (\texttt{uuid}, Foreign Key): Referencia al usuario.
+	\item \textbf{book\_id} (\texttt{uuid}, Foreign Key): Referencia al libro.
+	\item \textbf{format\_id} (\texttt{int8}, Foreign Key): Formato de la obra.
+	\item \textbf{reading\_status\_id} (\texttt{int8}, Foreign Key): Estado actual de la lectura.
+	\item \textbf{current\_page} (\texttt{int4}) / \textbf{total\_page} (\texttt{int4}): Control de páginas leídas y totales.
+	\item \textbf{current\_chapter} (\texttt{int4}) / \textbf{total\_chapter} (\texttt{int4}): Control de capítulos.
+	\item \textbf{is\_favorite} (\texttt{bool}): Indicador de si el libro está marcado como favorito.
+	\item \textbf{finished\_at} (\texttt{date}): Fecha de finalización del libro.
+\end{itemize}
+
+\paragraph{11. Tabla: \texttt{library\_notes}}
+Guarda notas o apuntes tomados por el usuario durante la lectura.
+\begin{itemize}
+	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador de la nota.
+	\item \textbf{user\_library\_id} (\texttt{uuid}, Foreign Key): Registro de la biblioteca al que pertenece la nota.
+	\item \textbf{chapter} (\texttt{int4}) / \textbf{page} (\texttt{int4}): Capítulo o página referenciada.
+	\item \textbf{content} (\texttt{text}): Contenido en texto de la nota.
+	\item \textbf{created\_at} (\texttt{timestamp}): Fecha y hora de creación.
+\end{itemize}
+
+\paragraph{12. Tabla: \texttt{reading\_sessions}}
+Registra las sesiones individuales de lectura para generar métricas de tiempo y avance.
+\begin{itemize}
+	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador de la sesión.
+	\item \textbf{user\_library\_id} (\texttt{uuid}, Foreign Key): Libro/registro en lectura asociado.
+	\item \textbf{pages\_read} (\texttt{int4}) / \textbf{chapters\_read} (\texttt{int4}): Cantidad leída durante la sesión.
+	\item \textbf{seconds\_read} (\texttt{int4}): Duración total de la sesión en segundos.
+	\item \textbf{date} (\texttt{date}): Fecha en que se llevó a cabo.
+	\item \textbf{is\_flagged} (\texttt{bool}) / \textbf{flag\_reason} (\texttt{varchar}): Sistema de reporte/alerta de la sesión.
+\end{itemize}
+
+\paragraph{13. Tabla: \texttt{badges}}
+Catálogo de insignias o reconocimientos.
+\begin{itemize}
+	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador de la insignia.
+	\item \textbf{name} (\texttt{varchar}): Nombre de la insignia.
+	\item \textbf{description} (\texttt{varchar}): Criterios o descripción.
+	\item \textbf{public\_id} (\texttt{varchar}) / \textbf{url} (\texttt{varchar}): Imagen asociada a la insignia.
+\end{itemize}
+
+\paragraph{14. Tabla: \texttt{user\_badges}}
+Relaciona a los usuarios con las insignias que han obtenido.
+\begin{itemize}
+	\item \textbf{id} (\texttt{int8}, Primary Key): Identificador del logro.
+	\item \textbf{user\_id} (\texttt{uuid}, Foreign Key): Usuario beneficiario.
+	\item \textbf{badge\_id} (\texttt{int8}, Foreign Key): Insignia otorgada.
+	\item \textbf{created\_at} (\texttt{timestamp}): Fecha de obtención.
+\end{itemize}
+
+\paragraph{15. Tabla: \texttt{user\_streaks}}
+Monitorea las rachas continuas de lectura activa de los usuarios.
+\begin{itemize}
+	\item \textbf{id} (\texttt{uuid}, Primary Key): Identificador de la racha.
+	\item \textbf{user\_id} (\texttt{uuid}, Foreign Key): Usuario al que pertenece.
+	\item \textbf{current\_streak} (\texttt{int4}): Días seguidos actuales de lectura.
+	\item \textbf{max\_streak} (\texttt{int4}): Racha máxima histórica alcanzada.
+	\item \textbf{last\_activity\_date} (\texttt{date}): Último día registrado.
+\end{itemize}
+
+\paragraph{16. Tablas de preferencias (\texttt{user\_pref\_formats} y \texttt{user\_pref\_genres})}
+Almacenan los formatos e intereses literarios favoritos del usuario para personalización.
+\begin{itemize}
+	\item \textbf{user\_pref\_formats}: Asocia un `user\_preference\_id` con un `formats\_id`.
+	\item \textbf{user\_pref\_genres}: Asocia un `user\_preference\_id` con un `genres\_id`.
+\end{itemize}
+
+\paragraph{17. Tablas de interacción y comunidad (\texttt{recommendations}, \texttt{recommendation\_contents}, \texttt{letters}, \texttt{curiosities}, \texttt{pictures})}
+Módulos complementarios para dinamizar la experiencia del usuario dentro de la plataforma:
+\begin{itemize}
+	\item \textbf{recommendations} y \textbf{recommendation\_contents}: Gestión de recomendaciones de libros compartidas entre usuarios.
+	\item \textbf{letters}: Envío de mensajes o cartas virtuales entre receptores y emisores dentro de la aplicación.
+	\item \textbf{curiosities}: Datos curiosos o hechos literarios destacados.
+	\item \textbf{pictures}: Almacenamiento de archivos multimedia e imágenes públicas.
+\end{itemize}
 
 \subsection{Reglas del negocio}
 % Condiciones lógicas o restricciones de negocio
