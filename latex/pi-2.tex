@@ -1,25 +1,21 @@
 \documentclass[12pt, atypical, journal]{article}
 
-% --- Paquetes Requeridos para Formato APA 7 y Estilo Profesional ---
 \usepackage[utf8]{inputenc}
 \usepackage[spanish,es-tabla]{babel}
 \usepackage{geometry}
-\geometry{letterpaper, margin=2.54cm} % Margen APA estándar (1 pulgada)
-\usepackage{times} % Tipografía estándar Times New Roman
+\geometry{letterpaper, margin=2.54cm}
+\usepackage{times}
 \usepackage{setspace}
-\onehalfspacing % Interlineado 1.5 según especificación institucional
+\onehalfspacing
 \usepackage{graphicx}
-\usepackage{booktabs} % Para tablas estilizadas y profesionales
+\usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{titlesec}
 \usepackage{hyperref}
 \usepackage{caption}
-\usepackage{float}
 
-% --- Paquete para sangría francesa en Referencias (APA) ---
 \newenvironment{hangparas}[2]{\setlength{\parindent}{-#1}\setlength{\leftmargin}{#1}\everypar{\hangindent=#1}}{\par}
 
-% --- Configuración de Enlaces e Hipervínculos ---
 \hypersetup{
    colorlinks=true,
    linkcolor=black,
@@ -28,10 +24,23 @@
    citecolor=black
 }
 
-% --- Configuración de Formato de Títulos (Estilo APA/Institucional) ---
 \titleformat{\section}{\normalfont\Large\bfseries}{\thesection.}{0.5em}{}
 \titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{0.5em}{}
 \titleformat{\subsubsection}{\normalfont\normalsize\bfseries\itshape}{\thesubsubsection.}{0.5em}{}
+
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    showstringspaces=false,
+    tabsize=2,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1
+}
 
 \begin{document}
 
@@ -411,7 +420,7 @@ La estructura funcional se organiza en cinco módulos principales que encapsulan
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.0\textwidth]{bd.png}
+	\includegraphics[width=1.0\textwidth]{./fotos/code/bd.png}
 	\caption{Modelo de datos preliminar (Modelo Entidad-Relación).}
 	\label{fig:modelo_er}
 \end{figure}
