@@ -28,6 +28,7 @@
 \titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{0.5em}{}
 \titleformat{\subsubsection}{\normalfont\normalsize\bfseries\itshape}{\thesubsubsection.}{0.5em}{}
 
+\usepackage{pdfpages}
 \usepackage{float}
 \usepackage{listings}
 \usepackage{xcolor}
@@ -356,10 +357,63 @@ La estructura funcional se organiza en cinco módulos principales que encapsulan
 \end{figure}
 
 \subsection{Narrativas de casos de uso}
-% Describir paso a paso los escenarios principales
+Las narrativas de casos de uso describen de manera concisa y estructurada las interacciones entre los actores y el sistema. A continuación, se presenta la especificación formal del caso de uso para el registro de sesiones, respetando estrictamente el formato y los parámetros definidos por el equipo de desarrollo:
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|p{3.5cm}|p{10.5cm}|}
+\hline
+\textbf{Caso de Uso} & \textbf{UC-LIB-05 — Agregar Sesión de Lectura} \\ \hline
+\textbf{Actor(es)} & Lector \\ \hline
+\textbf{Precondiciones} & El libro está registrado en la biblioteca del lector. \\ \hline
+\textbf{Flujo Normal} & 
+\begin{minipage}{10cm}
+\vspace{1mm}
+\begin{enumerate}
+    \item El usuario selecciona un libro y elige "Agregar sesión".
+    \item El sistema solicita fecha, páginas leídas y tiempo invertido.
+    \item El usuario completa los datos y confirma.
+    \item El sistema registra la sesión y actualiza el progreso del libro (\textit{include} \textbf{UC-LIB-06}).
+\end{enumerate}
+\vspace{1mm}
+\end{minipage} \\ \hline
+\textbf{Flujo Alternativo} & 
+\begin{minipage}{10cm}
+\vspace{1mm}
+\textbf{3a.} Las páginas ingresadas superan el total del libro: el sistema alerta y solicita corrección.
+\vspace{1mm}
+\end{minipage} \\ \hline
+\textbf{Postcondiciones} & La sesión queda registrada y el progreso de lectura se actualiza. \\ \hline
+\textbf{Include} & UC-LIB-06 Actualizar Progreso \\ \hline
+\textbf{Extend} & — \\ \hline
+\textbf{Prioridad} & Alta \\ \hline
+\end{tabular}
+\caption{Narrativa del caso de uso UC-LIB-05: Agregar Sesión de Lectura.}
+\label{tab:uc_lib_05}
+\end{table}
+
+\begin{quote}
+\textit{\textbf{Nota:} La tabla anterior (\ref{tab:uc_lib_05}) representa el formato estandarizado utilizado para la documentación de los requerimientos funcionales del proyecto. El catálogo completo con las demás narrativas elaboradas por el equipo se encuentra disponible en el \textbf{Anexo B: Especificación y Narrativas de Casos de Uso}.}
+\end{quote}
 
 \subsection{Modelo de datos preliminar (modelo ER)}
-% Presentar entidad-relación y descripción de tablas
+El modelo de datos preliminar, elaborado durante la fase de análisis del sistema, representa el diseño conceptual inicial de la información en \textbf{LecturaMétrica}. Este diagrama primigenio constaba de aproximadamente 13 entidades lógicas enfocadas en solventar los requerimientos funcionales básicos del dominio literario, abstrayéndose de los detalles de normalización y de la motorización relacional.
+
+En su estructura original (modelo preliminar), el sistema agrupaba los elementos de la siguiente manera:
+\begin{itemize}
+    \item \textbf{Entidades Core:} \texttt{USUARIO}, \texttt{LIBRO}, \texttt{BIBLIOTECA}, \texttt{SESION\_LECTURA}, \texttt{RACHA} y \texttt{PERFIL}.
+    \item \textbf{Catálogos y Relaciones Directas:} Tablas conceptuales como \texttt{GENERO}, \texttt{FORMATO}, \texttt{ESTADO\_LECTURA} e \texttt{INSIGNIA} que se relacionaban de manera directa, sin desglosar todavía las tablas intermedias de alta normalización.
+    \item \textbf{Módulo Social y de Recomendaciones:} Entidades iniciales como \texttt{PREFERENCIA} y \texttt{BUZON\_RECOMENDACIONES} para el intercambio de cartas literarias.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{./fotos/code/db.png}
+    \caption{Modelo ER preliminar.}
+    \label{fig:casos_de_uso}
+\end{figure}
+
 
 \subsection{Reglas del negocio}
 % Condiciones lógicas o restricciones de negocio
@@ -377,13 +431,13 @@ La arquitectura general de \textbf{LecturaMétrica} se fundamenta en un modelo c
 El proyecto se divide físicamente en repositorios independientes para las aplicaciones cliente y el servidor backend. Esta estructura evita el acoplamiento del código, permite un desarrollo modular y facilita la evolución autónoma de cada interfaz. El ecosistema opera bajo cuatro pilares fundamentales:
 
 \begin{itemize}
-    \item \textbf{Clientes de Usuario (Capa de Presentación):} Representan el extremo 'Cliente' en la arquitectura. Al ser interfaces inteligentes y totalmente independientes del motor de base de datos, gestionan su propio enrutamiento visual y la experiencia de usuario:
+    \item \textbf{Clientes de Usuario (Capa de Presentación):} Interfaces inteligentes y totalmente independientes del motor de base de datos, gestionan su propio enrutamiento visual y la experiencia de usuario:
     \begin{itemize}
         \item \textit{Aplicación Web Progresiva (PWA):} Aplicación para los lectores finales con adaptabilidad para dispositivos móviles y de escritorio.
         \item \textit{Dashboard de Administración:} Interfaz web simplificada para el personal de gestión.
     \end{itemize}
     
-    \item \textbf{Servidor Central (API RESTful):} Actúa como el extremo "Servidor" y el núcleo de la lógica de negocio. Es un servicio backend independiente que recibe las peticiones HTTP de los clientes, procesa las reglas del sistema (cálculo de rachas de lectura, validaciones de seguridad y control de sesiones) y devuelve las respuestas en un formato estandarizado. Ningún cliente puede modificar datos sin pasar por la validación de este servidor.
+    \item \textbf{Servidor Central (API RESTful):} Núcleo de la lógica de negocio. Es un servicio backend independiente que recibe las peticiones HTTP de los clientes, procesa las reglas del sistema (cálculo de rachas de lectura, validaciones de seguridad y control de sesiones) y devuelve las respuestas en un formato estandarizado. Ningún cliente puede modificar datos sin pasar por la validación de este servidor.
     
     \item \textbf{Capa de Persistencia (Base de Datos):} El almacenamiento transaccional se encuentra aislado en un motor relacional (PostgreSQL). El servidor central es la única entidad autorizada para establecer conexión y ejecutar consultas o modificaciones sobre estas tablas, garantizando la seguridad y la integridad referencial de la información.
     
@@ -394,11 +448,108 @@ El proyecto se divide físicamente en repositorios independientes para las aplic
 La comunicación entre ambas capas se rige estrictamente por el ciclo de petición y respuesta (\textit{Request-Response}). Tanto la PWA como el Dashboard realizan peticiones asíncronas al servidor consumiendo puntos de acceso (\textit{endpoints}) protegidos. El intercambio de información se realiza mediante Objetos de Transferencia de Datos (\textit{DTOs}) estructurados en formato JSON a través del protocolo seguro HTTPS, asegurando que la interfaz visual y la lógica de almacenamiento trabajen en perfecta sincronía sin mezclar sus responsabilidades.
 
 \subsection{Diseño de base de datos}
-% Esquema relacional, llaves, tipos de datos
+
+El almacenamiento transaccional de \textbf{LecturaMétrica} está implementado sobre el motor relacional \textbf{PostgreSQL}. El esquema fue diseñado bajo la tercera forma normal (3NF) para evitar la redundancia de datos y garantizar la integridad referencial a través de restricciones de llave foránea (\textit{Foreign Keys}).
+
+\subsubsection{Decisiones estratégicas de diseño}
+El modelado de la base de datos incorpora tres patrones arquitectónicos clave para optimizar la seguridad, el rendimiento y la trazabilidad del sistema:
+
+\begin{itemize}
+    \item \textbf{Estrategia híbrida de identificadores:} Las entidades transaccionales y de usuario (\texttt{users}, \texttt{books}, \texttt{user\_library}, \texttt{reading\_sessions}) utilizan identificadores únicos universales (\textbf{UUID}). Esto previene ataques de enumeración en la API y facilita la escalabilidad horizontal. Por otro lado, los catálogos y diccionarios (\texttt{authors}, \texttt{genders}, \texttt{formats}, \texttt{badges}) emplean enteros largos autoincrementables (\textbf{BIGINT}), optimizando el indexado y la velocidad de las consultas relacionales más frecuentes.
+    \item \textbf{Trazabilidad y Borrado Suave (\textit{Soft Delete}):} Entidades principales como usuarios, libros, autores y estados integran banderas booleanas (\texttt{deleted}) y marcas de tiempo (\texttt{deleted\_at}). Esto permite desactivar registros en la lógica de negocio sin destruirlos físicamente, preservando la coherencia de las estadísticas e historiales de lectura.
+    \item \textbf{Auditoría temporal:} La mayoría de las tablas incorporan atributos de control de tiempo (\texttt{created\_at}, \texttt{updated\_at}) para registrar el ciclo de vida de la información sin depender de bitácoras externas.
+\end{itemize}
+
+\subsubsection{Estructura relacional por dominios de negocio}
+Para facilitar su comprensión y mantenimiento, el esquema de 22 tablas se agrupa en cinco dominios funcionales que reflejan directamente los módulos del backend:
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|p{3.5cm}|p{2.3cm}|p{2cm}|p{5.5cm}|}
+\hline
+\textbf{Tabla} & \textbf{Llave Primaria} & \textbf{Tipo de Dato} & \textbf{Descripción y Responsabilidad} \\ \hline
+\texttt{users} & \texttt{id} & \texttt{UUID} & Credenciales, metas anuales de lectura y relación con rol y fotografía. \\ \hline
+\texttt{roles} & \texttt{id} & \texttt{UUID} & Catálogo de roles de acceso al sistema (Ej. Lector, Administrador). \\ \hline
+\texttt{pictures} & \texttt{id} & \texttt{BIGINT} & Almacenamiento y URL de avatares sincronizados con Cloudinary. \\ \hline
+\end{tabular}
+\caption{Dominio 1: Gestión de Usuarios y Seguridad.}
+\label{tab:db_users}
+\end{table}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|p{3.5cm}|p{2.3cm}|p{2cm}|p{5.5cm}|}
+\hline
+\textbf{Tabla} & \textbf{Llave Primaria} & \textbf{Tipo de Dato} & \textbf{Descripción y Responsabilidad} \\ \hline
+\texttt{books} & \texttt{id} & \texttt{UUID} & Catálogo central de obras literarias, código ISBN y URL de portada. \\ \hline
+\texttt{authors} & \texttt{id} & \texttt{BIGINT} & Registro de autores literarios con soporte de borrado suave. \\ \hline
+\texttt{genders} & \texttt{id} & \texttt{BIGINT} & Catálogo de géneros y clasificaciones literarias. \\ \hline
+\texttt{formats} & \texttt{id} & \texttt{BIGINT} & Tipos de formato de lectura (Físico, Digital, Audiolibro). \\ \hline
+\texttt{book\_authors} & \texttt{book\_id, author\_id} & \texttt{UUID / BIGINT} & Tabla intermedia para la relación N:M entre obras y autores. \\ \hline
+\texttt{book\_genres} & \texttt{book\_id, gender\_id} & \texttt{UUID / BIGINT} & Tabla intermedia para la relación N:M entre obras y géneros. \\ \hline
+\end{tabular}
+\caption{Dominio 2: Catálogo Literario y Clasificación.}
+\label{tab:db_books}
+\end{table}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|p{3.5cm}|p{2.3cm}|p{2cm}|p{5.5cm}|}
+\hline
+\textbf{Tabla} & \textbf{Llave Primaria} & \textbf{Tipo de Dato} & \textbf{Descripción y Responsabilidad} \\ \hline
+\texttt{user\_library} & \texttt{id} & \texttt{UUID} & Biblioteca personal del usuario, progreso actual y libro favorito. \\ \hline
+\texttt{reading\_status} & \texttt{id} & \texttt{BIGINT} & Catálogo de estados de lectura (Por leer, Leyendo, Terminado). \\ \hline
+\texttt{reading\_sessions}& \texttt{id} & \texttt{UUID} & Historial de lecturas con registro exacto de segundos, páginas y capítulos. \\ \hline
+\texttt{library\_notes} & \texttt{id} & \texttt{BIGINT} & Notas y reflexiones guardadas por el usuario por página o capítulo. \\ \hline
+\end{tabular}
+\caption{Dominio 3: Biblioteca Personal, Sesiones y Notas.}
+\label{tab:db_library}
+\end{table}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|p{3.5cm}|p{2.3cm}|p{2cm}|p{5.5cm}|}
+\hline
+\textbf{Tabla} & \textbf{Llave Primaria} & \textbf{Tipo de Dato} & \textbf{Descripción y Responsabilidad} \\ \hline
+\texttt{user\_streaks} & \texttt{id} & \texttt{UUID} & Control de racha actual, racha máxima y última fecha de actividad. \\ \hline
+\texttt{badges} & \texttt{id} & \texttt{BIGINT} & Catálogo de insignias y recompensas visuales de la plataforma. \\ \hline
+\texttt{user\_badges} & \texttt{id} & \texttt{BIGINT} & Registro de insignias y logros desbloqueados por cada usuario. \\ \hline
+\texttt{curiosities} & \texttt{id} & \texttt{BIGINT} & Datos curiosos aleatorios para el radar de descubrimiento. \\ \hline
+\end{tabular}
+\caption{Dominio 4: Gamificación, Rachas y Descubrimiento.}
+\label{tab:db_gamification}
+\end{table}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|p{3.7cm}|p{2.1cm}|p{2cm}|p{5.5cm}|}
+\hline
+\textbf{Tabla} & \textbf{Llave Primaria} & \textbf{Tipo de Dato} & \textbf{Descripción y Responsabilidad} \\ \hline
+\texttt{recommendations} & \texttt{id} & \texttt{UUID} & Perfil general de preferencias y configuración del lector. \\ \hline
+\texttt{user\_pref\_formats} & \texttt{pref\_id, formats\_id} & \texttt{UUID / BIGINT} & Tabla intermedia que enlaza al usuario con sus formatos preferidos. \\ \hline
+\texttt{user\_pref\_genres} & \texttt{pref\_id, genres\_id} & \texttt{UUID / BIGINT} & Tabla intermedia que enlaza al usuario con sus géneros preferidos. \\ \hline
+\texttt{recommendation\_contents} & \texttt{id} & \texttt{BIGINT} & Contenido literario y mensajes para las recomendaciones creadas. \\ \hline
+\texttt{letters} & \texttt{id} & \texttt{BIGINT} & Buzón de cartas para intercambio asíncrono y reclamo de lecturas. \\ \hline
+\end{tabular}
+\caption{Dominio 5: Recomendaciones y Buzón de Cartas.}
+\label{tab:db_social}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./fotos/code/database.png}
+    \caption{Diagrama Entidad-Relación de LecturaMétrica.}
+    \label{fig:database}
+\end{figure}
 
 \subsection{Diseño del backend}
 
-El diseño del servidor de \textbf{LecturaMétrica} se fundamenta en los principios de la Arquitectura Limpia (\textit{Clean Architecture}) y el Desarrollo Guiado por el Dominio (\textit{Domain-Driven Design, DDD}). Esta decisión arquitectónica se tomó para desacoplar completamente la lógica central del negocio de las dependencias externas (como bases de datos, frameworks web y servicios de terceros), garantizando así un sistema escalable, mantenible y altamente testeable
+El diseño del servidor de \textbf{LecturaMétrica} se fundamenta en los principios de la Arquitectura Limpia (\textit{Clean Architecture}). Esta decisión arquitectónica se tomó para desacoplar completamente la lógica central del negocio de las dependencias externas (como bases de datos, frameworks web y servicios de terceros), garantizando así un sistema escalable, mantenible y altamente testeable
 
 El desarrollo se implementó en \textbf{Java 21} utilizando el ecosistema de \textbf{Spring Boot}, lo que facilita la inyección de dependencias y el mapeo objeto-relacional (ORM) a través de Spring Data JPA e Hibernate. 
 Todo el código está organizado bajo un enfoque modular por características (\textit{Feature-driven structure}), donde cada dominio principal (como libros, usuarios, biblioteca, rachas y buzón) se encapsula de forma independiente.
@@ -426,7 +577,46 @@ La seguridad del backend se gestiona mediante filtros de autenticación y servic
 Adicionalmente, se configuró un manejador global de excepciones (\textit{Global Exception Handler}) a nivel de infraestructura para centralizar la captura de errores. Asegurando que siempre retorne un formato estructurado y predecible para el \textit{frontend}, en lugar de exponer las trazas de error internas del servidor.
 
 \subsection{Diseño del frontend}
-% Mockups y flujo de navegación
+
+El diseño de la capa de presentación de \textbf{LecturaMétrica} se fundamenta en un modelo de componentes reactivos y tipado estático, utilizando \textbf{Next.js} junto con \textbf{TypeScript} y \textbf{Tailwind CSS}. Para mantener un bajo acoplamiento, optimizar el rendimiento y reforzar la seguridad, el desarrollo del cliente se dividió físicamente en dos repositorios independientes, separando por completo la experiencia de los lectores finales del panel de control administrativo.
+
+Ambas interfaces utilizan el moderno sistema de Enrutamiento de Aplicaciones (\textit{App Router}) de Next.js, lo que permite organizar el código por dominios funcionales y aprovechar el renderizado optimizado para reducir los tiempos de carga en el navegador.
+
+\subsubsection{Separación de aplicaciones por perfil de usuario}
+La división en dos proyectos garantiza que cada interfaz cargue únicamente los recursos y lógica que necesita su perfil de usuario:
+
+\begin{enumerate}
+    \item \textbf{LecturaMétrica - Usuario (Aplicación Web Progresiva):}
+    Es la interfaz principal orientada al consumidor. Está adaptada para funcionar de forma fluida tanto en dispositivos móviles como de escritorio (\textit{Responsive Design}). Su estructura de rutas en el directorio \texttt{app/} se organiza en tres flujos principales:
+    \begin{itemize}
+        \item \textbf{Autenticación y Registro \texttt{(auth)}:} Agrupa las vistas públicas de acceso, registro de cuentas, verificación de códigos de seguridad (\texttt{/verify-code}) y recuperación de contraseñas (\texttt{/forgot-password}).
+        \item \textbf{Iniciación de Usuario \texttt{/onboarding}:} Un módulo dedicado a guiar a los nuevos usuarios en la configuración inicial de su perfil y preferencias de lectura.
+        \item \textbf{Plataforma Principal \texttt{(app)}:} Contiene las vistas protegidas del lector, divididas en módulos claramente delimitados: gestión de catálogo personal (\texttt{/biblioteca}), temporizador asíncrono de sesiones en tiempo real (\texttt{/lectura}), visualización de gráficas y proyecciones (\texttt{/estadisticas}) y un sistema de mensajería para el intercambio de cartas literarias (\texttt{/buzon}).
+    \end{itemize}
+    
+    \item \textbf{LecturaMétrica - Admin (Dashboard de Administración):}
+    Es una plataforma web de control cerrado orientada al personal de gestión y soporte técnico. Al estar en un repositorio aislado, no compromete la ligereza del sistema de los usuarios finales. Su estructura se enfoca en la simplicidad operativa y la supervisión del ecosistema:
+    \begin{itemize}
+        \item \textbf{Acceso Seguro \texttt{(auth)}:} Módulo exclusivo para el inicio de sesión del personal administrativo.
+        \item \textbf{Panel de Control \texttt{/dashboard}:} Subdividido en áreas estratégicas para el monitoreo general: métricas y proyecciones globales de la plataforma (\texttt{/resumen}), gestión de cuentas y roles (\texttt{/usuarios}) y un bitácora para el seguimiento del tráfico y comportamiento en el servidor (\texttt{/actividad}).
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Estructura interna y modularidad del código}
+Para asegurar que el código sea mantenible y fácil de escalar por cualquier desarrollador, ambos repositorios siguen un patrón estándar de organización interna que separa la lógica visual de la comunicación externa:
+
+\begin{itemize}
+    \item \textbf{\texttt{app/}:} Contiene exclusivamente la lógica de enrutamiento, vistas de página (\texttt{page.tsx}) y plantillas de diseño generales (\texttt{layout.tsx}). Utiliza la convención de paréntesis, como \texttt{(app)} o \texttt{(auth)}, para crear "Grupos de Rutas" (\textit{Route Groups}); esto permite aplicar diseños de navegación específicos (por ejemplo, mostrar u ocultar barras laterales) sin alterar la dirección web en el navegador.
+    
+    \item \textbf{\texttt{components/}:} Almacena los bloques visuales reutilizables (botones, tarjetas de libros, tablas, barras de navegación y formularios de entrada). Estos componentes son agnósticos a las rutas, garantizando una consistencia visual en toda la interfaz.
+    
+    \item \textbf{\texttt{data/}:} Actúa como la capa de servicios del frontend. Aquí se centralizan todas las peticiones asíncronas hacia la API REST central (desarrollada en Spring Boot). Al aislar el consumo del servidor en este directorio, los componentes visuales se mantienen limpios y no necesitan conocer las URLs ni la lógica interna de los puntos de acceso HTTP.
+    
+    \item \textbf{\texttt{lib/} (en repositorio de Usuario):} Contiene funciones de utilidad general, validaciones de seguridad, formateadores de fechas y la lógica para el manejo del almacenamiento local de credenciales de sesión (tokens de autorización).
+\end{itemize}
+
+\subsubsection{Consumo de servicios y sincronización}
+La comunicación entre ambas aplicaciones web y la API central se ejecuta en tiempo real mediante peticiones asíncronas. Cada vez que un usuario realiza una acción —como detener el cronómetro de lectura o filtrar un reporte administrativo—, el frontend procesa la información localmente, adjunta los tokens de seguridad pertinentes y transmite un Objeto de Transferencia de Datos (\textit{DTO}) en formato JSON hacia el backend. Esto permite actualizar la interfaz al instante, garantizando una experiencia interactiva sin la necesidad de recargar la página completa.
 
 \newpage
 
@@ -435,11 +625,79 @@ Adicionalmente, se configuró un manejador global de excepciones (\textit{Global
 % ==============================================================================
 \section{Implementación}
 
+\subsection{Repositorios del proyecto y control de versiones}
+El desarrollo del ecosistema \textbf{LecturaMétrica} se gestionó mediante el control de versiones distribuido Git y la plataforma de alojamiento GitHub. 
+
+Para garantizar un bajo acoplamiento arquitectónico, mantener prácticas de Arquitectura Limpia y facilitar el ciclo de despliegue independiente de cada interfaz, el código fuente se encuentra versionado en tres repositorios oficiales:
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|p{3.8cm}|p{6.2cm}|p{4.5cm}|}
+\hline
+\textbf{Módulo del Ecosistema} & \textbf{Responsabilidad y Tecnología} & \textbf{Enlace al Repositorio (GitHub)} \\ \hline
+\textbf{Backend (API RESTful)} & Núcleo lógico del sistema, validación de reglas de negocio, cálculo de rachas y conexión a PostgreSQL. Desarrollado en Java y Spring Boot. & \url{https://github.com/SoftFairies/Backend.git} \\ \hline
+\textbf{Frontend 1: Usuario (PWA)} & Aplicación Web Progresiva para lectores finales con cronómetro de lectura asíncrono y catálogo personal. Desarrollada en Next.js. & \url{https://github.com/SoftFairies/LecturaMetrica-Usuario.git} \\ \hline
+\textbf{Frontend 2: Dashboard Admin} & Interfaz web cerrada (back-office) para la gestión de usuarios, monitoreo del sistema y administración de catálogo. Desarrollada en Next.js. & \url{https://github.com/SoftFairies/LecturaMetrica-Admin.git} \\ \hline
+\end{tabular}
+\caption{Repositorios oficiales y código fuente del sistema LecturaMétrica.}
+\label{tab:repositorios_github}
+\end{table}
+
+\vspace{0.2cm}
+
 La implementación del sistema comprende el desarrollo integral de la plataforma, dividiéndose en la construcción de la API RESTful (Backend) y la interfaz de usuario (Frontend).
 
 \subsection{Estructura de carpetas}
 
 \subsubsection{Frontend}
+El desarrollo del cliente web se distribuye en dos repositorios independientes, utilizando el framework \textbf{Next.js} bajo el modelo de Enrutamiento de Aplicaciones (\path{App Router}) y \textbf{TypeScript} para el tipado estático. Esta organización permite desacoplar por completo la aplicación de los lectores de la plataforma administrativa.
+
+\paragraph{1. Repositorio de Usuario (\textit{LecturaMétrica - PWA})}
+Estructurado para ofrecer una experiencia interactiva en dispositivos móviles y de escritorio. El directorio \path{app/} hace uso de "Grupos de Rutas" mediante paréntesis (ej. \path{(app)} y \path{(auth)}) para aplicar diseños de navegación específicos y proteger vistas sin alterar la estructura de la URL web:
+
+\begin{lstlisting}[language=bash, basicstyle=\ttfamily\footnotesize, breaklines=true, frame=single, showstringspaces=false, extendedchars=true]
+LecturaMetrica-Usuario/
+|-- app/
+|   |-- (app)/             # Rutas protegidas de la plataforma principal
+|   |   |-- biblioteca/    # Catálogo literario personal y filtros
+|   |   |-- buzon/         # Sistema de mensajería para cartas literarias
+|   |   |-- estadisticas/  # Visualización de métricas, proyecciones y rachas
+|   |   `-- lectura/       # Cronómetro asíncrono y registro de sesiones
+|   |-- (auth)/            # Flujos públicos de autenticación y seguridad
+|   |   |-- forgot-password/
+|   |   |-- login/
+|   |   |-- register/
+|   |   `-- verify-code/   # Verificación de códigos de seguridad 2FA/Email
+|   `-- onboarding/        # Configuración inicial y preferencias del lector
+|-- components/            # Componentes visuales reutilizables
+|-- data/                  # Consumo de servicios y comunicación con la API|
+`-- lib/                   # Utilidades generales, validaciones y manejo de sesión
+\end{lstlisting}
+
+\paragraph{2. Repositorio de Administración (\textit{LecturaMétrica - Dashboard})}
+Estructurado como un panel de control back-office optimizado para la carga e inspección de datos masivos. Se aísla de las dependencias de la PWA para garantizar ligereza y seguridad operativa:
+
+\begin{lstlisting}[language=bash, basicstyle=\ttfamily\footnotesize, breaklines=true, frame=single, showstringspaces=false, extendedchars=true]
+LecturaMetrica-Admin/
+|-- app/
+|   |-- (auth)/            # Acceso restringido para el personal administrativo
+|   |   `-- login/
+|   `-- dashboard/         # Panel de control y supervisión del ecosistema
+|       |-- actividad/     # Bitácora de tráfico y monitoreo de eventos
+|       |-- resumen/       # Métricas generales y proyecciones de la plataforma
+|       `-- usuarios/      # Gestión de roles, permisos y cuentas
+|-- components/            # Tablas de datos con paginación, filtros y modales
+`-- data/                  # Peticiones HTTP y servicios de integración con Spring Boot
+\end{lstlisting}
+
+\paragraph{Separación de responsabilidades en el Frontend}
+Para mantener un código limpio y modular, ambos repositorios comparten la misma lógica de organización arquitectónica en sus directorios raíz:
+\begin{itemize}
+    \item \textbf{\path{app/}:} Contiene únicamente las páginas visuales (\path{page.tsx}), plantillas maestras (\path{layout.tsx}) y la configuración del enrutador. No almacena lógica de peticiones HTTP ni utilidades complejas.
+    \item \textbf{\path{components/}:} Aloja los bloques constructivos de la interfaz. Al ser modulares y agnósticos al enrutamiento, garantizan que un cambio visual en un botón o tabla se refleje de manera uniforme en todo el sistema.
+    \item \textbf{\path{data/}:} Centraliza la capa de servicios. Actúa como el único punto de contacto entre la interfaz visual y el Backend en Spring Boot, aislando las llamadas asíncronas (\path{fetch}) y el manejo de cabeceras de autorización de los componentes visuales.
+\end{itemize}
 
 \subsubsection{Backend (API REST)}
 El backend está desarrollado en Java con Spring Boot, estructurado bajo una arquitectura modular orientada al dominio. Cada módulo agrupa las capas de aplicación (casos de uso), dominio (modelos) e infraestructura (controladores, repositorios y clientes externos).
@@ -490,9 +748,133 @@ Cada uno de los módulos de negocio mantiene una separación estricta de respons
 
 \subsection{Fragmentos de código clave}
 
-\subsubsection{Consumo de Servicios e Interfaz (Frontend)}
+\subsubsection{Carga Asíncrona y Resiliente de Catálogos (Frontend - \texttt{BibliotecaPage})}
+Para garantizar que la interfaz en Next.js no se bloquee ni falle en caso de latencia o errores de red en el servidor, el componente de la biblioteca implementa un patrón de carga paralela con degradación elegante (\textit{Graceful Degradation}). 
 
-\subsection{Fragmentos de código clave}
+Mediante la función \texttt{loadCatalogs}, se ejecutan cuatro peticiones HTTP en paralelo utilizando \texttt{Promise.all} para consultar los géneros, formatos, estados de lectura y autores desde la API REST. Cada llamada incorpora su propio bloque de captura de excepciones (\texttt{.catch()}) con arreglos vacíos o constantes de respaldo (\texttt{FALLBACK\_STATUSES}), asegurando que el formulario de creación de libros siga funcionando para el usuario incluso si alguno de los catálogos secundarios del backend no se encuentra disponible:
+
+\begin{lstlisting}[language=Java, basicstyle=\ttfamily\footnotesize, breaklines=true, frame=single, showstringspaces=false]
+useEffect(() => {
+  const loadCatalogs = async () => {
+    try {
+      // Ejecución paralela de 4 peticiones a la API con sus propios respaldos de error
+      const results = await Promise.all([
+        api.genders.getAll({ page: 0, size: 50 }).catch(() => ({ content: [] as CatalogItem[] })),
+        api.formats.getAll({ page: 0, size: 50 }).catch(() => ({ content: [] as CatalogItem[] })),
+        api.readingStatus
+          .getAll({ page: 0, size: 50 })
+          .catch(() => ({ content: FALLBACK_STATUSES })),
+        api.authors.getAll({ page: 0, size: 300 }).catch(() => ({ content: [] as CatalogItem[] })),
+      ]);
+
+      const genrePage = results[0];
+      const formatPage = results[1];
+      const statusPage = results[2];
+      const authorPage = results[3];
+
+      // Sincronización con el estado local de React
+      setGenres(genrePage.content || []);
+      setFormats(formatPage.content || []);
+      setStatuses(
+        statusPage.content && statusPage.content.length ? statusPage.content : FALLBACK_STATUSES,
+      );
+      setAuthors(authorPage.content || []);
+
+      // Autoselección inteligente del primer formato disponible
+      setFormatId((current) =>
+        current === "" && formatPage.content && formatPage.content[0]
+          ? formatPage.content[0].id
+          : current,
+      );
+    } catch {
+      // Restablecimiento a valores seguros si falla la promesa global
+      setGenres([]);
+      setFormats([]);
+      setStatuses(FALLBACK_STATUSES);
+      setAuthors([]);
+    }
+  };
+
+  void loadCatalogs();
+}, []);
+\end{lstlisting}
+
+\subsubsection{Inicialización Segura y Tolerancia a Fallos (Frontend - \texttt{LecturaPage})}
+La vista de registro de sesiones de lectura requiere sincronizar múltiples fuentes de datos al montarse en el navegador. Para evitar que problemas de red en servicios secundarios bloqueen la operativa principal del usuario, el componente implementa un patrón de aislamiento de fallos dentro de su ciclo de vida reactivo.
+
+Como se observa en el siguiente fragmento, la petición para obtener las rachas del usuario (\texttt{api.streaks.getMine}) se encapsula en un bloque de captura independiente dentro del flujo principal de carga de la biblioteca (\texttt{api.library.getAll}). Adicionalmente, se integra una bandera de control (\texttt{active}) para prevenir fugas de memoria y errores por condiciones de carrera si el usuario abandona la vista antes de que finalicen las promesas asíncronas:
+
+\begin{lstlisting}[language=Java, basicstyle=\ttfamily\footnotesize, breaklines=true, frame=single, showstringspaces=false]
+useEffect(() => {
+  let active = true;
+
+  const load = async () => {
+    try {
+      setLoadingBook(true);
+
+      // Carga principal de la biblioteca
+      const libraryPage = await api.library.getAll({ page: 0, size: 100 });
+      if (!active) return;
+
+      // Aislamiento de fallos: La racha se consulta en su propio bloque try-catch
+      // Si el servicio de rachas falla, no interrumpe la carga del libro
+      try {
+        const streak = await api.streaks.getMine();
+        if (active) {
+          setCurrentStreak(Number(streak.currentStreak ?? 0));
+          setMaxStreak(Number(streak.maxStreak ?? 0));
+        }
+      } catch {
+        if (active) {
+          setCurrentStreak(0);
+          setMaxStreak(0);
+        }
+      }
+
+      // Normalización defensiva de la respuesta de la API
+      const safeLibs: LibraryItem[] = Array.isArray(libraryPage)
+        ? libraryPage
+        : libraryPage.content || [];
+
+      setLibraryItems(safeLibs);
+
+      if (safeLibs.length === 0) {
+        clearReadingSelection();
+        return;
+      }
+
+      // Recuperación inteligente del último libro seleccionado en la sesión local
+      const storedSelectedId =
+        typeof window !== "undefined"
+          ? window.localStorage.getItem(SELECTED_READING_BOOK_KEY)
+          : null;
+
+      const selectedBook =
+        safeLibs.find((item) => item.id === storedSelectedId) ||
+        safeLibs.find((item) => item.readingStatusName?.toLowerCase() === "leyendo") ||
+        safeLibs[0];
+
+      await applyLibraryItem(selectedBook);
+    } catch (error) {
+      console.error("Error cargando libro de lectura:", error);
+      await Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo cargar tu biblioteca para iniciar la sesión.",
+      });
+    } finally {
+      if (active) setLoadingBook(false);
+    }
+  };
+
+  void load();
+
+  // Limpieza al desmontar el componente para prevenir fugas de memoria
+  return () => {
+    active = false;
+  };
+}, []);
+\end{lstlisting}
 
 \subsubsection{Consumo de API Externa (\texttt{OpenLibraryClient})}
 El cliente gestiona la petición HTTP a la API de Open Library y procesa la respuesta mediante registros internos para extraer los metadatos esenciales de forma eficiente:
@@ -587,6 +969,29 @@ public ReadingSession execute(UUID userId, UUID libraryId, ReadingSessionRequest
 
 \subsection{Evidencia visual}
 
+\subsubsection{Consumo de Servicios e Interfaz (Frontend)}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./fotos/vistas/usuario/AgregarLibro(Exito).png}
+    \caption{Agregar un libro a la biblioteca personal.}
+    \label{fig:vista_usuario_agregar_libro}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./fotos/vistas/usuario/SesionLectura(Fallido).png}
+    \caption{Agregar una sesión de lectura fallida para actualizar el progreso de un libro.}
+    \label{fig:vista_usuario_agregar_sesion_fallida}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./fotos/vistas/usuario/PerfilInsignias.png}
+    \caption{Gamificación por medio de insignias.}
+    \label{fig:vista_usuario_insignias}
+\end{figure}
+
 \subsubsection{Pruebas y Documentación de API (Backend)}
 La correcta funcionalidad de los endpoints del backend se validó a través de herramientas de prueba de peticiones HTTP y la interfaz interactiva de documentación OpenAPI / Swagger UI:
 
@@ -597,11 +1002,11 @@ La correcta funcionalidad de los endpoints del backend se validó a través de h
     \label{fig:swagger_docs}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{./fotos/swagger/uno.png}
     \caption{Vista de documentación de 4 recursos del backend en Swagger UI.}
-    \label{fig:swagger_docs}
+    \label{fig:swagger_docs_dos}
 \end{figure}
 
 % ==============================================================================
@@ -690,5 +1095,28 @@ Sommerville, I. (2016). \textit{Ingeniería de software} (10a ed.). Pearson.
 Spring Framework Team. (2025). \textit{Spring Boot Reference Documentation}. Core Software Press. \url{https://spring.io/projects/spring-boot}
 
 \end{thebibliography}
+
+\newpage
+\section*{Anexos}
+\addcontentsline{toc}{section}{Anexos} 
+
+% --- ANEXO 1: Manual  ---
+\subsection*{Anexo A: Manual de Usuario}
+\addcontentsline{toc}{subsection}{Anexo A: Manual de Usuario} % <-- ESTO LO METE AL ÍNDICE
+\includepdf[pages=-]{./anexos/Manual_de_Usuario.pdf}
+
+% --- ANEXO 2: Casos de Uso ---
+% Introducción al anexo para que no se vea puesto de golpe
+\subsection*{Anexo B: Especificación y Narrativas de Casos de Uso}
+\addcontentsline{toc}{subsection}{Anexo B: Especificación y Narrativas de Casos de Uso} % <-- ESTO TAMBIÉN
+El presente anexo contiene la documentación detallada de las narrativas de casos de uso, flujos principales y flujos de excepción del sistema \textbf{LecturaMétrica}, elaborados como parte del análisis y diseño arquitectónico de la plataforma.
+
+\vspace{0.5cm}
+
+\includepdf[
+    pages=-, 
+    scale=0.90, 
+    pagecommand={\thispagestyle{plain}}
+]{./anexos/casos_de_uso_lecturametrica.docx.pdf}
 
 \end{document}
