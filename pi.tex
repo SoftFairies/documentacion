@@ -962,7 +962,29 @@ se presenta la organización del árbol de directorios del proyecto, evidenciand
 \section{Pruebas}
 
 \subsection{Casos de prueba}
-% Tabla con caso, acción, resultado esperado y obtenido
+En esta sección se describen los escenarios de prueba ejecutados sobre el sistema para validar el funcionamiento de los módulos principales, el cumplimiento de las reglas del negocio y el manejo de respuestas del servidor:
+
+\begin{table}[h]
+	\centering
+	\small
+	\caption{Matriz de ejecución de casos de prueba del sistema}
+	\label{tab:casos_prueba}
+	\begin{tabular}{p{1.2cm}p{2.3cm}p{3.2cm}p{3.5cm}p{3.5cm}}
+		\toprule
+		\textbf{ID} & \textbf{Módulo} & \textbf{Caso de Prueba} & \textbf{Acción / Entrada} & \textbf{Resultado Esperado} \\
+		\midrule
+		\textbf{CP-01} & Autenticación & Inicio de sesión exitoso de un Administrador. & Ingresar correo y contraseña válidos en \texttt{app/(auth)} y enviar el formulario. & El \textit{backend} responde con HTTP 200 y token JWT. El cliente almacena el token y redirige a \texttt{app/dashboard}. \\
+		\addlinespace
+		\textbf{CP-02} & Catálogo & Registro de una nueva obra con extensión total y formato. & Enviar formulario desde el panel para crear un Manga especificando 120 capítulos e imagen de portada. & El \textit{backend} procesa la imagen (vía Cloudinary), guarda el registro en la BD y retorna HTTP 201 Created. \\
+		\addlinespace
+		\textbf{CP-03} & Seguimiento & Validación de límite de progreso (Regla RN-04). & Intentar actualizar la lectura de un libro de 300 páginas ingresando un progreso de 350 páginas. & El \textit{backend} responde con un error HTTP 400 Bad Request (\textit{``El progreso no puede exceder el total de la obra''}). \\
+		\addlinespace
+		\textbf{CP-04} & Seguimiento & Cambio automático de estado a Completado (Regla RN-06). & Registrar el capítulo 120/120 en un Manga que estaba en estado \textit{Leyendo}. & El \textit{backend} actualiza automáticamente el estado a \textit{Completado}. \\
+		\addlinespace
+		\textbf{CP-05} & Métricas & Carga de métricas globales de actividad en tiempo real. & Navegar a para consultar gráficos de lectura. & El controlador en \texttt{modules/} calcula y devuelve las estadísticas agregadas en formato JSON en $< 300$~ms. \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \subsection{Métodos de validación}
 % Descripción de herramientas (JUnit, Postman)
