@@ -372,7 +372,26 @@ La estructura funcional se organiza en cinco módulos principales que encapsulan
 \section{Diseño del sistema}
 
 \subsection{Arquitectura del sistema}
-% Descripción de capas (Presentation, Business, Data)
+La arquitectura general de \textbf{LecturaMétrica} se fundamenta en un modelo clásico de \textbf{Arquitectura Cliente-Servidor}, evolucionado hacia un enfoque distribuido y desacoplado mediante servicios (API RESTful).
+
+El proyecto se divide físicamente en repositorios independientes para las aplicaciones cliente y el servidor backend. Esta estructura evita el acoplamiento del código, permite un desarrollo modular y facilita la evolución autónoma de cada interfaz. El ecosistema opera bajo cuatro pilares fundamentales:
+
+\begin{itemize}
+    \item \textbf{Clientes de Usuario (Capa de Presentación):} Representan el extremo 'Cliente' en la arquitectura. Al ser interfaces inteligentes y totalmente independientes del motor de base de datos, gestionan su propio enrutamiento visual y la experiencia de usuario:
+    \begin{itemize}
+        \item \textit{Aplicación Web Progresiva (PWA):} Aplicación para los lectores finales con adaptabilidad para dispositivos móviles y de escritorio.
+        \item \textit{Dashboard de Administración:} Interfaz web simplificada para el personal de gestión.
+    \end{itemize}
+    
+    \item \textbf{Servidor Central (API RESTful):} Actúa como el extremo "Servidor" y el núcleo de la lógica de negocio. Es un servicio backend independiente que recibe las peticiones HTTP de los clientes, procesa las reglas del sistema (cálculo de rachas de lectura, validaciones de seguridad y control de sesiones) y devuelve las respuestas en un formato estandarizado. Ningún cliente puede modificar datos sin pasar por la validación de este servidor.
+    
+    \item \textbf{Capa de Persistencia (Base de Datos):} El almacenamiento transaccional se encuentra aislado en un motor relacional (PostgreSQL). El servidor central es la única entidad autorizada para establecer conexión y ejecutar consultas o modificaciones sobre estas tablas, garantizando la seguridad y la integridad referencial de la información.
+    
+    \item \textbf{Sistemas y Servicios Externos:} El servidor central y los clientes se integran de manera controlada con herramientas de terceros, tales como la API de \textit{Open Library} para la obtención automática de metadatos literarios e ISBN, y \textit{Cloudinary} para el almacenamiento y optimización en la nube de recursos multimedia (portadas y avatares).
+\end{itemize}
+
+\subsubsection{Flujo de comunicación Cliente-Servidor}
+La comunicación entre ambas capas se rige estrictamente por el ciclo de petición y respuesta (\textit{Request-Response}). Tanto la PWA como el Dashboard realizan peticiones asíncronas al servidor consumiendo puntos de acceso (\textit{endpoints}) protegidos. El intercambio de información se realiza mediante Objetos de Transferencia de Datos (\textit{DTOs}) estructurados en formato JSON a través del protocolo seguro HTTPS, asegurando que la interfaz visual y la lógica de almacenamiento trabajen en perfecta sincronía sin mezclar sus responsabilidades.
 
 \subsection{Diseño de base de datos}
 % Esquema relacional, llaves, tipos de datos
