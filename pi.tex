@@ -359,7 +359,22 @@ Los requerimientos no funcionales definen los criterios de calidad, restriccione
 \end{itemize}
 
 \subsection{Identificación de los actores del sistema}
-% Presentar tabla con los roles (Administrador, Usuario, etc.)
+En esta sección se definen los roles principales que interactúan con la plataforma, delimitando sus responsabilidades:
+
+\begin{table}[h]
+	\centering
+	\caption{Actores del sistema y descripción de roles}
+	\label{tab:actores_sistema}
+	\begin{tabular}{lp{11cm}}
+		\toprule
+		\textbf{Actor} & \textbf{Descripción y Responsabilidades} \\
+		\midrule
+		\textbf{Lector / Usuario Registrado} & Es el usuario final del sistema. Interactúa con la plataforma para gestionar su biblioteca personal, registrar su actividad diaria de lectura y consultar sus métricas. \\
+		\addlinespace
+		\textbf{Administrador del Sistema} & Encargado de mantener la integridad global de la aplicación, gestionar cuentas de usuario, supervisar la consistencia de los metadatos y asegurar el correcto funcionamiento del entorno. \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \subsection{Diagramas de casos de uso (UML)}
 El diagrama de casos de uso modela el comportamiento del sistema LecturaMétrica, identificando dos actores principales: el \textit{Lector}, quien interactúa con los módulos funcionales de usuario, biblioteca, buzón social y estadísticas; y el \textit{Super Administrador}, quien posee privilegios de supervisión sobre el rendimiento y estadísticas globales de la plataforma. 
