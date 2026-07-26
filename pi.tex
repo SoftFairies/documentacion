@@ -481,7 +481,33 @@ Las reglas del negocio definen las condiciones lógicas, restricciones y políti
 \section{Diseño del sistema}
 
 \subsection{Arquitectura del sistema}
-% Descripción de capas (Presentation, Business, Data)
+La arquitectura de la plataforma se estructuró bajo un enfoque de "Capas Desacopladas" (Clean Architecture), garantizando la separación de responsabilidades, mantenibilidad y escalabilidad del código. El sistema se organiza conceptualmente en tres capas operativas principales:
+
+\begin{enumerate}
+	\item \textbf{Capa de Presentación / Entrada (\textit{Presentation Layer}):} 
+	Constituye el punto de entrada a la aplicación y el canal directo de comunicación con los clientes (web, dispositivos móviles o consumidores directos de la API). Sus componentes clave son:
+	\begin{itemize}
+		\item \textbf{Controladores REST (\texttt{@RestController}):} Encargados de interceptar y procesar las peticiones HTTP (\texttt{GET}, \texttt{POST}, \texttt{PUT}, \texttt{DELETE}), gestionar la emisión de códigos de estado (\texttt{200 OK}, \texttt{201 Created}, \texttt{400 Bad Request}) y delegar la ejecución a los casos de uso correspondientes.
+		\item \textbf{Objetos de Transferencia de Datos (\textit{DTOs}):} Estructuras rígidas que definen la forma exacta de los datos que entran y salen, desacoplando la interfaz externa del modelo interno del dominio.
+		\item \textbf{Validación y Mapeo de Peticiones:} Ejecuta la verificación sintáctica de la información entrante (campos obligatorios, restricciones de formato, emails válidos) y realiza la transformación de los DTOs hacia objetos del modelo de dominio antes de llamar a las capas inferiores.
+	\end{itemize}
+	
+	\item \textbf{Capa de Lógica de Negocio / Dominio y Aplicación} 
+	En esta capa se concentran las reglas de negocio, algoritmos y dinámicas específicas de la plataforma, manteniéndose aisladas de dependencias con \textit{frameworks} o motores de base de datos específicos:
+	\begin{itemize}
+		\item \textbf{Casos de Uso (\texttt{application/}):} Clases dedicadas a orquestar los flujos de operación del sistema, \texttt las cuales encapsulan las acciones concretas ejecutable por los actores.
+		\item \textbf{Modelos de Dominio (\texttt{domain/model/}):} Entidades puras que representan los conceptos sustanciales de la plataforma, conservando el estado y comportamientos clave del sistema.
+		\item \textbf{Reglas de Negocio y Reglas de Dominio:} Implementación de validaciones complejas, tales como comprobar que el avance no supere el límite del libro, computar el incremento de rachas consecutivas o alterar el estado a \textit{Completado}.
+	\end{itemize}
+	
+	\item \textbf{Capa de Datos / Persistencia / Infraestructura} 
+	Es la encargada de la persistencia de la información en el almacenamiento primario y de la interacción con servicios externos:
+	\begin{itemize}
+		\item \textbf{Repositorios (\texttt{infrastructure/}):} Implementaciones concretas de las interfaces declaradas en la capa de negocio, encargadas de aislar la forma en que los datos son consultados o modificados.
+		\item \textbf{Acceso a la Base de Datos (Spring Data JPA):} Administra la ejecución de sentencias SQL, la gestión de transacciones (\texttt{@Transactional}), el agrupamiento de conexiones y la interacción con el motor PostgreSQL.
+		\item \textbf{Entidades ORM (\texttt{@Entity}):} Mapeo objeto-relacional orientado a reflejar la estructura exacta de las tablas relacionales. Permanecen desvinculadas de los modelos de dominio para permitir modificaciones en el esquema de base de datos sin afectar la lógica de negocio.
+	\end{itemize}
+\end{enumerate}
 
 \subsection{Diseño de base de datos}
 A continuación, se define la estructura técnica detallada de cada una de las tablas del modelo relacional, especificando el tipo de dato, las restricciones y las llaves correspondientes (PK = Primary Key, FK = Foreign Key):
