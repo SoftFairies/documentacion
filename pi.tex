@@ -1,0 +1,1178 @@
+\documentclass[12pt, atypical, journal]{article}
+
+% --- Paquetes Requeridos para Formato APA 7 y Estilo Profesional ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\geometry{letterpaper, margin=2.54cm} % Margen APA estándar (1 pulgada)
+\usepackage{times} % Tipografía estándar Times New Roman
+\usepackage{setspace}
+\onehalfspacing % Interlineado 1.5 según especificación institucional
+\usepackage{graphicx}
+\usepackage{booktabs} % Para tablas estilizadas y profesionales
+\usepackage{longtable}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{float}
+
+% --- Paquete para sangría francesa en Referencias (APA) ---
+\newenvironment{hangparas}[2]{\setlength{\parindent}{-#1}\setlength{\leftmargin}{#1}\everypar{\hangindent=#1}}{\par}
+
+% --- Configuración de Enlaces e Hipervínculos ---
+\hypersetup{
+   colorlinks=true,
+   linkcolor=black,
+   filecolor=black,     
+   urlcolor=blue,
+   citecolor=black
+}
+
+% --- Configuración de Formato de Títulos (Estilo APA/Institucional) ---
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries\itshape}{\thesubsubsection.}{0.5em}{}
+
+\begin{document}
+
+% ==============================================================================
+% 1. PORTADA
+% ==============================================================================
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+      
+       {\Large\bfseries UNIVERSIDAD POLITÉCNICA DE CHIAPAS} \\[0.5cm]
+       {\large\bfseries INGENIERÍA EN TECNOLOGÍAS DE LA INFORMACIÓN E INNOVACIÓN DIGITAL} \\[1.5cm]
+      
+       \vfill
+      
+       {\Large\bfseries REPORTE DE PROYECTO INTEGRADOR II} \\[1cm]
+      
+       \textbf{Nombre del Proyecto:} \\
+       \textbf{Nombre del Proyecto:} \\
+       {\large LecturaMétrica: Plataforma Web para la Gestión Automatizada, Analítica y Gamificada del Hábito Lector} \\[1.5cm]
+      
+       \vfill
+      
+       \textbf{Integrantes del Equipo:} \\[0.3cm]
+       {\large Patricia Alejandra Clemente Chacón (Matrícula: 251237)} \\
+       {\large Nínive Argelia Pérez González (Matrícula: 251239)} \\
+       {\large Mónica Jamileth Velázquez García (Matrícula: 243729)} \\[1.5cm]
+      
+       \textbf{Docente:} \\
+       {\large Hernandez Camacho Rocio Crystal} \\[1.5cm]
+      
+       \vfill
+      
+       \textbf{Fecha de entrega:} \\
+       {\large 13 de junio de 2026}
+      
+       \vspace*{1cm}
+   \end{center}
+\end{titlepage}
+
+\newpage
+
+% ==============================================================================
+% ÍNDICES
+% ==============================================================================
+\tableofcontents
+\newpage
+
+\listoffigures
+\newpage
+
+\listoftables
+\newpage
+
+% ==============================================================================
+% 2. RESUMEN
+% ==============================================================================
+\section{Resumen}
+
+Este proyecto presenta el desarrollo de una aplicación web dedicada a la lectura métrica y la optimización de procesos mediante la recopilación, almacenamiento y visualización de indicadores clave de rendimiento. El sistema fue concebido para mitigar los errores derivados del registro manual y solucionar la falta de centralización de la información en entornos organizacionales.
+
+Arquitectónicamente, el desarrollo se basa en una estructura modular y desacoplada que garantiza la escalabilidad y mantenibilidad del sistema. El \textit{frontend}, construido con Next.js y React, proporciona una interfaz de usuario reactiva y optimizada mediante Tailwind CSS, mientras que el \textit{backend} implementa una arquitectura limpia (\textit{Clean Architecture}) utilizando Java, Spring Boot y Hibernate. Este diseño permite una clara separación entre la lógica de negocio y la infraestructura, apoyándose en PostgreSQL para asegurar la integridad y persistencia de los datos.
+
+\vspace{0.5cm}
+\noindent \textbf{Palabras clave:} Aplicación Web, Hábitos de Lectura, Seguimiento, Arquitectura Limpia.
+
+% ==============================================================================
+% 3. INTRODUCCIÓN
+% ==============================================================================
+\section{Introducción}
+
+\subsection{Breve explicación del entorno del problema}
+En el entorno contemporáneo del aprendizaje y el bienestar personal, el desarrollo o mantenimiento de la disciplina lectora se enfrenta de manera constante a la falta de herramientas tecnológicas accesibles que cuantifiquen el rendimiento de forma automática. La ausencia de soluciones centralizadas genera dos escenarios críticos en el público general: por un lado, los lectores novatos experimentan desmotivación y aislamiento prematuro debido a la pesadez de los registros manuales; por otro lado, los lectores recurrentes y consumidores avanzados de formatos complejos como el manga o las novelas gráficas fragmentan su información al carecer de un repositorio único para controlar grandes volúmenes de capítulos. Como consecuencia, el hábito de la lectura tiende a volverse desorganizado, inconsistente y propenso al abandono.
+
+\subsection{Importancia del desarrollo}
+El desarrollo de la plataforma web LecturaMétrica radicó en transformar datos estadísticos pasivos en estímulos activos de comportamiento humano mediante software. La importancia de esta solución tecnológica residió en eliminar la carga operativa de las bitácoras tradicionales a través de la ingesta automatizada de datos, inyectando simultáneamente dinámicas de interacción comunitaria asíncrona y gamificación. El impacto esperado de la implementación del sistema se centró en elevar la retención activa, incrementar la constancia diaria mediante incentivos lógicos en el servidor y facilitar la planeación personal a través de un panel analítico predictivo de la velocidad lectora real.
+
+\subsection{Alcances y limitaciones}
+El alcance del proyecto abarcó el diseño y construcción de los módulos de autenticación y personalización (\textit{onboarding}), el CRUD automatizado de la biblioteca personal indexada a APIs externas, el sistema de registro híbrido (temporizador web en tiempo real y formulario retroactivo), el tablero analítico dinámico, las mecánicas de gamificación (cálculo de rachas e insignias) y el motor de mensajería asíncrona anónima denominado ``Buzón del Lector'' con ciclos cerrados de 24 horas. Como limitaciones del sistema, se determinó explícitamente fuera del alcance el almacenamiento, distribución o lectura directa de archivos físicos digitales protegidos (como EPUB o PDF), la difusión de fragmentos textuales con derechos de autor, y la creación de chats o foros públicos en tiempo real.
+
+\subsection{Estructura del documento}
+Este documento técnico está organizado estructuralmente de manera sistemática en secciones secuenciales diseñadas para detallar el ciclo de ingeniería del software. El reporte incluye la delimitación analítica en el Planteamiento del Problema, la formulación de metas en los Objetivos Generales y Específicos, el sustento tecnológico y conceptual en el Marco Teórico, y la descripción detallada del marco legal aplicable en la sección de Normativas, sirviendo como base formal para la posterior implementación y validación experimental del sistema.
+
+\newpage
+
+% ==============================================================================
+% 4. PLANTEAMIENTO DEL PROBLEMA
+% ==============================================================================
+\section{Planteamiento del problema}
+
+\subsection{Descripción del problema en su contexto}
+El desarrollo del hábito de la lectura en la sociedad digital se ve obstaculizado por la desconexión entre el interés del usuario y las herramientas de seguimiento disponibles. El público general se encuentra dividido en dos perfiles con necesidades desatendidas en su contexto operativo diario: personas que buscan iniciarse en la lectura y que sufren de falta de constancia por aislamiento, y lectores expertos que consumen activamente libros, mangas y novelas gráficas de forma simultánea. Al no contar con una plataforma adecuada, la recopilación de datos de lectura se vuelve caótica, lo que provoca que el usuario pierda la visibilidad de sus propios logros y abandone la actividad debido a la monotonía de los métodos analógicos.
+
+\subsection{Antecedentes y evidencia}
+Las alternativas del mercado actual reflejan una fragmentación crítica en el desarrollo de software educativo y de gestión de hábitos. Por un lado, existen plataformas orientadas a la autoedición de foros abiertos (como Wattpad o Webtoon); por otro, se encuentran herramientas basadas en registros planos y manuales (como Goodreads o plantillas de hojas de cálculo). La evidencia recopilada en el análisis del comportamiento del usuario demuestra que los llenados manuales repetitivos generan una alta fricción operativa, provocando cansancio cognitivo y convirtiéndose en la causa principal de que los sistemas de registro tradicionales sean abandonados en las primeras semanas de uso.
+
+\subsection{Declaración clara del problema}
+Los lectores en el público general carecen de herramientas tecnológicas centralizadas y automatizadas que permitan cuantificar su progreso real de lectura, lo que provoca la deserción prematura del hábito en lectores novatos debido a la desmotivación por registros pesados, y la fragmentación de la información en lectores expertos al no disponer de un espacio único para gestionar obras y estadísticas de rendimiento.
+
+\subsection{Consecuencias del problema}
+De persistir la ausencia de una solución centralizada, se mantendrá la tendencia de abandono del hábito lector ante la falta de estímulos conductuales estructurados. Las consecuencias directas incluyen una baja retención activa de la información leída, desorganización en el control de bibliotecas personales y una disminución en la disciplina y constancia diaria, limitando el impacto positivo que la lectura ejerce sobre el desarrollo cognitivo y académico del individuo.
+
+\subsection{Delimitación del problema}
+Este proyecto se delimita estrictamente al desarrollo de una plataforma web para la recolección, automatización y análisis cuantitativo de métricas individuales de lectura. El sistema procesará metadatos, tiempos de lectura, páginas y micro-reseñas en texto plano escritas por los propios usuarios. No se incluirá el soporte para procesamiento de archivos de lectura digital, la captura de imágenes de obras externas, ni funciones de interacción social síncrona o perfiles públicos abiertos.
+
+\subsection{Preguntas de investigación}
+\begin{enumerate}
+   \item ¿Cómo se puede diseñar una arquitectura de software web híbrida que combine la ingesta de APIs externas de metadatos con rastreadores web para eliminar el esfuerzo del registro manual de libros y mangas?
+   \item ¿De qué manera la implementación de mecánicas de gamificación predictiva y un sistema de intercambio de cartas asíncrono e independiente impactan en la motivación intrínseca y la retención del usuario?
+\end{enumerate}
+
+\subsection{Justificación del desarrollo del proyecto}
+El desarrollo de LecturaMétrica se justifica tecnológicamente al proveer una solución que transforma datos estáticos en estímulos de comportamiento lector a través de procesos automatizados en el servidor. Al automatizar la organización de la biblioteca mediante APIs (como Open Library API), se elimina la carga operativa del usuario. Socialmente, el proyecto introduce una innovación nativa mediante el ``Buzón del Lector'', un intercambio asíncrono y anónimo de micro-reseñas en ciclos cerrados de 24 horas, diseñado para mitigar el aislamiento del lector moderno sin los riesgos de moderación de una red social tradicional. Desde la perspectiva científica de la asignatura, el proyecto se fundamenta en un enfoque cuantitativo experimental que busca validar de manera matemática el incremento de al menos un 20\% en el tiempo promedio de lectura diario durante un periodo de pruebas de 20 días naturales con una muestra mínima de 40 usuarios reales.
+
+\subsection{Hipótesis}
+Si los usuarios cuentan con una plataforma web que centraliza y visualiza métricas de rendimiento en tiempo real, automatiza el registro de obras mediante el consumo de APIs y mitiga el aislamiento lector a través de una mecánica interactiva de "Buzón de Recomendaciones Anónimas" de formato corto (con un ciclo cerrado de envío-espera de 24 horas), entonces se incrementará al menos un 20% el tiempo promedio de lectura diario y la retención activa de los usuarios durante un periodo de 20 días, dado que la reducción del esfuerzo operativo combinada con el factor sorpresa, la curiosidad comunitaria y las recompensas de gamificación asíncrona disminuyen la resistencia cognitiva, incrementando la motivación intrínseca y la disciplina en actividades de lectura.
+
+\newpage
+
+% ==============================================================================
+% 5. OBJETIVOS
+% ==============================================================================
+\section{Objetivos}
+
+\subsection{Objetivo General}
+Desarrollar una plataforma web llamada LecturaMétrica que permita optimizar el hábito lector en el público general mediante herramientas de seguimiento automatizado, análisis estadístico multiformato y gestión personalizada de bibliotecas digitales, utilizando un ecosistema tecnológico compuesto por Next.js, Java con Spring Boot y PostgreSQL bajo un modelo de desarrollo híbrido.
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}
+   \item Diseñar e implementar el módulo de biblioteca personal mediante operaciones CRUD de obras, optimizándolo a través de una arquitectura híbrida de ingesta de datos que combine el consumo de APIs externas de metadatos y rastreadores web para automatizar la extracción de portadas, capítulos y géneros, eliminando la fricción del registro manual.
+   \item Desarrollar un componente interactivo de cuantificación de progreso en el \textit{front-end} que ofrezca un flujo dual de captura: un temporizador en tiempo real para la medición automatizada de sesiones activas, y un formulario de registro manual retroactivo para asegurar la flexibilidad de recolección de datos sin importar el entorno del usuario.
+   \item Programar la lógica algorítmica para la gestión de un motor de gamificación que procese el cálculo automatizado de rachas consecutivas de días leyendo (\textit{streaks}), récords históricos, asignación de insignias y la inyección automatizada de un ``Radar de Curiosidades'' basado en las preferencias psicográficas del usuario.
+   \item Construir el sistema de mensajería asíncrona ``Buzón del Lector'', implementando las reglas de negocio y filtros necesarios en el servidor para la distribución aleatoria y anónima de micro-reseñas en ciclos controlados de bloqueo y apertura de 24 horas.
+   \item Estructurar un \textit{dashboard} analítico dinámico utilizando componentes gráficos interactivos en Next.js para representar la distribución de lectura por géneros literarios, promedios de velocidad lectora real, estimaciones predictivas de finalización de obras y líneas de tiempo de metas cumplidas.
+   \item Evaluar el impacto y usabilidad de la plataforma mediante la recolección de datos cuantitativos en una muestra de un mínimo de 40 usuarios reales durante un periodo de 20 días naturales, validando estadísticamente el incremento del tiempo promedio de lectura diario y la tasa de retención activa.
+\end{enumerate}
+
+\newpage
+
+% ==============================================================================
+% 6. MARCO TEÓRICO
+% ==============================================================================
+\section{Marco teórico}
+
+\subsection{Antecedentes teóricos y tecnológicos}
+
+Para fundamentar el valor tecnológico de \textbf{LecturaMétrica}, se analizaron aplicaciones existentes en el mercado. Actualmente, las aplicaciones de lectura se dividen en tres grandes categorías con enfoques muy marcados:
+
+\begin{enumerate}
+    \item \textbf{Gestores masivos de bibliotecas (Goodreads, StoryGraph):} Plataformas enfocadas en la catalogación exhaustiva y la reseña literaria. Aunque cuentan con bases de datos inmensas, carecen de herramientas de seguimiento en tiempo real (como temporizadores en web). Además, su principal base de usuarios y diseño nativo se centra en el idioma inglés.
+    \item \textbf{Medidores de hábitos y sesiones (Bookmory, Bookly):} Son las herramientas funcionalmente más cercanas al propósito de este proyecto, ya que integran temporizadores, calendarios y estadísticas detalladas. Sin embargo, su enfoque es estrictamente individualista y cerrado, aislando al lector. Aplicaciones como Bookly suelen bloquear funciones hasta pagar una suscripción, mientras que Bookmory carece de mecánicas de interacción comunitaria.
+    \item \textbf{Plataformas de autoedición y consumo serializado (Wattpad, Webtoon, Lilithum):} Su núcleo no es la medición del hábito, sino la publicación y el consumo de contenido original. Su componente social es síncrono, directo y a menudo invasivo (comentarios por párrafo o capítulo), lo cual no fomenta la disciplina lectora de obras externas, sino la permanencia dentro de su propio ecosistema de contenido.
+\end{enumerate}
+
+A pesar de la popularidad de estas herramientas, el usuario hispanohablante se enfrenta a barreras de idioma o a la falta de una plataforma que equilibre el seguimiento cuantitativo con una motivación comunitaria sana.
+
+\begin{table}[htpb]
+\centering
+\caption{Análisis comparativo de plataformas de gestión y fomento de lectura}
+\label{tab:comparativa_apps}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\textbf{Plataforma} & \textbf{Registro por API} & \textbf{Temporizador} & \textbf{Analíticas} & \textbf{Gamificación} & \textbf{Interacción Social} & \textbf{Idioma Nativo} \\
+\midrule
+\textbf{Goodreads} & Manual / ISBN & No & Básicas & Reto Anual & Foros abiertos & Inglés \\
+\textbf{StoryGraph} & Manual / ISBN & No & Avanzadas & Reto Anual & Seguidores & Inglés \\
+\textbf{Bookly} & Manual / ISBN & Sí & Avanzadas & Insignias & Nula & Inglés \\
+\textbf{Bookmory} & Manual / ISBN & Sí & Avanzadas & Rachas / Calendario & Nula & Multi (Traducido) \\
+\textbf{Wattpad / Webtoon / Lilithum} & N/A (Interno) & No & N/A & N/A & Comentarios directos & Español / Multi \\
+\midrule
+\textbf{LecturaMétrica (Propuesta)} & \textbf{Sí} & \textbf{Sí} & \textbf{Avanzadas} & \textbf{Rachas / Insignias} & \textbf{Buzón Asíncrono} & \textbf{Español} \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Como se observa en la comparativa, \textbf{LecturaMétrica} se posiciona como una solución superior en su nicho al tomar las mejores mecánicas de medición (presentes en aplicaciones como Bookmory) y potenciarlas mediante la inyección de un componente social controlado. El modelo del ``Buzón del Lector'' introduce un intercambio asíncrono y anónimo que genera expectativa y curiosidad sin la presión de las redes sociales tradicionales. Sumado a su arquitectura de ingesta automatizada y su diseño nativo en español, la plataforma elimina la resistencia cognitiva, garantizando una mayor retención del usuario.
+
+
+\subsection{Definición de conceptos clave}
+\begin{itemize}
+   \item \textbf{Back-end:} Segmento lógico de una aplicación informática que se ejecuta en el servidor y procesa las reglas de negocio, la comunicación con la base de datos y la seguridad, permaneciendo invisible al usuario final.
+   \item \textbf{Front-end:} Entorno visual y de presentación de la aplicación interactiva con la que el usuario final tiene contacto directo a través de navegadores web.
+   \item \textbf{Base de Datos Relacional:} Sistema de organización de datos estructurados en filas y columnas que se interconectan mediante llaves primarias y foráneas asegurando la integridad referencial.
+   \item \textbf{API REST:} Interfaz de programación de aplicaciones que utiliza los métodos del protocolo HTTP para intercambiar datos de manera ligera y estandarizada, usualmente en formato JSON.
+   \item \textbf{Ingesta Híbrida de Datos:} Arquitectura de software que combina múltiples fuentes de extracción de información en tiempo real, tales como el consumo estructurado de APIs RESTful externas y la ejecución dirigida de rastreadores web o arañas informáticas (\textit{Web Spiders}) para consolidar un registro unificado de metadatos.
+   \item \textbf{Gamificación Asíncrona:} Integración de mecánicas, dinámicas y componentes de diseño de juegos en entornos que no son de juego, estructurada bajo ciclos diferidos en el tiempo (como sistemas de bloqueo/apertura programados) para incentivar el retorno diario basado en la curiosidad y el factor sorpresa.
+   \item \textbf{Arquitectura Desacoplada:} Patrón de diseño de sistemas donde el \textit{front-end} (capa de presentación) y el \textit{back-end} (capa lógica) operan de manera independiente en servidores autónomos, comunicándose exclusivamente a través de peticiones HTTP e intercambiando objetos ligeros de datos (JSON).
+   \item \textbf{Formulario Psicográfico:} Herramienta de recolección de datos iniciales (\textit{onboarding}) diseñada para capturar variables cualitativas de comportamiento, gustos, preferencias y rasgos de interés del usuario con el fin de parametrizar algoritmos de personalización en el servidor.
+\end{itemize}
+
+\subsection{Explicación de tecnologías y herramientas utilizadas}
+\begin{itemize}
+   \item \textbf{Next.js y React:} Framework de desarrollo \textit{front-end} basado en JavaScript que permite la renderización eficiente de interfaces de usuario basadas en componentes. Su gestión nativa de estados dinámicos es óptima para la construcción de gráficos estadísticos interactivos y tableros analíticos en tiempo real.
+   \item \textbf{Java y Spring Boot:} Lenguaje de programación fuertemente tipado acoplado a un framework robusto para el desarrollo del \textit{back-end}. Su motor de inversión de control (IoC) e inyección de dependencias permite aislar rígidamente las reglas de negocio del motor de gamificación y la seguridad del servidor.
+   \item \textbf{Spring Data JPA e Hibernate:} Tecnologías de mapeo objeto-relacional (ORM) que abstraen la capa de datos en Java, transformando las entidades de software en tablas de bases de datos relacionales y automatizando las consultas transaccionales de alta velocidad.
+   \item \textbf{PostgreSQL:} Sistema de gestión de bases de datos relacionales (RDBMS) de código abierto, seleccionado por su alta integridad cuantitativa, soporte avanzado para tipos de datos complejos y eficiencia en el almacenamiento seguro de variables métricas acumuladas.
+\end{itemize}
+
+\subsection{Relación entre teoría y proyecto}
+Ohno
+
+\subsection{Referencias académicas y técnicas}
+\begin{itemize}
+	\item \textbf{INEGI.} (2025). \textit{Módulo sobre Lectura (MOLEC)}. \\
+	Enlace: \url{https://share.google/oSIT0jhQy8hLjdmqe}
+	
+	\item \textbf{Dialnet.} (2024). \textit{Factores que afectan el hábito de la lectura: un problema de la sociedad actual}. \\
+	Enlace: \url{https://share.google/RAG5lluZnsl7iiICb}
+	
+	\item \textbf{Revista OCNOS.} (2009). \textit{Aunque lea poco, yo sé que estoy listo}. \\
+	Enlace: \url{https://share.google/1MDzQisS2FaRMtEf9}
+	
+	\item \textbf{E-Ciencias de la Información.} (2020). \textit{Hábitos de lectura en alumnos de primer ingreso de psicología educativa de la Universidad Pedagógica Nacional (UPN), México}. Vol. 10, N° 1. \\
+	Enlace: \url{https://www.scielo.sa.cr/scielo.php?script=sci_arttext&pid=S1659-41422020000100231}
+	
+	\item \textbf{RIDE. Revista Iberoamericana para la Investigación y Desarrollo Educativo.} (2025). \textit{Las creencias de estudiantes de secundaria sobre la lectura}. Vol. 15, N° 30. \\
+	Enlace: \url{https://www.scielo.org.mx/scielo.php?script=sci_arttext&pid=S2007-74672025000100135}
+\end{itemize}
+
+\newpage
+
+% ==============================================================================
+% 7. NORMATIVAS
+% ==============================================================================
+\section{Normativas}
+El diseño arquitectónico, la implementación lógica y el tratamiento de datos de la presente aplicación web de lectura métrica se alinean estrictamente con el marco jurídico nacional regulado por la Ley Federal del Derecho de Autor (LFDA) de México. Debido a las características particulares del sistema ---el cual opera como una biblioteca centralizada de indicadores sin almacenamiento ni distribución de archivos de obras protegidas---, se identifican y aplican las siguientes disposiciones normativas específicas:
+
+\begin{itemize}
+    
+   \item \textbf{Protección de las Notas y Comentarios de los Usuarios:} De acuerdo con el \textbf{Artículo 14 (Fracción VIII)}, la ley no protege los textos legales en sí, pero sí protege las anotaciones, comentarios, estudios y críticas originales que alguien escriba sobre ellos. Por eso, el sistema reconoce que los apuntes y opiniones literarias que los usuarios registren en la plataforma son de su propiedad intelectual por ser creaciones originales. Por otra parte, el \textbf{Artículo 148 (Fracción III)} permite copiar fragmentos de libros sin pedir permiso siempre que sea para fines de crítica o investigación, con la condición obligatoria de citar al autor original; debido a esto, la aplicación incluye campos específicos para que el usuario registre siempre la fuente de sus lecturas \cite{lfda2026}.
+    
+    \item \textbf{Límites en las Reglas de Juego (Módulo de Gamificación):} El \textbf{Artículo 14 (Fracciones I y III)} aclara que los derechos de autor no protegen las ideas puras, los métodos, los sistemas de puntuación ni las reglas de los juegos o dinámicas mentales. Esto significa que las fórmulas de puntos, niveles y lógicas que usamos para motivar la lectura no son exclusivas por ley. Lo que sí queda protegido legalmente es el código de programación real (tanto el \textit{back-end} como el \textit{front-end}) que da vida a esas funciones, pero no la idea conceptual del juego en sí \cite{lfda2026}.
+    
+    \item \textbf{Uso Libre de Nombres y Títulos de Libros:} El \textbf{Artículo 14 (Fracción V)} establece de forma directa que los nombres propios, títulos aislados o frases sueltas de las obras no cuentan con protección de derecho de autor. Gracias a esto, la base de datos de la plataforma puede guardar, mostrar y organizar libremente una lista con los títulos de los libros que los usuarios recomiendan en los espacios comunitarios, sin temor a infringir ninguna norma \cite{lfda2026}.
+    
+    \item \textbf{Compatibilidad y Pruebas de Seguridad en el Sistema:} Según los \textbf{Artículos 114 Quáter (Fracciones I y III)} y \textbf{114 Quinquies}, no se considera una violación a la ley cuando se analizan o adaptan programas informáticos de buena fe. La legislación nos permite aplicar ingeniería inversa con el único objetivo de que nuestra plataforma pueda conectarse e interactuar correctamente con otras aplicaciones externas de lectura. Asimismo, nos autoriza a realizar pruebas y auditorías para revisar, detectar fallas y mejorar la seguridad de nuestra base de datos centralizada \cite{lfda2026}.
+    
+    \item \textbf{No Distribución de Contenido Protegido:} El \textbf{Artículo 16 (Fracciones II, V y VI)} define formalmente qué significa publicar, distribuir o reproducir una obra de forma digital (como almacenarla de forma temporal o permanente en servidores). Como nuestra aplicación se limita exclusivamente a calcular y registrar métricas numéricas de lectura (páginas leídas, tiempos, etc.) y jamás guarda, copia ni distribuye los archivos de los libros completos al público, el sistema no realiza ninguna actividad de explotación y queda libre de pagar regalías o tramitar licencias especiales \cite{lfda2026}.
+
+    \item \textbf{Módulo 1: Registro e Incorporación de Usuarios (Onboarding):} El diseño de la interfaz en las vistas de registro de cuenta e introducción de preferencias literarias da cumplimiento estricto a las obligaciones dispuestas en los Artículos 15 y 16 de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), así como a los Artículos 22, 23 y 24 de la Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Chiapas. La lógica de desarrollo de la aplicación prohíbe el almacenamiento de datos sin el consentimiento previo del titular. Por ello, la vista bloquea el envío de los datos identificativos primarios (nombre y correo electrónico) hacia la API centralizada hasta que el usuario ejecute una acción afirmativa que valide el conocimiento de las finalidades del tratamiento. Esto asegura que el flujo de datos inicie de manera lícita bajo el amparo normativo local y federal, garantizando que el usuario conozca la identidad del responsable antes de la recolección.
+    
+    \item \textbf{Módulo 2: Panel de Identidad y Autenticación (Login):} El módulo de autenticación e inicio de sesión implementa las directrices técnicas de mitigación de riesgos descritas en el Artículo 19 de la LFPDPPP y los Artículos 32 y 35 de la Ley de Protección de Datos Personales del Estado de Chiapas. Las credenciales de acceso se consideran vectores críticos de seguridad. Los artículos citados obligan al responsable de la aplicación a adoptar medidas de seguridad técnicas y administrativas para evitar el acceso no autorizado, la pérdida o la alteración de datos de carácter personal. La interfaz frontend mitiga estas vulnerabilidades mediante el enmascaramiento visual de caracteres sensibles en el campo de contraseña y fuerza la transmisión cifrada de los tokens de acceso hacia la base de datos centralizada.
+    
+    \item \textbf{Módulo 3: Captura Manual de Metadatos (Agregar Libro):} La arquitectura del formulario para la adición manual o indexación de textos por parte del usuario se rige bajo los principios de calidad y proporcionalidad mandatados por el Artículo 6 de la LFPDPPP y los Artículos 16 y 18 de la Ley de Protección de Datos Personales del Estado de Chiapas. La ley estipula que los sistemas de información solo deben recabar los datos que sean estrictamente necesarios, pertinentes y correctos para la finalidad que justifica su tratamiento. Las vistas del formulario restringen la captura de información exclusivamente a campos cuantitativos de control lector (como título, autor y número de páginas), absteniéndose de solicitar datos excesivos, accesorios o ajenos a la naturaleza del software, garantizando una base de datos optimizada y legalmente limpia.
+    
+    \item \textbf{Módulo 4: Dashboard General y Visualización de Métricas (Perfil de Usuario):} Las interfaces persistentes que muestran el nombre del perfil activo y los módulos gráficos de estadísticas operan como el canal de ejecución inmediata para el ejercicio del Derecho de Acceso, fundamentado en el Artículo 22 de la LFPDPPP y el Artículo 51 de la Ley de Protección de Datos Personales del Estado de Chiapas. El derecho de Acceso dicta que el titular tiene la facultad constitucional de conocer, de manera comprensible y en tiempo real, qué datos específicos tiene el sistema sobre él y cómo se están procesando. Al renderizar permanentemente la identidad del usuario, su historial de racha y las métricas acumuladas, el diseño del frontend automatiza el cumplimiento de este derecho ARCO sin obligar al usuario a realizar trámites administrativos complejos.
+    
+    \item \textbf{Módulo 5: Interacción de Recomendaciones (Buzón Literario):} El flujo operativo de la sección destinada al envío e intercambio de cartas y recomendaciones literarias observa rigurosamente las restricciones de transferencia de datos y confidencialidad señaladas en el Artículo 36 de la LFPDPPP y los Artículos 11, 65 y 71 de la Ley de Protección de Datos Personales del Estado de Chiapas. La ley prohíbe la transferencia o revelación de datos personales a terceros sin un consentimiento explícito. Dado que la funcionalidad de la pantalla promete un entorno de intercambio ``anónimo'', la interfaz gráfica asegura que el contenido de la recomendación se desvincule por completo de los datos de identidad digital del remitente en el backend antes de ser distribuido a otros lectores. Este proceso de disociación técnica sostiene el principio de confidencialidad y evita filtraciones o transferencias ilícitas dentro de la red de usuarios.
+   \end{itemize}
+\newpage
+
+% ==============================================================================
+% 8. METODOLOGÍA
+% ==============================================================================
+\section{Metodología}
+
+\subsection{Tipo de investigación}
+Este proyecto se clasifica como una \textbf{investigación aplicada de tipo tecnológico} con un \textbf{enfoque cuantitativo y experimental}. 
+
+Es \textit{tecnológica} y \textit{aplicada} puesto que su objetivo principal es la creación de una solución de software funcional para resolver una problemática real. Asimismo, adopta un \textit{enfoque cuantitativo} al fundamentarse en la recopilación y análisis estadístico de variables medibles, como el tiempo promedio de lectura diario, la frecuencia de sesiones y la consistencia de las rachas (\textit{streaks}) del usuario. Finalmente, es \textit{experimental} ya que el desarrollo se sustenta en la validación de una hipótesis, donde se introducen variables controladas (automatización de registros y mecánicas de gamificación) para medir su impacto directo en el comportamiento lector de una muestra controlada de 40 usuarios, buscando una correlación positiva validada mediante datos empíricos.
+
+\subsection{Enfoque metodológico del desarrollo}
+Para la construcción del sistema se adoptó un modelo híbrido. A nivel macro, se utilizó un enfoque en \textit{Cascada} (Waterfall) para el cumplimiento de las fases de análisis, diseño, desarrollo, pruebas e implementación, garantizando la alineación con los hitos académicos del proyecto. A nivel micro (desarrollo operativo), se implementó la metodología ágil \textit{SCRUM}, organizando el trabajo en \textit{sprints} de dos semanas. Esto permitió al equipo gestionar el \textit{backlog} de requerimientos mediante historias de usuario, realizar reuniones de sincronización semanales y ejecutar entregas incrementales que facilitaron la corrección técnica y la mejora continua del producto.
+
+\subsection{Fases del proyecto}
+El desarrollo del proyecto se estructuró en cinco fases cronológicas:
+\begin{itemize}
+    \item \textbf{Análisis de requerimientos:} Identificación del problema mediante la observación del comportamiento lector y la revisión de limitaciones en herramientas existentes, estableciendo las necesidades del usuario final.
+    \item \textbf{Diseño del sistema:} Elaboración de la arquitectura de \textit{software} (Clean Architecture), definición del esquema relacional de la base de datos en PostgreSQL y diseño de la interfaz de usuario.
+    \item \textbf{Implementación:} Construcción modular del \textit{backend} en Java con Spring Boot y el \textit{frontend} en Next.js, utilizando flujos de trabajo en Git con aislamiento de ramas por funcionalidades.
+    \item \textbf{Pruebas y validación:} Ejecución de pruebas unitarias y de integración para asegurar la robustez de los \textit{endpoints} y la correcta persistencia de los datos.
+    \item \textbf{Documentación y entrega:} Generación de los reportes técnicos, manuales y presentación final del producto bajo los estándares académicos requeridos.
+\end{itemize}
+
+\subsection{Herramientas y tecnologías utilizadas}
+
+\begin{table}[h]
+\centering
+\caption{Stack tecnológico y herramientas del proyecto}
+\label{tab:tecnologias}
+\begin{tabular}{ll}
+\toprule
+\textbf{Actividad} & \textbf{Herramienta / Tecnología} \\
+\midrule
+Desarrollo Back-end & Java 21, Spring Boot, Hibernate, JPA \\
+Interfaz de usuario & Next.js, React, Tailwind CSS \\
+Base de datos & PostgreSQL \\
+Control de versiones & Git, GitHub CLI \\
+Pruebas & Jmeter, Postman, Selenium (Web Testing) \\
+Gestión de proyecto & Metodología SCRUM, Jira \\
+Contenedorización & Docker \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Técnicas de recopilación de información}
+Para la definición de los requerimientos se emplearon técnicas de investigación documental y análisis de campo. Se realizó una revisión de literatura sobre gamificación y hábitos lectores, complementada con encuestas de opinión y formularios de \textit{feedback} para capturar las expectativas del usuario. Asimismo, se analizaron flujos de trabajo manuales previos para identificar los puntos críticos de fricción que el sistema debía automatizar.
+
+\subsection{Validación y evaluación del sistema}
+La validación del sistema se llevó a cabo mediante un enfoque de pruebas en capas. En el \textit{backend}, se aplicaron pruebas unitarias para verificar la lógica de los casos de uso y la integridad de los datos. A nivel de comunicación, se utilizaron pruebas de integración con Postman para validar los \textit{endpoints} REST. Finalmente, se diseñó un protocolo de evaluación con usuarios reales, consistente en un periodo de prueba de 20 días naturales con una muestra de 40 usuarios, cuyo objetivo es validar estadísticamente el incremento del tiempo promedio de lectura y la retención activa, utilizando el \textit{dashboard} de métricas como herramienta de verificación principal.
+
+\newpage
+% ==============================================================================
+% 8. ANÁLISIS DEL SISTEMA
+% ==============================================================================
+\section{Análisis del sistema}
+
+\subsection{Requerimientos funcionales}
+Los requerimientos funcionales especifican las capacidades, comportamientos y acciones concretas que el sistema debe ejecutar para responder a las necesidades de los usuarios y garantizar la correcta gestión de la plataforma:
+
+\begin{itemize}
+	\item \textbf{RF-01:} El sistema debe permitir el registro de nuevos usuarios mediante correo electrónico y contraseña cifrada.
+	\item \textbf{RF-02:} El sistema debe permitir el inicio de sesión y el manejo de sesiones activas de forma segura.
+	\item \textbf{RF-03:} El sistema debe permitir la consulta y actualización de la información básica del perfil de usuario.
+	\item \textbf{RF-04:} El sistema debe permitir registrar nuevas obras especificando obligatoriamente su formato de lectura: Libro, Manga, Manhwa, Cómic o Novela Gráfica.
+	\item \textbf{RF-05:} El sistema debe permitir asociar metadatos detallados a cada obra, incluyendo título, autor(es) y género(s).
+	\item \textbf{RF-06:} El sistema debe permitir clasificar el estado de cada obra dentro de la biblioteca personal del usuario (Pendiente, Leyendo, Completado, Pausado o Abandonado).
+	\item \textbf{RF-07:} El sistema debe permitir actualizar el progreso de lectura de manera incremental mediante sesiones de lectura diarias o periódicas.
+	\item \textbf{RF-08:} El sistema debe calcular y visualizar métricas del usuario, tales como el total de obras finalizadas.
+	\item \textbf{RF-09:} El sistema debe mostrar reportes de ritmo de lectura (páginas o capítulos leídos por semana).
+	\item \textbf{RF-10:} El sistema debe calcular indicadores de constancia, como rachas de lectura.
+	\item \textbf{RF-11:} El sistema debe permitir redactar notas o marcadores de texto vinculados a capítulos o páginas específicas dentro del seguimiento de una obra.
+\end{itemize}
+
+\subsection{Requerimientos no funcionales}
+Los requerimientos no funcionales definen los criterios de calidad, restricciones técnicas, atributos de rendimiento y estándares de seguridad que rigen la operación interna de la plataforma:
+
+\begin{itemize}
+	\item \textbf{RNF-01:} El tiempo de respuesta de la API para consultas del catálogo y progreso no debe superar los 300 ms en condiciones normales de carga.
+	\item \textbf{RNF-02:} Las contraseñas de los usuarios deben almacenarse mediante un algoritmo de hashing seguro (como BCrypt).
+	\item \textbf{RNF-03:} El acceso a los endpoints del sistema debe estar protegido mediante tokens de sesión (JWT).
+	\item \textbf{RNF-04:} Todas las solicitudes que alteren la base de datos deben incluir validaciones estrictas de entrada para prevenir inyecciones SQL.
+	\item \textbf{RNF-05:} El sistema debe mantener una disponibilidad del 99.5\% durante el tiempo de operación.
+	\item \textbf{RNF-06:} La arquitectura de la base de datos debe estar estructurada e indexada para soportar el crecimiento constante del historial de lectura sin degradar el rendimiento.
+	\item \textbf{RNF-07:} La interfaz de usuario debe ser totalmente adaptable a diferentes tamaños de pantalla (dispositivos móviles, tabletas y computadoras de escritorio).
+	\item \textbf{RNF-08:} El registro de progreso de lectura (actualizar páginas o capítulos) debe poder completarse en un máximo de tres clics o interacciones desde la pantalla principal.
+	\item \textbf{RNF-09:} El código debe seguir una arquitectura modular bien definida para facilitar su mantenimiento.
+	\item \textbf{RNF-10:} La API backend debe contar con documentación clara (por ejemplo, especificación OpenAPI/Swagger) para la consulta de rutas y payloads de respuesta.
+\end{itemize}
+
+\subsection{Identificación de los actores del sistema}
+En esta sección se definen los roles principales que interactúan con la plataforma, delimitando sus responsabilidades:
+
+\begin{table}[h]
+	\centering
+	\caption{Actores del sistema y descripción de roles}
+	\label{tab:actores_sistema}
+	\begin{tabular}{lp{11cm}}
+		\toprule
+		\textbf{Actor} & \textbf{Descripción y Responsabilidades} \\
+		\midrule
+		\textbf{Lector / Usuario Registrado} & Es el usuario final del sistema. Interactúa con la plataforma para gestionar su biblioteca personal, registrar su actividad diaria de lectura y consultar sus métricas. \\
+		\addlinespace
+		\textbf{Administrador del Sistema} & Encargado de mantener la integridad global de la aplicación, gestionar cuentas de usuario, supervisar la consistencia de los metadatos y asegurar el correcto funcionamiento del entorno. \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\subsection{Diagramas de casos de uso (UML)}
+El diagrama de casos de uso modela el comportamiento del sistema LecturaMétrica, identificando dos actores principales: el \textit{Lector}, quien interactúa con los módulos funcionales de usuario, biblioteca, buzón social y estadísticas; y el \textit{Super Administrador}, quien posee privilegios de supervisión sobre el rendimiento y estadísticas globales de la plataforma. 
+
+La estructura funcional se organiza en cinco módulos principales que encapsulan la lógica de negocio, utilizando relaciones de \textit{include} para procesos obligatorios (como la validación de preferencias tras la creación de cuenta o la adición de sesiones a un libro) y relaciones de \textit{extend} para funcionalidades opcionales o dependientes (como la configuración de seguridad 2 pasos o la búsqueda automatizada por API).
+
+\begin{figure}[h]
+    \centering
+   \includegraphics[width=1.0\textwidth]{./fotos/uc/image.png}
+    \caption{Diagrama de casos de uso del sistema LecturaMétrica.}
+    \label{fig:casos_de_uso}
+\end{figure}
+
+\subsection{Narrativas de casos de uso}
+% Describir paso a paso los escenarios principales
+
+\subsection{Modelo de datos preliminar (modelo ER)}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{bd.png}
+	\caption{Modelo de datos preliminar (Modelo Entidad-Relación).}
+	\label{fig:modelo_er}
+\end{figure}
+
+\subsubsection{Descripción del modelo de datos}
+
+A continuación, se detalla la estructura y propósito de cada una de las tablas registradas en el diagrama entidad-relación del sistema:
+
+\paragraph{1. Tabla: \texttt{users}}
+Almacena la información principal de los usuarios registrados.
+
+
+\paragraph{2. Tabla: \texttt{roles}}
+Define los roles y permisos del sistema.
+
+\paragraph{3. Tabla: \texttt{books}}
+Contiene el catálogo general de libros y obras.
+
+
+\paragraph{4. Tabla: \texttt{authors}}
+Almacena el registro de autores.
+
+\paragraph{5. Tabla: \texttt{book\_authors}}
+Tabla intermedia que gestiona la relación muchos a muchos entre libros y autores.
+
+\paragraph{6. Tabla: \texttt{genders}}
+Contiene los géneros o categorías literarias.
+
+\paragraph{7. Tabla: \texttt{book\_genres}}
+Relaciona los libros con sus respectivos géneros literarios.
+
+\paragraph{8. Tabla: \texttt{formats}}
+Registra los diferentes formatos disponibles para la lectura (ej. físico, digital).
+
+
+\paragraph{9. Tabla: \texttt{reading\_status}}
+Define los estados posibles del progreso de lectura (ej. por leer, en curso, finalizado).
+
+\paragraph{10. Tabla: \texttt{user\_library}}
+Lleva el control de la biblioteca personal de cada usuario y su progreso de lectura.
+
+\paragraph{11. Tabla: \texttt{library\_notes}}
+Guarda notas o apuntes tomados por el usuario durante la lectura.
+
+\paragraph{12. Tabla: \texttt{reading\_sessions}}
+Registra las sesiones individuales de lectura para generar métricas de tiempo y avance.
+
+\paragraph{13. Tabla: \texttt{badges}}
+Catálogo de insignias o reconocimientos.
+
+\paragraph{14. Tabla: \texttt{user\_badges}}
+Relaciona a los usuarios con las insignias que han obtenido.
+
+\paragraph{15. Tabla: \texttt{user\_streaks}}
+Monitorea las rachas continuas de lectura activa de los usuarios.
+
+\paragraph{16. Tablas de preferencias (\texttt{user\_pref\_formats} y \texttt{user\_pref\_genres})}
+Almacenan los formatos e intereses literarios favoritos del usuario para personalización.
+
+\paragraph{17. Tablas de interacción y comunidad (\texttt{recommendations}, \texttt{recommendation\_contents}, \texttt{letters}, \texttt{curiosities}, \texttt{pictures})}
+Módulos complementarios para dinamizar la experiencia del usuario dentro de la plataforma:
+
+\subsection{Reglas del negocio}
+Las reglas del negocio definen las condiciones lógicas, restricciones y políticas operativas que debe validar y hacer cumplir de manera estricta para asegurar la integridad de los datos y el correcto comportamiento del sistema:
+
+\begin{itemize}
+	\item \textbf{RN-01:} Toda obra agregada al catálogo debe asociarse obligatoriamente a un único formato principal (Libro, Manga, Manhwa, Cómic o Novela Gráfica).
+	\item \textbf{RN-02:} La extensión total de una obra (expresada en páginas o capítulos) debe ser un número entero mayor a cero.
+	\item \textbf{RN-03:} El progreso de lectura registrado por el usuario no puede exceder la extensión total definida para la obra ($0 \le \textit{Progreso Actual} \le \textit{Progreso Total}$).
+	\item \textbf{RN-04:} Cuando el progreso actual alcance exactamente la extensión total de la obra (equivalente al 100\%), el estado de la lectura debe actualizarse automáticamente a \textit{Completado}.
+	\item \textbf{RN-05:} Se considera que un día computa para la contabilización de la racha (\textit{streak}) si el usuario registra un incremento en el progreso de lectura mayor a cero dentro de dicho período.
+	\item \textbf{RN-06:} Unicidad de credenciales: no pueden existir dos cuentas de usuario registradas con el mismo correo electrónico en la base de datos.
+	\item \textbf{RN-07:} En caso de que un usuario ejecute la eliminación de su cuenta, el sistema debe efectuar un borrado en cascada de todas sus sesiones de lectura y notas asociadas, garantizando la privacidad de los datos y la integridad referencial.
+	\item \textbf{RN-08:} Si una obra se clasifica bajo el estado \textit{Abandonado}, el sistema mantendrá y conservará el registro histórico del progreso alcanzado hasta ese momento.
+\end{itemize}
+
+\newpage
+
+% ==============================================================================
+% 9. DISEÑO DEL SISTEMA
+% ==============================================================================
+\section{Diseño del sistema}
+
+\subsection{Arquitectura del sistema}
+La arquitectura de la plataforma se estructuró bajo un enfoque de "Capas Desacopladas" (Clean Architecture), garantizando la separación de responsabilidades, mantenibilidad y escalabilidad del código. El sistema se organiza conceptualmente en tres capas operativas principales:
+
+\begin{enumerate}
+	\item \textbf{Capa de Presentación / Entrada (\textit{Presentation Layer}):} 
+	Constituye el punto de entrada a la aplicación y el canal directo de comunicación con los clientes (web, dispositivos móviles o consumidores directos de la API). Sus componentes clave son:
+	\begin{itemize}
+		\item \textbf{Controladores REST (\texttt{@RestController}):} Encargados de interceptar y procesar las peticiones HTTP (\texttt{GET}, \texttt{POST}, \texttt{PUT}, \texttt{DELETE}), gestionar la emisión de códigos de estado (\texttt{200 OK}, \texttt{201 Created}, \texttt{400 Bad Request}) y delegar la ejecución a los casos de uso correspondientes.
+		\item \textbf{Objetos de Transferencia de Datos (\textit{DTOs}):} Estructuras rígidas que definen la forma exacta de los datos que entran y salen, desacoplando la interfaz externa del modelo interno del dominio.
+		\item \textbf{Validación y Mapeo de Peticiones:} Ejecuta la verificación sintáctica de la información entrante (campos obligatorios, restricciones de formato, emails válidos) y realiza la transformación de los DTOs hacia objetos del modelo de dominio antes de llamar a las capas inferiores.
+	\end{itemize}
+	
+	\item \textbf{Capa de Lógica de Negocio / Dominio y Aplicación} 
+	En esta capa se concentran las reglas de negocio, algoritmos y dinámicas específicas de la plataforma, manteniéndose aisladas de dependencias con \textit{frameworks} o motores de base de datos específicos:
+	\begin{itemize}
+		\item \textbf{Casos de Uso (\texttt{application/}):} Clases dedicadas a orquestar los flujos de operación del sistema, \texttt las cuales encapsulan las acciones concretas ejecutable por los actores.
+		\item \textbf{Modelos de Dominio (\texttt{domain/model/}):} Entidades puras que representan los conceptos sustanciales de la plataforma, conservando el estado y comportamientos clave del sistema.
+		\item \textbf{Reglas de Negocio y Reglas de Dominio:} Implementación de validaciones complejas, tales como comprobar que el avance no supere el límite del libro, computar el incremento de rachas consecutivas o alterar el estado a \textit{Completado}.
+	\end{itemize}
+	
+	\item \textbf{Capa de Datos / Persistencia / Infraestructura} 
+	Es la encargada de la persistencia de la información en el almacenamiento primario y de la interacción con servicios externos:
+	\begin{itemize}
+		\item \textbf{Repositorios (\texttt{infrastructure/}):} Implementaciones concretas de las interfaces declaradas en la capa de negocio, encargadas de aislar la forma en que los datos son consultados o modificados.
+		\item \textbf{Acceso a la Base de Datos (Spring Data JPA):} Administra la ejecución de sentencias SQL, la gestión de transacciones (\texttt{@Transactional}), el agrupamiento de conexiones y la interacción con el motor PostgreSQL.
+		\item \textbf{Entidades ORM (\texttt{@Entity}):} Mapeo objeto-relacional orientado a reflejar la estructura exacta de las tablas relacionales. Permanecen desvinculadas de los modelos de dominio para permitir modificaciones en el esquema de base de datos sin afectar la lógica de negocio.
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Diseño de base de datos}
+A continuación, se define la estructura técnica detallada de cada una de las tablas del modelo relacional, especificando el tipo de dato, las restricciones y las llaves correspondientes (PK = Primary Key, FK = Foreign Key):
+
+\paragraph{1. Tabla: \texttt{users}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador único del usuario. \\ \hline
+		name & VARCHAR & - & Nombre del usuario. \\ \hline
+		lastname & VARCHAR & - & Apellido del usuario. \\ \hline
+		email & VARCHAR & UNIQUE & Correo electrónico único. \\ \hline
+		password & VARCHAR & - & Hash de la contraseña. \\ \hline
+		annual\_goal & INT4 & - & Meta anual de lectura. \\ \hline
+		picture\_id & INT8 & FK & Referencia a \texttt{pictures(id)}. \\ \hline
+		role\_id & UUID & FK & Referencia a \texttt{roles(id)}. \\ \hline
+		deleted & BOOL & - & Estado de borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha/hora de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{users}.}
+\end{table}
+
+\paragraph{2. Tabla: \texttt{roles}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador único del rol. \\ \hline
+		name & VARCHAR & - & Nombre del rol (ej. Lector, Admin). \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{roles}.}
+\end{table}
+
+\paragraph{3. Tabla: \texttt{books}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador único de la obra. \\ \hline
+		title & VARCHAR & - & Título del libro. \\ \hline
+		isbn & VARCHAR & - & Código de identificación ISBN. \\ \hline
+		cover & VARCHAR & - & URL o ruta de la portada. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{books}.}
+\end{table}
+
+\paragraph{4. Tabla: \texttt{authors}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador único del autor. \\ \hline
+		name & VARCHAR & - & Nombre completo del autor. \\ \hline
+		description & VARCHAR & - & Biografía breve. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{authors}.}
+\end{table}
+
+\paragraph{5. Tabla: \texttt{book\_authors}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		book\_id & UUID & PK, FK & Referencia a \texttt{books(id)}. \\ \hline
+		author\_id & INT8 & PK, FK & Referencia a \texttt{authors(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla intermedia \texttt{book\_authors}.}
+\end{table}
+
+\paragraph{6. Tabla: \texttt{genders}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador del género. \\ \hline
+		name & VARCHAR & - & Nombre del género literario. \\ \hline
+		description & VARCHAR & - & Descripción del género. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{genders}.}
+\end{table}
+
+\paragraph{7. Tabla: \texttt{book\_genres}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		book\_id & UUID & PK, FK & Referencia a \texttt{books(id)}. \\ \hline
+		gender\_id & INT8 & PK, FK & Referencia a \texttt{genders(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla intermedia \texttt{book\_genres}.}
+\end{table}
+
+\paragraph{8. Tabla: \texttt{formats}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador único del formato. \\ \hline
+		name & VARCHAR & - & Nombre del formato (físico, digital, etc.). \\ \hline
+		description & VARCHAR & - & Descripción del formato. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{formats}.}
+\end{table}
+
+\paragraph{9. Tabla: \texttt{reading\_status}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador del estado de lectura. \\ \hline
+		name & VARCHAR & - & Nombre del estado (ej. leyendo, por leer). \\ \hline
+		description & VARCHAR & - & Descripción breve del estado. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{reading\_status}.}
+\end{table}
+
+\paragraph{10. Tabla: \texttt{user\_library}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador único del registro. \\ \hline
+		user\_id & UUID & FK & Referencia a \texttt{users(id)}. \\ \hline
+		book\_id & UUID & FK & Referencia a \texttt{books(id)}. \\ \hline
+		format\_id & INT8 & FK & Referencia a \texttt{formats(id)}. \\ \hline
+		reading\_status\_id & INT8 & FK & Referencia a \texttt{reading\_status(id)}. \\ \hline
+		current\_page & INT4 & - & Página actual. \\ \hline
+		total\_page & INT4 & - & Total de páginas del libro. \\ \hline
+		current\_chapter & INT4 & - & Capítulo actual. \\ \hline
+		total\_chapter & INT4 & - & Total de capítulos. \\ \hline
+		is\_favorite & BOOL & - & Indicador de favorito. \\ \hline
+		finished\_at & DATE & - & Fecha en que se finalizó. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{user\_library}.}
+\end{table}
+
+\paragraph{11. Tabla: \texttt{library\_notes}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador de la nota. \\ \hline
+		user\_library\_id & UUID & FK & Referencia a \texttt{user\_library(id)}. \\ \hline
+		chapter & INT4 & - & Capítulo referenciado. \\ \hline
+		page & INT4 & - & Página referenciada. \\ \hline
+		content & TEXT & - & Contenido de la nota. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{library\_notes}.}
+\end{table}
+
+\paragraph{12. Tabla: \texttt{reading\_sessions}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador de la sesión de lectura. \\ \hline
+		user\_library\_id & UUID & FK & Referencia a \texttt{user\_library(id)}. \\ \hline
+		pages\_read & INT4 & - & Páginas leídas en la sesión. \\ \hline
+		chapters\_read & INT4 & - & Capítulos leídos en la sesión. \\ \hline
+		seconds\_read & INT4 & - & Duración en segundos. \\ \hline
+		date & DATE & - & Fecha de la sesión. \\ \hline
+		is\_flagged & BOOL & - & Indicador de anomalía/alerta. \\ \hline
+		flag\_reason & VARCHAR & - & Motivo del reporte/alerta. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{reading\_sessions}.}
+\end{table}
+
+\paragraph{13. Tabla: \texttt{badges}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador de la insignia. \\ \hline
+		name & VARCHAR & - & Nombre del logro/insignia. \\ \hline
+		description & VARCHAR & - & Descripción de la insignia. \\ \hline
+		public\_id & VARCHAR & - & ID público del recurso gráfico. \\ \hline
+		url & VARCHAR & - & URL de la imagen de la insignia. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{badges}.}
+\end{table}
+
+\paragraph{14. Tabla: \texttt{user\_badges}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador del registro. \\ \hline
+		user\_id & UUID & FK & Referencia a \texttt{users(id)}. \\ \hline
+		badge\_id & INT8 & FK & Referencia a \texttt{badges(id)}. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha en que se obtuvo la insignia. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{user\_badges}.}
+\end{table}
+
+\paragraph{15. Tabla: \texttt{user\_streaks}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador de la racha. \\ \hline
+		user\_id & UUID & FK & Referencia a \texttt{users(id)}. \\ \hline
+		current\_streak & INT4 & - & Racha actual de días consecutivos. \\ \hline
+		max\_streak & INT4 & - & Racha máxima alcanzada. \\ \hline
+		last\_activity\_date & DATE & - & Fecha de última actividad registrada. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{user\_streaks}.}
+\end{table}
+
+\paragraph{16. Tabla: \texttt{user\_pref\_formats}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		user\_preference\_id & UUID & PK, FK & Identificador de preferencia. \\ \hline
+		formats\_id & INT8 & PK, FK & Referencia a \texttt{formats(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{user\_pref\_formats}.}
+\end{table}
+
+\paragraph{17. Tabla: \texttt{user\_pref\_genres}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		user\_preference\_id & UUID & PK, FK & Identificador de preferencia. \\ \hline
+		genres\_id & INT8 & PK, FK & Referencia a \texttt{genders(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{user\_pref\_genres}.}
+\end{table}
+
+\paragraph{18. Tabla: \texttt{recommendations}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & UUID & PK & Identificador de la recomendación. \\ \hline
+		user\_id & UUID & FK & Referencia a \texttt{users(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{recommendations}.}
+\end{table}
+
+\paragraph{19. Tabla: \texttt{recommendation\_contents}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador del contenido. \\ \hline
+		content & VARCHAR & - & Texto del contenido. \\ \hline
+		sender\_id & UUID & FK & Referencia al remitente \texttt{users(id)}. \\ \hline
+		book\_id & UUID & FK & Referencia a \texttt{books(id)}. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{recommendation\_contents}.}
+\end{table}
+
+\paragraph{20. Tabla: \texttt{letters}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador de la carta. \\ \hline
+		receiver\_id & UUID & FK & Referencia al destinatario \texttt{users(id)}. \\ \hline
+		recommendation\_content\_id & INT8 & FK & Referencia a \texttt{recommendation\_contents(id)}. \\ \hline
+		claimed\_at & TIMESTAMP & - & Fecha de reclamo o recepción. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{letters}.}
+\end{table}
+
+\paragraph{21. Tabla: \texttt{curiosities}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador de la curiosidad. \\ \hline
+		title & VARCHAR & - & Título del dato curioso. \\ \hline
+		fact & TEXT & - & Explicación o hecho curioso. \\ \hline
+		genre & VARCHAR & - & Género asociado. \\ \hline
+		book\_reference & VARCHAR & - & Referencia al libro. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{curiosities}.}
+\end{table}
+
+\paragraph{22. Tabla: \texttt{pictures}}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{6.5cm}|}
+		\hline
+		\textbf{Atributo} & \textbf{Tipo de Dato} & \textbf{Llave} & \textbf{Descripción / Restricción} \\ \hline
+		id & INT8 & PK & Identificador de la imagen. \\ \hline
+		name & VARCHAR & - & Nombre del archivo. \\ \hline
+		description & VARCHAR & - & Descripción de la imagen. \\ \hline
+		public\_id & VARCHAR & - & Identificador público del hosting. \\ \hline
+		url & VARCHAR & - & Enlace directo a la imagen. \\ \hline
+		created\_at & TIMESTAMP & - & Fecha de creación. \\ \hline
+		updated\_at & TIMESTAMP & - & Fecha de actualización. \\ \hline
+		deleted & BOOL & - & Borrado lógico. \\ \hline
+		deleted\_at & TIMESTAMP & - & Fecha de eliminación lógica. \\ \hline
+	\end{tabular}
+	\caption{Esquema de la tabla \texttt{pictures}.}
+\end{table}
+\subsection{Diseño del backend}
+
+El diseño del servidor de \textbf{LecturaMétrica} se fundamenta en los principios de la Arquitectura Limpia (\textit{Clean Architecture}) y el Desarrollo Guiado por el Dominio (\textit{Domain-Driven Design, DDD}). Esta decisión arquitectónica se tomó para desacoplar completamente la lógica central del negocio de las dependencias externas (como bases de datos, frameworks web y servicios de terceros), garantizando así un sistema escalable, mantenible y altamente testeable
+
+El desarrollo se implementó en \textbf{Java 21} utilizando el ecosistema de \textbf{Spring Boot}, lo que facilita la inyección de dependencias y el mapeo objeto-relacional (ORM) a través de Spring Data JPA e Hibernate. 
+Todo el código está organizado bajo un enfoque modular por características (\textit{Feature-driven structure}), donde cada dominio principal (como libros, usuarios, biblioteca, rachas y buzón) se encapsula de forma independiente.
+
+\subsubsection{Estructura de capas por módulo}
+Para asegurar la separación de responsabilidades, cada módulo dentro del sistema se subdivide estrictamente en tres capas lógicas.
+
+\begin{enumerate}
+    \item \textbf{Capa de Dominio:} Es el núcleo de la aplicación. Contiene las entidades (modelos de datos puros) y los eventos del dominio. Esta capa no tiene ninguna dependencia hacia Spring Boot u otras bibliotecas externas, asegurando que las reglas de negocio permanezcan puras.
+    
+    \item \textbf{Capa de Aplicación:} Contiene los casos de uso (\textit{Use Cases}) que orquestan la lógica del negocio. Ejemplos de esto son los servicios encargados de registrar nuevas obras, actualizar las rachas diarias de lectura o calcular el radar de preferencias del usuario.
+    
+    \item \textbf{Capa de Infraestructura (\textit{Infrastructure Layer}):} Es la capa más externa y se encarga de los detalles de implementación, se encuentran: 
+    \begin{itemize}
+        \item \textbf{Controladores REST (\textit{Routing/Controllers}):} Manejan las peticiones HTTP y exponen los \textit{endpoints} de comunicación .
+        \item \textbf{Data Transfer Objects (DTOs) y Mapeadores:} Se aseguran de que las propiedades crudas de las peticiones no interactúen directamente con la capa de aplicación. Transforman los datos de entrada a modelos de dominio antes de ser procesados.
+        \item \textbf{Repositorios:} Interfaces que gestionan la conexión directa con la base de datos PostgreSQL.
+        \item \textbf{Clientes Externos (\textit{Clients}):} Adaptadores para comunicarse con APIs externas, utilizados principalmente para la ingesta de metadatos de los libros.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Seguridad y Manejo Global de Excepciones}
+La seguridad del backend se gestiona mediante filtros de autenticación y servicios de validación de tokens JWT para proteger los accesos, mientras que las contraseñas se almacenan de forma cifrada en la base de datos.
+
+Adicionalmente, se configuró un manejador global de excepciones (\textit{Global Exception Handler}) a nivel de infraestructura para centralizar la captura de errores. Asegurando que siempre retorne un formato estructurado y predecible para el \textit{frontend}, en lugar de exponer las trazas de error internas del servidor.
+
+\subsection{Diseño del frontend}
+% Mockups y flujo de navegación
+
+\newpage
+
+% ==============================================================================
+% 10. IMPLEMENTACIÓN
+% ==============================================================================
+\section{Implementación}
+
+\subsection{Estructura de carpetas}
+se presenta la organización del árbol de directorios del proyecto, evidenciando la separación de capas tanto en el servicio \textit{back-end} como en el cliente \textit{front-end}:
+
+\subsubsection{Estructura del Back-end}
+\begin{verbatim}
+	Backend/
+	|-- gradle/
+	|-- src/
+	|   |-- main/
+	|   |   |-- java/com/fairies/api/proyecto/
+	|   |   |   |-- common/                
+	|   |   |   |-- modules/                 
+	|   |   |   `-- Application.java         
+	|   |   |
+	|   |   `-- resources/
+	|   |       `-- application.properties  
+	|   |
+	|   `-- test/java/com/fairies/api/proyecto/
+	|       `-- ApplicationTests.java       
+	|
+	|-- .env.example                         
+	|-- .gitattributes
+	|-- .gitignore
+	|-- README.md
+	|-- build.gradle                        
+	|-- gradlew
+	|-- gradlew.bat
+	`-- settings.gradle
+\end{verbatim}
+
+\subsubsection{Estructura del Front-end}
+\begin{verbatim}
+	LecturaMetrica-Admin/
+	|-- Public/                              
+	|-- app/                                 
+	|   |-- (auth)/                          
+	|   |-- dashboard/                       
+	|   |   |-- actividad/                   
+	|   |   |-- resumen/                     
+	|   |   |-- usuarios/                   
+	|   |   `-- layout.tsx                  
+	|   |-- globals.css                      
+	|   |-- layout.tsx                       
+	|   |-- manifest.json                    
+	|   `-- page.tsx                        
+	|
+	|-- components/                          
+	|-- data/                                
+	|-- .eslintrc.json
+	|-- .gitignore
+	|-- README.md
+	|-- globals.d.ts
+	|-- next-env.d.ts
+	|-- next.config.js
+	|-- package-lock.json
+	|-- package.json
+	`-- postcss.config.js
+\end{verbatim}
+
+\subsection{Fragmentos de código clave}
+% Ejemplos de implementación de lógica relevante
+
+\subsection{Evidencia visual}
+% Capturas de pantalla de la aplicación funcional
+
+\newpage
+
+% ==============================================================================
+% 11. PRUEBAS
+% ==============================================================================
+\section{Pruebas}
+
+\subsection{Casos de prueba}
+En esta sección se describen los escenarios de prueba ejecutados sobre el sistema para validar el funcionamiento de los módulos principales, el cumplimiento de las reglas del negocio y el manejo de respuestas del servidor:
+
+\begin{table}[h]
+	\centering
+	\small
+	\caption{Matriz de ejecución de casos de prueba del sistema}
+	\label{tab:casos_prueba}
+	\begin{tabular}{p{1.2cm}p{2.3cm}p{3.2cm}p{3.5cm}p{3.5cm}}
+		\toprule
+		\textbf{ID} & \textbf{Módulo} & \textbf{Caso de Prueba} & \textbf{Acción / Entrada} & \textbf{Resultado Esperado} \\
+		\midrule
+		\textbf{CP-01} & Autenticación & Inicio de sesión exitoso de un Administrador. & Ingresar correo y contraseña válidos en \texttt{app/(auth)} y enviar el formulario. & El \textit{backend} responde con HTTP 200 y token JWT. El cliente almacena el token y redirige a \texttt{app/dashboard}. \\
+		\addlinespace
+		\textbf{CP-02} & Catálogo & Registro de una nueva obra con extensión total y formato. & Enviar formulario desde el panel para crear un Manga especificando 120 capítulos e imagen de portada. & El \textit{backend} procesa la imagen (vía Cloudinary), guarda el registro en la BD y retorna HTTP 201 Created. \\
+		\addlinespace
+		\textbf{CP-03} & Seguimiento & Validación de límite de progreso (Regla RN-04). & Intentar actualizar la lectura de un libro de 300 páginas ingresando un progreso de 350 páginas. & El \textit{backend} responde con un error HTTP 400 Bad Request (\textit{``El progreso no puede exceder el total de la obra''}). \\
+		\addlinespace
+		\textbf{CP-04} & Seguimiento & Cambio automático de estado a Completado (Regla RN-06). & Registrar el capítulo 120/120 en un Manga que estaba en estado \textit{Leyendo}. & El \textit{backend} actualiza automáticamente el estado a \textit{Completado}. \\
+		\addlinespace
+		\textbf{CP-05} & Métricas & Carga de métricas globales de actividad en tiempo real. & Navegar a para consultar gráficos de lectura. & El controlador en \texttt{modules/} calcula y devuelve las estadísticas agregadas en formato JSON en $< 300$~ms. \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\subsection{Métodos de validación}
+Para garantizar el correcto funcionamiento del sistema, la integridad de los datos, se emplearon las siguientes herramientas de validación y pruebas:
+
+\begin{itemize}
+	\item \textbf{Postman e insomnia:} Empleado para la validación y consumo de las APIs RESTful, verificando los estados HTTP de respuesta, la estructura JSON, los tiempos de latencia y la seguridad en los \textit{endpoints}.
+\end{itemize}
+
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabular}{|c|l|p{3.5cm}|p{3.5cm}|p{3.5cm}|c|}
+		\hline
+		\textbf{ID} & \textbf{Módulo} & \textbf{Caso de Prueba} & \textbf{Acción / Entrada} & \textbf{Resultado Esperado} & \textbf{Resultado} \\ \hline
+		
+		\textbf{CP-01} & Lectura & 
+		Registro de sesión de lectura con cronómetro. & 
+		Seleccionar obra, iniciar cronómetro (4 min), sumar 2 páginas y guardar. & 
+		Guarda la sesión, incrementa el tiempo total en estadísticas y actualiza la racha diaria. & 
+		\textbf{Exitoso} \\ \hline
+		
+		\textbf{CP-02} & Biblioteca & 
+		Filtrado dinámico por estado de obra. & 
+		Hacer clic en la pestaña "Terminado" en  \texttt{/biblioteca}. & 
+		La vista filtra dinámicamente mostrando únicamente las obras completadas & 
+		\textbf{Exitoso} \\ \hline
+		
+		\textbf{CP-03} & Buzón & 
+		Envío de carta de recomendación anónima. & 
+		Seleccionar libro, redactar opinión y presionar "Enviar carta". & 
+		Transmite la carta al buzón general de manera anónima y activa la \textit{racha} de 24 horas. & 
+		\textbf{Exitoso} \\ \hline
+		
+		\textbf{CP-04} & Estadísticas & 
+		Cálculo de progreso de meta anual. & 
+		Completar tantos libros con una meta configurada de cierta cantidad de libros. & 
+		Actualiza la barra de progreso el \% y muestra "x libros restantes". & 
+		\textbf{Exitoso} \\ \hline
+		
+	\end{tabular}
+	\caption{Matriz de pruebas funcionales y de validación del sistema.}
+	\label{tab:casos_prueba}
+\end{table}
+
+\newpage
+
+% ==============================================================================
+% 12. RESULTADOS
+% ==============================================================================
+\section{Resultados}
+
+\subsection{Indicadores de éxito}
+Se cumplió con los requerimientos funcionales y objetivos core establecidos para el proyecto, logrando integrar la gestión multiformato de lecturas con mecánicas de gamificación.
+
+\begin{itemize}
+	\item \textbf{Gestión Multiformato Integrada:} El sistema permite catalogar y dar seguimiento preciso a obras en formatos de Libro Tradicional, Manga, Webtoon y comics, adaptando las unidades de avance (páginas y capítulos) según corresponda.
+	
+	\item \textbf{Sesiones de Lectura Interactivas:} Se implementó exitosamente el cronómetro en tiempo real para sesiones activas, permitiendo el registro incremental de páginas/capítulos leídos junto con notas y acotaciones asociadas a puntos específicos de la obra.
+	
+	\item \textbf{Métricas y Visualización de Datos:} El panel de estadísticas procesa en tiempo real métricas de lectura (minutos totales registrados, páginas, avance en la meta anual y distribución por estados de biblioteca).
+	
+	\item \textbf{Gamificación y Perfil:} Se logró el cálculo dinámico de rachas de lectura (\textit{streaks}) y la asignación automática de insignias en el perfil del usuario tras alcanzar hitos de lectura.
+	
+	\item \textbf{Buzón Anónimo:} Se implementó el módulo de intercambio de cartas anónimas con restricción de envío (24 horas) e interacciones dinámicas (\textit{like}, \textit{dislike} y agregar a biblioteca).
+\end{itemize}
+
+\subsection{Retroalimentación de usuarios}
+Durante las sesiones de prueba con usuarios reales, se recopilaron diversas observaciones y sugerencias orientadas a mejorar la experiencia:
+
+\begin{itemize}
+	\item \textbf{Notificaciones de racha:} Implementar alertas o recordatorios visuales para ayudar al usuario a no perder su racha diaria de lectura.
+	\item \textbf{Autocompletado en búsquedas:} Mejorar el motor de búsqueda incorporando sugerencias automáticas y autocompletado al escribir.
+	\item \textbf{Interacción en cartas:} Habilitar la capacidad de responder o dejar un comentario directo en la carta anónima recibida a través del buzón.
+	\item \textbf{Flexibilidad en el buzón:} Modificar las restricciones actuales para permitir el envío de más de una recomendación o carta al buzón general en el mismo día.
+	\item \textbf{Exportación de reportes:} Añadir la funcionalidad de descargar el historial completo de lectura y las métricas del panel de estadísticas en formato PDF.
+	\item \textbf{Foro:} Tener un foro donde se pueda interactuar con otros usuarios y contar con chat en vivo.
+\end{itemize}
+
+\subsection{Impacto esperado}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|p{8.5cm}|p{4.5cm}|}
+		\hline
+		\textbf{Nivel de Impacto} & \textbf{Área de Mejora / Descripción} \\ \hline
+		\textbf{Alto} & Reducción del tiempo de registro manual de obras populares.\\ \hline
+		\textbf{Medio-Alto} & Dinamización del flujo de contenido y participación activa. \\ \hline
+		\textbf{Medio} & Retención de usuarios y fomento de la constancia de lectura. \\ \hline
+		\textbf{Medio} & Sentido de comunidad entre lectores mediante buzón y recomendaciones. \\ \hline
+		\textbf{Bajo} & Generación de información útil para respaldos personales. \\ \hline
+	\end{tabular}
+	\caption{Matriz de impacto esperado por funcionalidad implementada.}
+	\label{tab:impacto_esperado}
+\end{table}
+
+\newpage
+
+% ==============================================================================
+% 13. CONCLUSIONES
+% ==============================================================================
+\section{Conclusiones}
+
+\subsection{Logros alcanzados}
+\begin{description}
+	\item[\textbf{Arquitectura robusta e integración completa:}] 
+	Se construyó una plataforma funcional combinando un backend estructurado en Spring Boot con un frontend responsivo y moderno en Next.js, logrando comunicaciones eficientes mediante APIs REST desplegadas en entornos de producción.
+	
+	\item[\textbf{Consolidación de métricas y gamificación:}] 
+	Se implementó con éxito un motor de estadísticas en tiempo real capaz de procesar rachas de lectura, metas anuales, registros semanales e insignias dinámicas dentro del perfil del usuario.
+\end{description}
+
+\subsection{Lecciones aprendidas}
+\begin{description}
+	\item[\textbf{Modelado de dominio flexible:}] 
+	Diseñar una base de datos preparada para manejar múltiples tipos de obras desde las etapas iniciales evitó refactorizaciones complejas al integrar mangas y webtoons junto con libros convencionales.
+	
+	\item[\textbf{Diseño orientado al feedback del usuario:}] 
+	Las pruebas con usuarios reales demostraron que restricciones muy rígidas pueden limitar la interacción.
+	
+	\item[\textbf{Optimización de despliegues en la nube:}] 
+	Configurar correctamente los entornos de ejecución en servicios de la nube (como Railway y Supabase) permitió identificar rápidamente cuellos de botella en peticiones HTTP e integrar eficientemente servicios de terceros para el manejo de archivos multimedia.
+\end{description}
+
+\subsection{Impacto y reflexión final}
+
+El proyecto demuestra cómo el uso estratégico de la tecnología, las métricas visuales y la gamificación puede transformar una actividad tradicionalmente solitaria en un hábito constante, interactivo y motivador.
+
+LecturaMétrica cobra relevancia al llenar el vacío existente entre los gestores de lectura tradicionales (pensados para libros en formato físico) y la realidad de los lectores modernos, quienes consumen contenido digital en formatos variados. Al combinar el seguimiento de hábitos con dinámicas comunitarias anónimas y la proyección a futuro de espacios de discusión directa (foros y chats), el sistema se posiciona no solo como una herramienta de registro, sino como una plataforma integral para el fomento de la lectura.
+
+\newpage
+
+% ==============================================================================
+% 14. RECOMENDACIONES
+% ==============================================================================
+\section{Recomendaciones}
+Con la finalidad de dar continuidad al proyecto y potenciar el impacto de la plataforma a futuro, se sugieren las siguientes propuestas de mejora tecnológica y funcional:
+
+\begin{itemize}
+	\item \textbf{Módulo de Notificaciones y Recordatorios Automatizados:} Implementar un sistema de notificaciones push enfocado en la retención del usuario, enviando alertas periódicas que incentiven la continuidad del hábito (ej. ``¡No pierdas tu racha diario!'').
+	\item \textbf{Gestión de Listas y Colecciones Personalizadas:} Ampliar la flexibilidad de la biblioteca personal mediante la creación de listas temáticas organizadas por el usuario, con la posibilidad de con la comunidad.
+	\item \textbf{Subida y Personalización de Avatares/Fotos de Perfil:} Integrar un servicio de almacenamiento de objetos (como Amazon S3) para gestionar la carga y procesamiento de imágenes de perfil personalizadas, reforzando la identidad digital de cada lector.
+	\item \textbf{Salas de Chat y Espacios de Discusión Dinámicos:} Incorporar salas de conversación síncronas o foros temáticos para enriquecer el flujo social de la plataforma y fomentar debates sobre lecturas compartidas.
+	\item \textbf{Ampliación de Frecuencia en el Buzón de Lectura:} Permitir el envío y recepción de múltiples micro-reseñas o cartas diarias en el ``Buzón del Lector'', flexibilizando los ciclos actuales de 24 horas sin perder la esencia asíncrona y anónima del módulo.
+\end{itemize}
+
+
+\newpage
+% ==============================================================================
+% REFERENCIAS (MANTENIDAS PARA LA CONSISTENCIA DEL TRABAJO ACADÉMICO)
+% ==============================================================================
+
+\begin{thebibliography}{7}
+
+\bibitem{lfpdppp}
+Cámara de Diputados del H. Congreso de la Unión. (2010). \textit{Ley Federal de Protección de Datos Personales en Posesión de los Particulares}. (LFPDPPP). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf}
+
+\bibitem{lfda2026}
+Cámara de Diputados del H. Congreso de la Unión. (2020). \textit{Ley Federal del Derecho de Autor}. (LFDA). Texto vigente. Última Reforma Publicada. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
+
+\bibitem{chiapas2017}
+Congreso del Estado de Chiapas. (2017). \textit{Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Chiapas}. Periódico Oficial del Estado. \url{https://www.asechiapas.gob.mx/download/leyes/LEY_PROTECCION_DATOS_PERSONALES.pdf}
+
+\bibitem{lfda2026_oficial}  %
+Ley Federal del Derecho de Autor. (2026). \textit{Diario Oficial de la Federación}. Última reforma publicada el 14 de mayo de 2026. \url{http://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf}
+
+\bibitem{oracle2024}
+Oracle. (2024). \textit{MySQL Documentation}. \url{https://dev.mysql.com/doc/}
+
+\bibitem{sommerville2016}
+Sommerville, I. (2016). \textit{Ingeniería de software} (10a ed.). Pearson.
+
+\bibitem{spring2025}
+Spring Framework Team. (2025). \textit{Spring Boot Reference Documentation}. Core Software Press. \url{https://spring.io/projects/spring-boot}
+
+\end{thebibliography}
+
+\end{document}
