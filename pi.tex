@@ -890,7 +890,63 @@ Adicionalmente, se configuró un manejador global de excepciones (\textit{Global
 \section{Implementación}
 
 \subsection{Estructura de carpetas}
-% Árbol de directorios del proyecto
+se presenta la organización del árbol de directorios del proyecto, evidenciando la separación de capas tanto en el servicio \textit{back-end} como en el cliente \textit{front-end}:
+
+\subsubsection{Estructura del Back-end}
+\begin{verbatim}
+	Backend/
+	|-- gradle/
+	|-- src/
+	|   |-- main/
+	|   |   |-- java/com/fairies/api/proyecto/
+	|   |   |   |-- common/                
+	|   |   |   |-- modules/                 
+	|   |   |   `-- Application.java         
+	|   |   |
+	|   |   `-- resources/
+	|   |       `-- application.properties  
+	|   |
+	|   `-- test/java/com/fairies/api/proyecto/
+	|       `-- ApplicationTests.java       
+	|
+	|-- .env.example                         
+	|-- .gitattributes
+	|-- .gitignore
+	|-- README.md
+	|-- build.gradle                        
+	|-- gradlew
+	|-- gradlew.bat
+	`-- settings.gradle
+\end{verbatim}
+
+\subsubsection{Estructura del Front-end}
+\begin{verbatim}
+	LecturaMetrica-Admin/
+	|-- Public/                              
+	|-- app/                                 
+	|   |-- (auth)/                          
+	|   |-- dashboard/                       
+	|   |   |-- actividad/                   
+	|   |   |-- resumen/                     
+	|   |   |-- usuarios/                   
+	|   |   `-- layout.tsx                  
+	|   |-- globals.css                      
+	|   |-- layout.tsx                       
+	|   |-- manifest.json                    
+	|   `-- page.tsx                        
+	|
+	|-- components/                          
+	|-- data/                                
+	|-- .eslintrc.json
+	|-- .gitignore
+	|-- README.md
+	|-- globals.d.ts
+	|-- next-env.d.ts
+	|-- next.config.js
+	|-- package-lock.json
+	|-- package.json
+	`-- postcss.config.js
+\end{verbatim}
 
 \subsection{Fragmentos de código clave}
 % Ejemplos de implementación de lógica relevante
