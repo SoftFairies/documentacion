@@ -28,6 +28,7 @@
 \titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{0.5em}{}
 \titleformat{\subsubsection}{\normalfont\normalsize\bfseries\itshape}{\thesubsubsection.}{0.5em}{}
 
+\usepackage{longtable}
 \usepackage{pdfpages}
 \usepackage{float}
 \usepackage{listings}
@@ -1115,35 +1116,53 @@ La correcta funcionalidad de los endpoints del backend se validó a través de h
     \label{fig:swagger_docs_dos}
 \end{figure}
 
+\newpage
 % ==============================================================================
 % 11. PRUEBAS
 % ==============================================================================
 \section{Pruebas}
 
 \subsection{Casos de prueba}
-En esta sección se describen los escenarios de prueba ejecutados sobre el sistema para validar el funcionamiento de los módulos principales, el cumplimiento de las reglas del negocio y el manejo de respuestas del servidor:
+En esta sección se describen los escenarios de prueba ejecutados sobre el sistema para validar el funcionamiento de los módulos principales tanto en el \textit{backend} como en el \textit{frontend}, el cumplimiento de las reglas del negocio y el manejo de respuestas ante distintas interacciones:
 
-\begin{table}[h]
-	\centering
-	\small
-	\caption{Matriz de ejecución de casos de prueba del sistema}
-	\label{tab:casos_prueba}
-	\begin{tabular}{p{1.2cm}p{2.3cm}p{3.2cm}p{3.5cm}p{3.5cm}}
-		\toprule
-		\textbf{ID} & \textbf{Módulo} & \textbf{Caso de Prueba} & \textbf{Acción / Entrada} & \textbf{Resultado Esperado} \\
-		\midrule
-		\textbf{CP-01} & Autenticación & Inicio de sesión exitoso de un Administrador. & Ingresar correo y contraseña válidos en \texttt{app/(auth)} y enviar el formulario. & El \textit{backend} responde con HTTP 200 y token JWT. El cliente almacena el token y redirige a \texttt{app/dashboard}. \\
-		\addlinespace
-		\textbf{CP-02} & Catálogo & Registro de una nueva obra con extensión total y formato. & Enviar formulario desde el panel para crear un Manga especificando 120 capítulos e imagen de portada. & El \textit{backend} procesa la imagen (vía Cloudinary), guarda el registro en la BD y retorna HTTP 201 Created. \\
-		\addlinespace
-		\textbf{CP-03} & Seguimiento & Validación de límite de progreso (Regla RN-04). & Intentar actualizar la lectura de un libro de 300 páginas ingresando un progreso de 350 páginas. & El \textit{backend} responde con un error HTTP 400 Bad Request (\textit{``El progreso no puede exceder el total de la obra''}). \\
-		\addlinespace
-		\textbf{CP-04} & Seguimiento & Cambio automático de estado a Completado (Regla RN-06). & Registrar el capítulo 120/120 en un Manga que estaba en estado \textit{Leyendo}. & El \textit{backend} actualiza automáticamente el estado a \textit{Completado}. \\
-		\addlinespace
-		\textbf{CP-05} & Métricas & Carga de métricas globales de actividad en tiempo real. & Navegar a para consultar gráficos de lectura. & El controlador en \texttt{modules/} calcula y devuelve las estadísticas agregadas en formato JSON en $< 300$~ms. \\
-		\bottomrule
-	\end{tabular}
-\end{table}
+\begin{longtable}{|p{1.0cm}|p{2.2cm}|p{3.0cm}|p{3.5cm}|p{3.8cm}|}
+	\caption{Matriz detallada de ejecución de casos de prueba del sistema (Backend y Frontend)}
+	\label{tab:casos_prueba} \\
+	
+	\hline
+	\textbf{ID} & \textbf{Módulo} & \textbf{Caso de Prueba} & \textbf{Acción / Entrada} & \textbf{Resultado Esperado} \\ \hline
+	\endfirsthead
+	
+	\hline
+	\textbf{ID} & \textbf{Módulo} & \textbf{Caso de Prueba} & \textbf{Acción / Entrada} & \textbf{Resultado Esperado} \\ \hline
+	\endhead
+	
+	\textbf{CP-01} & Autenticación & Inicio de sesión exitoso de un Administrador. & Ingresar credenciales válidas en la ruta de acceso y enviar el formulario. & El \textit{backend} valida el hash BCrypt, responde con HTTP 200 y emite un token JWT. \\ \hline
+	
+	\textbf{CP-02} & Seguridad & Acceso denegado a ruta protegida sin credenciales. & Intentar consumir un \textit{endpoint} protegido del API sin adjuntar el encabezado \texttt{Authorization}. & El filtro JWT intercepta la petición y el servidor responde con un error HTTP 401 Unauthorized. \\ \hline
+	
+	\textbf{CP-03} & Catálogo & Búsqueda y extracción de portadas mediante API Externa. & Ingresar un título de obra en el buscador para consultar el catálogo. & El \textit{backend} no guarda las portadas, las extrae directamente de Open Library y las integra en el catálogo del libro, retornando HTTP 200 OK. \\ \hline
+	
+	\textbf{CP-04} & Catálogo & Registro de una nueva obra en el sistema. & Enviar formulario desde el panel para registrar una nueva obra literaria. & El \textit{backend} procesa y persiste la entidad correctamente, retornando HTTP 201 Created. \\ \hline
+	
+	\textbf{CP-05} & Seguimiento & Validación de límite de progreso (Regla RN-03). & Intentar actualizar la lectura de un libro ingresando un valor mayor al total de páginas de la obra. & El servidor rechaza la transacción y responde con HTTP 400 Bad Request. \\ \hline
+	
+	\textbf{CP-06} & Seguimiento & Cambio automático de estado a Completado (Regla RN-04). & Registrar el avance final (100\%) en una obra que se encontraba bajo el estado \textit{Leyendo}. & El \textit{backend} actualiza de forma automática el estado de la biblioteca a \textit{Completado} y fija la fecha de término. \\ \hline
+	
+	\textbf{CP-07} & Gamificación & Actualización atómica de racha de lectura (\textit{streak}). & Registrar una sesión de lectura válida en el día actual tras haber leído el día anterior. & El caso de uso evalúa la fecha, incrementa la racha consecutiva en $+1$ y persiste el cambio en la BD. \\ \hline
+	
+	\textbf{CP-08} & Social (Buzón) & Envío de recomendación anónima de formato corto. & Seleccionar una obra leída, redactar una micro-reseña y enviarla al buzón comunitario. & El servidor valida los ciclos de 24 horas, disocia la identidad del remitente y encola la carta de forma anónima. \\ \hline
+	
+	\textbf{CP-09} & Métricas & Carga de estadísticas globales en el panel analítico. & Navegar a la ruta \path{/estadisticas} para consultar los gráficos de rendimiento e historial. & El controlador calcula y devuelve las métricas agregadas en formato JSON en un tiempo menor a 300 ms. \\ \hline
+	
+	\textbf{CP-10} & Frontend (Auth) & Validación de campos vacíos en el formulario de inicio de sesión. & Intentar enviar el formulario de \textit{login} en \path{/login} sin ingresar correo ni contraseña. & El componente de interfaz despliega mensajes de error de validación en tiempo real e impide el envío de la petición HTTP. \\ \hline
+	
+	\textbf{CP-11} & Frontend (Rutas) & Redirección automática por ausencia de sesión activa. & Intentar acceder directamente a rutas protegidas como \path{/biblioteca} o \path{/estadisticas} sin autenticación previa. & El contexto de autenticación y el enrutador detectan la falta de token y redirigen al usuario hacia la vista de inicio de sesión. \\ \hline
+	
+	\textbf{CP-12} & Frontend (Biblioteca) & Renderizado dinámico de tarjetas de libros (\textit{BookCard}). & Navegar a la sección de biblioteca y aplicar filtros o paginación sobre los elementos disponibles. & La interfaz actualiza el listado visual de obras de forma responsiva utilizando los componentes de UI y datos del API. \\ \hline
+	
+	\textbf{CP-13} & Frontend (PWA) & Registro del \textit{Service Worker} y soporte offline básico. & Cargar la aplicación web progresiva y verificar el estado del registro de los recursos estáticos. & El cliente registra correctamente el \textit{Service Worker} permitiendo la caché de activos para funcionamiento offline. \\ \hline
+\end{longtable}
 
 \subsection{Métodos de validación}
 Para garantizar el correcto funcionamiento del sistema, la integridad de los datos, se emplearon las siguientes herramientas de validación y pruebas:
@@ -1365,13 +1384,9 @@ El presente anexo contiene la documentación detallada de las narrativas de caso
     pagecommand={\thispagestyle{plain}}
 ]{./anexos/casos_de_uso_lecturametrica.docx.pdf}
 
-% --- ANEXO 3: Diccionario de Datos de la Base de Datos ---
-\subsection*{Anexo C: Diccionario de Datos del Sistema Relacional}
-\addcontentsline{toc}{subsection}{Anexo C: Diccionario de Datos del Sistema Relacional}
-
-El presente anexo contiene la especificación técnica exhaustiva de las 22 tablas que conforman el esquema relacional de la base de datos \textbf{LecturaMétrica} en PostgreSQL. Se detallan los nombres de atributos, tipos de datos nativos, llaves primarias (PK), llaves foráneas (FK), reglas de unicidad y descripciones funcionales para cada entidad del sistema:
-
-\vspace{0.3cm}
+\subsection*{Anexo C: Especificación y Narrativas de Casos de Uso}
+\addcontentsline{toc}{subsection}{Anexo B: Especificación y Narrativas de Casos de Uso} % <-- ESTO TAMBIÉN
+El presente anexo contiene la documentación detallada de las narrativas de casos de uso, flujos principales y flujos de excepción del sistema \textbf{LecturaMétrica}, elaborados como parte del análisis y diseño arquitectónico de la plataforma. 
 
 \paragraph{1. Tabla: \texttt{users}}
 \begin{table}[H]
