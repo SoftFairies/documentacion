@@ -1149,11 +1149,11 @@ En esta sección se describen los escenarios de prueba ejecutados sobre el siste
 	
 	\textbf{CP-06} & Seguimiento & Cambio automático de estado a Completado (Regla RN-04). & Registrar el avance final (100\%) en una obra que se encontraba bajo el estado \textit{Leyendo}. & El \textit{backend} actualiza de forma automática el estado de la biblioteca a \textit{Completado} y fija la fecha de término. \\ \hline
 	
-	\textbf{CP-07} & Gamificación & Actualización atómica de racha de lectura (\textit{streak}). & Registrar una sesión de lectura válida en el día actual tras haber leído el día anterior. & El caso de uso evalúa la fecha, incrementa la racha consecutiva en $+1$ y persiste el cambio en la BD. \\ \hline
+	\textbf{CP-07} & Gamificación & Actualización atómica de racha de lectura (\textit{streak}). & Registrar una sesión de lectura en el día actual tras haber leído el día anterior. & El caso de uso evalúa la fecha, incrementa la racha consecutiva en $+1$ y persiste el cambio en la BD. \\ \hline
 	
 	\textbf{CP-08} & Social (Buzón) & Envío de recomendación anónima de formato corto. & Seleccionar una obra leída, redactar una micro-reseña y enviarla al buzón comunitario. & El servidor valida los ciclos de 24 horas, disocia la identidad del remitente y encola la carta de forma anónima. \\ \hline
 	
-	\textbf{CP-09} & Métricas & Carga de estadísticas globales en el panel analítico. & Navegar a la ruta \path{/estadisticas} para consultar los gráficos de rendimiento e historial. & El controlador calcula y devuelve las métricas agregadas en formato JSON en un tiempo menor a 300 ms. \\ \hline
+	\textbf{CP-09} & Métricas & Carga de estadísticas globales en el panel analítico. & Navegar a la ruta \path{/estadisticas} para consultar los gráficos de rendimiento e historial. & El controlador calcula y devuelve las métricas agregadas en formato JSON. \\ \hline
 	
 	\textbf{CP-10} & Frontend (Auth) & Validación de campos vacíos en el formulario de inicio de sesión. & Intentar enviar el formulario de \textit{login} en \path{/login} sin ingresar correo ni contraseña. & El componente de interfaz despliega mensajes de error de validación en tiempo real e impide el envío de la petición HTTP. \\ \hline
 	
@@ -1215,7 +1215,7 @@ Para garantizar el correcto funcionamiento del sistema, la integridad de los dat
 \section{Resultados}
 
 \subsection{Indicadores de éxito}
-Se cumplió con los requerimientos funcionales y objetivos core establecidos para el proyecto, logrando integrar la gestión multiformato de lecturas con mecánicas de gamificación.
+Se cumplió con los requerimientos funcionales y objetivos establecidos para el proyecto, logrando integrar la gestión multiformato de lecturas con mecánicas de gamificación.
 
 \begin{itemize}
 	\item \textbf{Gestión Multiformato Integrada:} El sistema permite catalogar y dar seguimiento preciso a obras en formatos de Libro Tradicional, Manga, Webtoon y comics, adaptando las unidades de avance (páginas y capítulos) según corresponda.
@@ -1257,8 +1257,18 @@ Durante las sesiones de prueba con usuarios reales, se recopilaron diversas obse
 	\label{tab:impacto_esperado}
 \end{table}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{./fotos/resultados/resumen-26Jul.png} 
+	\caption{Panel administrativo mostrando un resumen de actividad.}
+	\label{fig:panel_metricas}
+\end{figure}
+
 \newpage
 
+% ==============================================================================
+% 13. CONCLUSIONES
+% ==============================================================================
 % ==============================================================================
 % 13. CONCLUSIONES
 % ==============================================================================
@@ -1267,7 +1277,7 @@ Durante las sesiones de prueba con usuarios reales, se recopilaron diversas obse
 \subsection{Logros alcanzados}
 \begin{description}
 	\item[\textbf{Arquitectura robusta e integración completa:}] 
-	Se construyó una plataforma funcional combinando un backend estructurado en Spring Boot con un frontend responsivo y moderno en Next.js, logrando comunicaciones eficientes mediante APIs REST desplegadas en entornos de producción.
+	Se construyó una plataforma funcional combinando un \textit{backend} estructurado en Spring Boot con un \textit{frontend} responsivo y moderno en Next.js, logrando comunicaciones eficientes mediante APIs REST desplegadas en entornos de producción.
 	
 	\item[\textbf{Consolidación de métricas y gamificación:}] 
 	Se implementó con éxito un motor de estadísticas en tiempo real capaz de procesar rachas de lectura, metas anuales, registros semanales e insignias dinámicas dentro del perfil del usuario.
@@ -1276,10 +1286,10 @@ Durante las sesiones de prueba con usuarios reales, se recopilaron diversas obse
 \subsection{Lecciones aprendidas}
 \begin{description}
 	\item[\textbf{Modelado de dominio flexible:}] 
-	Diseñar una base de datos preparada para manejar múltiples tipos de obras desde las etapas iniciales evitó refactorizaciones complejas al integrar mangas y webtoons junto con libros convencionales.
+	Diseñar una base de datos preparada para manejar múltiples tipos de obras desde las etapas iniciales evitó refactorizaciones complejas al integrar mangas y \textit{webtoons} junto con libros convencionales.
 	
-	\item[\textbf{Diseño orientado al feedback del usuario:}] 
-	Las pruebas con usuarios reales demostraron que restricciones muy rígidas pueden limitar la interacción.
+	\item[\textbf{Diseño orientado al \textit{feedback} del usuario:}] 
+	Las pruebas con usuarios reales demostraron que restricciones operativas muy rígidas pueden limitar la interacción fluida con la plataforma.
 	
 	\item[\textbf{Optimización de despliegues en la nube:}] 
 	Configurar correctamente los entornos de ejecución en servicios de la nube (como Railway y Supabase) permitió identificar rápidamente cuellos de botella en peticiones HTTP e integrar eficientemente servicios de terceros para el manejo de archivos multimedia.
@@ -1289,7 +1299,28 @@ Durante las sesiones de prueba con usuarios reales, se recopilaron diversas obse
 
 El proyecto demuestra cómo el uso estratégico de la tecnología, las métricas visuales y la gamificación puede transformar una actividad tradicionalmente solitaria en un hábito constante, interactivo y motivador.
 
-LecturaMétrica cobra relevancia al llenar el vacío existente entre los gestores de lectura tradicionales (pensados para libros en formato físico) y la realidad de los lectores modernos, quienes consumen contenido digital en formatos variados. Al combinar el seguimiento de hábitos con dinámicas comunitarias anónimas y la proyección a futuro de espacios de discusión directa (foros y chats), el sistema se posiciona no solo como una herramienta de registro, sino como una plataforma integral para el fomento de la lectura.
+LecturaMétrica cobra relevancia al llenar el vacío existente entre los gestores de lectura tradicionales (pensados para libros en formato físico) y la realidad de los lectores modernos, quienes consumen contenido digital en formatos variados. Al combinar el seguimiento de hábitos con dinámicas comunitarias anónimas y la proyección a futuro de espacios de discusión directa, el sistema se posiciona no solo como una herramienta de registro, sino como una plataforma integral para el fomento de la lectura.
+
+Asimismo, al evaluar el impacto y la usabilidad del sistema mediante la recolección de datos cuantitativos de los usuarios reales, se obtuvieron métricas clave sobre la adopción y la retención activa. Como se aprecia en la Figura~\ref{fig:panel_usuarios}, aunque se concretó un registro inicial de usuarios, el análisis del comportamiento reflejó el desafío inherente a la consolidación de hábitos digitales: una notable disminución en la constancia diaria tras los primeros días de uso. Específicamente, del total de usuarios que interactuaron con la plataforma, un sector menor logró mantenerse activo a largo plazo, destacando que únicamente \textbf{2 usuarios} consiguieron superar el umbral de los 10 días de racha continua de lectura. 
+
+Estos resultados empíricos, lejos de representar una limitante técnica, cumplen con el objetivo de evaluación cuantitativa al aportar datos reales sobre el comportamiento del usuario. Esto valida el correcto funcionamiento de los módulos de seguimiento y provee una base analítica fundamental para ajustar las estrategias de retención en futuras versiones del sistema.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{./fotos/resultados/gestion-26Julio.png} 
+	\caption{Actividad y métricas de retención de los usuarios en la plataforma.}
+	\label{fig:panel_usuarios}
+\end{figure}
+
+\subsection{Diseño visual y optimización de recursos gráficos}
+
+Durante el desarrollo del \textit{frontend}, uno de los aspectos clave abordados fue la identidad visual y el rendimiento de la interfaz orientada a la gamificación. Para garantizar una experiencia de usuario fluida y coherente, se implementaron las siguientes estrategias de diseño y optimización:
+
+\begin{itemize}
+	\item \textbf{Consistencia en avatares:} Se diseñó cada avatar bajo un estilo ilustrado unificado (empleando el mismo tipo de trazo, paleta de colores y proporciones), asegurando que todos los elementos pertenezcan a un set visual armónico y no a piezas aisladas.
+	\item \textbf{Insignias intuitivas:} Cada insignia fue conceptualizada para representar visualmente el logro desbloqueado (por ejemplo, una llama para las rachas de lectura, una luna para el lector nocturno o un buzón para la interacción comunitaria), permitiendo que el usuario comprenda el significado del incentivo de manera inmediata con solo visualizarlo.
+	\item \textbf{Optimización de recursos en formato SVG:} Todos los elementos gráficos principales se implementaron como vectores SVG (con un peso estimado entre $2$ y $3$ KB por archivo). Esto garantizó una nitidez impecable ante cualquier tamaño o densidad de pantalla, evitando el uso de mapas de bits pesados y manteniendo un rendimiento óptimo en la carga de la aplicación.
+	\end{itemize}
 
 \newpage
 
@@ -1305,6 +1336,7 @@ Con la finalidad de dar continuidad al proyecto y potenciar el impacto de la pla
 	\item \textbf{Subida y Personalización de Avatares/Fotos de Perfil:} Integrar un servicio de almacenamiento de objetos (como Amazon S3) para gestionar la carga y procesamiento de imágenes de perfil personalizadas, reforzando la identidad digital de cada lector.
 	\item \textbf{Salas de Chat y Espacios de Discusión Dinámicos:} Incorporar salas de conversación síncronas o foros temáticos para enriquecer el flujo social de la plataforma y fomentar debates sobre lecturas compartidas.
 	\item \textbf{Ampliación de Frecuencia en el Buzón de Lectura:} Permitir el envío y recepción de múltiples micro-reseñas o cartas diarias en el ``Buzón del Lector'', flexibilizando los ciclos actuales de 24 horas sin perder la esencia asíncrona y anónima del módulo.
+	\item \textbf{Módulo de Moderación y Reporte de Contenido Malicioso:} Desarrollar un mecanismo de control y reporte a nivel de \textit{backend} para prevenir y gestionar conductas maliciosas, permitiendo la detección, moderación o eliminación oportuna de reseñas ofensivas, registros de libros con contenido inapropiado o usuarios infractores que puedan alterar la seguridad y convivencia de la comunidad.
 \end{itemize}
 
 \newpage
