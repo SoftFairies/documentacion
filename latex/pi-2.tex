@@ -93,9 +93,9 @@
 \newpage
 
 % ==============================================================================
-% 2. Indroducción
+% 2. Introducción
 % ==============================================================================
-\section{Instroduccón}
+\section{Introducción}
 
 \subsection{Antecedentes y evidencia}
 Las herramientas existentes en el mercado presentan un vacío operativo significativo. Por una parte, existen redes sociales abiertas orientadas a la publicación de textos (como Wattpad o Webtoon) que no ofrecen herramientas métricas personales; por otra parte, plataformas de catálogo literario (como Goodreads) o plantillas de hojas de cálculo (Excel) dependen de un llenado manual repetitivo. Experiencias y estudios de usabilidad en aplicaciones de registro de hábitos demuestran que la alta fricción operativa —es decir, la pérdida de tiempo y el esfuerzo cognitivo que implica registrar datos a mano— es la causa primordial por la cual los usuarios abandonan el uso de estas herramientas durante las primeras semanas, generando frustración e interrumpiendo su ciclo de lectura.
@@ -123,7 +123,7 @@ El desarrollo de \textbf{LecturaMétrica} es fundamental porque ofrece una herra
 \subsection{Alcances y limitaciones}
 El alcance del proyecto contempla el desarrollo de funcionalidades básicas para la gestión de cuentas de usuario, una biblioteca personal para catalogar obras, un temporizador para cronometrar las sesiones de lectura, un tablero de estadísticas y un buzón para intercambiar recomendaciones literarias entre usuarios. Como limitaciones, el sistema no almacena ni visualiza archivos de libros digitales (como PDF o EPUB) por cuestiones de derechos de autor, ni incluye salas de chat públicas en tiempo real.
 
-\subsection{Entregables esperados?}
+\subsection{Entregables esperados}
 
 \subsection{Actividades}
 
@@ -225,6 +225,181 @@ Esta sección documenta el proceso de aseguramiento de calidad de software (QA) 
 
 \subsubsection{Calidad de software (QA)}
 
+\paragraph{Objetivo del testing}
+[Describir el propósito y alcance general de la estrategia de pruebas, especificando qué flujos o componentes clave se validaron antes del paso a producción.]
+
+\paragraph{Entorno de pruebas}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|p{9cm}|}
+\hline
+\textbf{Aspecto} & \textbf{Detalle} \\ \hline
+Aplicación evaluada & [Especificar plataformas o aplicaciones evaluadas] \\ \hline
+Versión de la app & [Indicar versión y build] \\ \hline
+Versión web & [Indicar commit, rama o release web] \\ \hline
+URL de staging & \url{[Insertar URL de prueba o staging]} \\ \hline
+Ambiente de backend & [Describir ambiente de backend y datos de prueba utilizados] \\ \hline
+Herramientas de gestión & [Indicar herramientas para gestión de bugs, casos de prueba y dispositivos] \\ \hline
+Periodo de ejecución & [Fecha de inicio al Fecha de fin] \\ \hline
+\end{tabular}
+\caption{Entorno y parámetros generales de pruebas.}
+\label{tab:qa_entorno}
+\end{table}
+
+\paragraph{Dispositivos y navegadores utilizados}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Categoría} & \textbf{Dispositivos / Navegadores} & \textbf{Versión de SO / Motor} \\ \hline
+Móvil - iOS & [Lista de dispositivos iOS] & [Versiones de iOS] \\ \hline
+Móvil - Android & [Lista de dispositivos Android] & [Versiones de Android] \\ \hline
+Navegador - Desktop & [Navegadores de escritorio] & [Versiones o estándar] \\ \hline
+Navegador - Mobile Web & [Navegadores móviles] & [Motores utilizados] \\ \hline
+Resoluciones web & [Resoluciones evaluadas] & --- \\ \hline
+\end{tabular}
+\caption{Matriz de dispositivos y navegadores.}
+\label{tab:qa_dispositivos}
+\end{table}
+
+\paragraph{Categorías de prueba ejecutadas}
+\begin{enumerate}
+    \item[A.] \textbf{Pruebas funcionales:}
+    \begin{itemize}
+        \item [Describir flujos end-to-end, casos de borde, validaciones, etc.]
+    \end{itemize}
+    \item[B.] \textbf{Pruebas de interfaz y experiencia de usuario (UI/UX):}
+    \begin{itemize}
+        \item [Describir pruebas de responsividad, consistencia, accesibilidad, etc.]
+    \end{itemize}
+    \item[C.] \textbf{Pruebas de rendimiento:}
+    \begin{itemize}
+        \item [Describir métricas de carga, consumo de recursos, red y estrés.]
+    \end{itemize}
+    \item[D.] \textbf{Pruebas de compatibilidad y portabilidad:}
+    \begin{itemize}
+        \item [Describir pruebas cross-browser, cross-platform, orientación e instalación.]
+    \end{itemize}
+    \item[E.] \textbf{Pruebas de seguridad básicas:}
+    \begin{itemize}
+        \item [Describir manejo de sesiones, almacenamiento seguro, HTTPS y permisos.]
+    \end{itemize}
+    \item[F.] \textbf{Pruebas de integración (API / terceros):}
+    \begin{itemize}
+        \item [Describir integraciones externas y manejo de errores HTTP.]
+    \end{itemize}
+    \item[G.] \textbf{Pruebas de localización e idioma:}
+    \begin{itemize}
+        \item [Describir verificación de idiomas, formatos y traducciones.]
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{Aspectos técnicos por capa}
+Además de las categorías generales, se evaluaron aspectos técnicos propios de cada capa:
+
+\begin{itemize}
+    \item \textbf{Frontend — Aplicación web}
+    \begin{itemize}
+        \item \textit{Rendimiento (Core Web Vitals):}
+        \begin{table}[H]
+        \centering
+        \small
+        \begin{tabular}{|l|p{5cm}|p{4.5cm}|}
+        \hline
+        \textbf{Métrica} & \textbf{Qué mide} & \textbf{Umbral recomendado} \\ \hline
+        LCP (Largest Contentful Paint) & [Descripción] & [Umbral] \\ \hline
+        INP (Interaction to Next Paint) & [Descripción] & [Umbral] \\ \hline
+        CLS (Cumulative Layout Shift) & [Descripción] & [Umbral] \\ \hline
+        \end{tabular}
+        \caption{Métricas Core Web Vitals.}
+        \label{tab:core_web_vitals}
+        \end{table}
+        \item [Describir gestión de estado, almacenamiento local y consumo de APIs.]
+    \end{itemize}
+    \item \textbf{Cliente móvil — iOS y Android}
+    \begin{itemize}
+        \item [Describir gestión de recursos, integración con SO y persistencia segura.]
+    \end{itemize}
+    \item \textbf{Backend / API — Integración entre plataformas}
+    \begin{itemize}
+        \item [Describir concurrencia, sincronización y consistencia de reglas de negocio.]
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Métricas y resultados (estado de salud)}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|c|c|p{4.5cm}|}
+\hline
+\textbf{Estado de los casos de prueba} & \textbf{Cantidad} & \textbf{Porcentaje} & \textbf{Observaciones} \\ \hline
+Exitosos (Passed) & [Cantidad] & [\%] & [Observación] \\ \hline
+Fallidos (Failed) & [Cantidad] & [\%] & [Observación] \\ \hline
+Bloqueados (Blocked) & [Cantidad] & [\%] & [Observación] \\ \hline
+\textbf{Total ejecutados} & \textbf{[Total]} & \textbf{100\%} & \\ \hline
+\end{tabular}
+\caption{Resumen de ejecución de casos de prueba.}
+\label{tab:qa_resultados}
+\end{table}
+
+[Redactar un breve análisis interpretando la tasa de éxito obtenida y los riesgos detectados.]
+
+\paragraph{Reporte de defectos (bug log)}
+Criterios de clasificación:
+\begin{itemize}
+    \item \textbf{Bloqueante / crítico:} [Definir criterio]
+    \item \textbf{Mayor:} [Definir criterio]
+    \item \textbf{Menor / cosmético:} [Definir criterio]
+\end{itemize}
+
+Defectos encontrados:
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|l|p{5cm}|l|l|}
+\hline
+\textbf{ID} & \textbf{Severidad} & \textbf{Descripción} & \textbf{Módulo / Plataforma} & \textbf{Estado} \\ \hline
+BUG-001 & [Severidad] & [Descripción del defecto] & [Módulo / Plataforma] & [Estado] \\ \hline
+BUG-002 & [Severidad] & [Descripción del defecto] & [Módulo / Plataforma] & [Estado] \\ \hline
+\end{tabular}
+\caption{Registro de defectos encontrados (Bug Log).}
+\label{tab:bug_log}
+\end{table}
+
+Distribución por severidad:
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|c|c|p{5.5cm}|}
+\hline
+\textbf{Nivel de severidad} & \textbf{Cantidad} & \textbf{\% del total} & \textbf{Criterio de salida} \\ \hline
+Crítico / Blocker & [Cant] & [\%] & [Criterio] \\ \hline
+Mayor & [Cant] & [\%] & [Criterio] \\ \hline
+Menor / Cosmético & [Cant] & [\%] & [Criterio] \\ \hline
+\end{tabular}
+\caption{Distribución de defectos por severidad.}
+\label{tab:defectos_severidad}
+\end{table}
+
+\paragraph{Conclusión de QA y estado del release}
+[Describir las conclusiones generales de la fase de pruebas, la solidez funcional encontrada y el impacto de los defectos identificados.]
+
+\paragraph{Recomendaciones de QA:}
+\begin{itemize}
+    \item \textbf [Incluir recomendaciones de acción basadas en los resultados.]
+\end{itemize}
+
+
+\noindent\textbf{Veredicto QA:} \textbf{[APTO / NO APTO]} para producción en su estado actual — [condicionado o justificación del veredicto].
+
+\subsection{Despliegue}
+El proceso de despliegue a producción del sistema \textbf{LecturaMétrica} se concibe bajo una estrategia automatizada y desacoplada para garantizar la estabilidad operativa del entorno real:
+\begin{itemize}
+    \item \textbf{Despliegue del Backend:} Tras superar las fases de pruebas unitarias e integración, el núcleo de servicios desarrollado en Spring Boot se empaqueta mediante contenedores Docker, configurando las variables de entorno definitivas de conexión a la base de datos PostgreSQL en producción y los servicios de almacenamiento en la nube (Cloudinary).
+    \item \textbf{Despliegue de los Client-Apps (Frontends):} Las aplicaciones de usuario (PWA) y de administración (Dashboard) desarrolladas en Next.js se sincronizan con las ramas estables de sus respectivos repositorios en GitHub, conectándose a plataformas de alojamiento en la nube con despliegue continuo (Continuous Deployment). Cada actualización ejecuta un proceso de compilación optimizada y asignación automática de rutas estáticas y dinámicas.
+\end{itemize}
 \newpage
 
 % ==============================================================================
