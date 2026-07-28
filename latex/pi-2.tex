@@ -312,23 +312,43 @@ Además de las categorías generales, se evaluaron aspectos técnicos propios de
 \begin{itemize}
     \item \textbf{Frontend — Aplicación web}
     \begin{itemize}
-        \item \textit{Rendimiento (Core Web Vitals):}
-        \begin{table}[H]
-        \centering
-        \small
-        \begin{tabular}{|l|p{5cm}|p{4.5cm}|}
+    \item \textit{Rendimiento (Core Web Vitals):} Se evaluaron los indicadores de rendimiento web bajo los estándares recomendados por Google para garantizar una experiencia fluida en la interfaz de usuario de la plataforma:
+    \begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{|l|p{5cm}|p{4.5cm}|}
+    \hline
+    \textbf{Métrica} & \textbf{Qué mide} & \textbf{Umbral recomendado} \\ \hline
+    LCP (Largest Contentful Paint) & Tiempo en renderizar el contenido principal & Menor a 2.5 segundos \\ \hline
+    INP (Interaction to Next Paint) & Tiempo de respuesta ante clic o escritura & Menor a 200 ms \\ \hline
+    CLS (Cumulative Layout Shift) & Estabilidad visual durante la carga & Menor a 0.1 \\ \hline
+    \end{tabular}
+    \caption{Métricas Core Web Vitals.}
+    \label{tab:core_web_vitals}
+    \end{table}
+    \item Gestión de estado, almacenamiento local y persistencia de datos ante recarga.
+    \item Consumo de APIs y manejo de errores HTTP ante timeouts.
+\end{itemize}
+
+\begin{table}[h!]
+    \centering
+    \caption{Resultados de Auditoría Lighthouse para Lectura Métrica}
+    \begin{tabular}{|l|c|}
         \hline
-        \textbf{Métrica} & \textbf{Qué mide} & \textbf{Umbral recomendado} \\ \hline
-        LCP (Largest Contentful Paint) & Tiempo en renderizar el contenido principal & Menor a 2.5 segundos \\ \hline
-        INP (Interaction to Next Paint) & Tiempo de respuesta ante clic o escritura & Menor a 200 ms \\ \hline
-        CLS (Cumulative Layout Shift) & Estabilidad visual durante la carga & Menor a 0.1 \\ \hline
-        \end{tabular}
-        \caption{Métricas Core Web Vitals.}
-        \label{tab:core_web_vitals}
-        \end{table}
-        \item Gestión de estado, almacenamiento local y persistencia de datos ante recarga.
-        \item Consumo de APIs y manejo de errores HTTP ante timeouts.
-    \end{itemize}
+        \textbf{Métrica / Categoría} & \textbf{Puntuación / Valor} \\ \hline
+        Rendimiento (Performance) & 100 / 100 \\ \hline
+        Accesibilidad (Accessibility) & 86 / 100 \\ \hline
+        Buenas Prácticas (Best Practices) & 100 / 100 \\ \hline
+        SEO & 100 / 100 \\ \hline
+        First Contentful Paint (FCP) & 0.4 s \\ \hline
+        Largest Contentful Paint (LCP) & 0.6 s \\ \hline
+        Speed Index & 0.8 s \\ \hline
+        Total Blocking Time (TBT) & 60 ms \\ \hline
+        Cumulative Layout Shift (CLS) & 0 \\ \hline
+        Time to Interactive (TTI) & 0.6 s \\ \hline
+    \end{tabular}
+    \label{tab:lighthouse-metrics}
+\end{table}
     \item \textbf{Cliente móvil — iOS y Android}
     \begin{itemize}
         \item Gestión de recursos de hardware, fugas de memoria y comportamiento en segundo plano.
@@ -358,6 +378,8 @@ Bloqueados (Blocked) & [Cantidad] & [\%] & [Observación] \\ \hline
 \end{table}
 
 [Redactar un breve análisis interpretando la tasa de éxito obtenida y los riesgos detectados.]
+
+
 
 \paragraph{Reporte de defectos (bug log)}
 Criterios de clasificación:
