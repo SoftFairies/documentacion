@@ -216,7 +216,7 @@ El diseño de la solución se estructuró bajo un modelo de arquitectura desacop
 La implementación del sistema se ejecutó de forma modular y descentralizada en tres repositorios independientes para asegurar un bajo acoplamiento:
 \begin{itemize}
     \item \textbf{Desarrollo del Backend:} Construido en Java 21 utilizando Spring Boot, Spring Data JPA e Hibernate. Se programaron los controladores REST, servicios de negocio, validaciones de seguridad con JWT, el consumo de la API externa de Open Library para la ingesta automatizada de portadas y metadatos, y los algoritmos de cálculo de rachas e insignias.
-    \item \textbf{Desarrollo del Frontend (PWA y Admin):} Codificado en Next.js con TypeScript y Tailwind CSS, implementando el enrutamiento por App Router, la gestión de estados globales y componentes optimizados para la visualización de estadísticas, temporizadores de lectura en tiempo real y el buzón de recomendaciones anónimas[cite: 1].
+    \item \textbf{Desarrollo del Frontend (PWA y Admin):} Codificado en Next.js con TypeScript y Tailwind CSS, implementando el enrutamiento por App Router, la gestión de estados globales y componentes optimizados para la visualización de estadísticas, temporizadores de lectura en tiempo real y el buzón de recomendaciones anónimas.
     \item \textbf{Control de Versiones y Despliegue:} Gestión del código fuente mediante Git y GitHub, apoyándose en contenedores Docker y servicios en la nube para la persistencia transaccional y el alojamiento de recursos multimedia en Cloudinary.
 \end{itemize}
 
@@ -266,33 +266,43 @@ Resoluciones web & [Resoluciones evaluadas] & --- \\ \hline
 
 \paragraph{Categorías de prueba ejecutadas}
 \begin{enumerate}
-    \item[A.] \textbf{Pruebas funcionales:}
+    \item \textbf{Pruebas funcionales:}
     \begin{itemize}
-        \item [Describir flujos end-to-end, casos de borde, validaciones, etc.]
+        \item Flujos de usuario end-to-end: registro, login, recuperación de contraseña y flujo principal del negocio.
+        \item Casos de borde ante datos inválidos, campos vacíos, caracteres especiales y valores extremos.
+        \item Sincronización de datos entre la interfaz web y la aplicación móvil.
+        \item Validaciones de formularios y mensajes de error.
     \end{itemize}
-    \item[B.] \textbf{Pruebas de interfaz y experiencia de usuario (UI/UX):}
+    \item \textbf{Pruebas de interfaz y experiencia de usuario (UI/UX):}
     \begin{itemize}
-        \item [Describir pruebas de responsividad, consistencia, accesibilidad, etc.]
+        \item Responsividad web en laptops, tablets y monitores ultra-wide.
+        \item Consistencia de diseño (colores, tipografías, iconografía) en las plataformas.
+        \item Accesibilidad (contraste, tamaño de fuente y navegación).
     \end{itemize}
-    \item[C.] \textbf{Pruebas de rendimiento:}
+    \item \textbf{Pruebas de rendimiento:}
     \begin{itemize}
-        \item [Describir métricas de carga, consumo de recursos, red y estrés.]
+        \item Tiempos de carga inicial y respuesta del sitio web.
+        \item Comportamiento de red ante conexiones lentas o pérdida de conexión.
+        \item Pruebas de carga y estrés en backend ante usuarios concurrentes.
     \end{itemize}
-    \item[D.] \textbf{Pruebas de compatibilidad y portabilidad:}
+    \item \textbf{Pruebas de compatibilidad y portabilidad:}
     \begin{itemize}
-        \item [Describir pruebas cross-browser, cross-platform, orientación e instalación.]
+        \item Verificación cross-browser (Chromium, WebKit, Gecko).
+        \item Adaptabilidad a distintos tamaños de pantalla y orientación.
     \end{itemize}
-    \item[E.] \textbf{Pruebas de seguridad básicas:}
+    \item \textbf{Pruebas de seguridad básicas:}
     \begin{itemize}
-        \item [Describir manejo de sesiones, almacenamiento seguro, HTTPS y permisos.]
+        \item Manejo de sesiones, expiración correcta y bloqueo de rutas protegidas.
+        \item Almacenamiento local seguro de tokens y contraseñas cifradas.
+        \item Comunicación segura mediante HTTPS/TLS y control de acceso.
     \end{itemize}
-    \item[F.] \textbf{Pruebas de integración (API / terceros):}
+    \item \textbf{Pruebas de integración (API / terceros):}
     \begin{itemize}
-        \item [Describir integraciones externas y manejo de errores HTTP.]
+        \item Integraciones externas y manejo de errores de API ante códigos 4xx/5xx.
     \end{itemize}
-    \item[G.] \textbf{Pruebas de localización e idioma:}
+    \item \textbf{Pruebas de localización e idioma:}
     \begin{itemize}
-        \item [Describir verificación de idiomas, formatos y traducciones.]
+        \item Verificación de formatos de fecha, textos y que las traducciones no rompan el diseño.
     \end{itemize}
 \end{enumerate}
 
@@ -309,22 +319,25 @@ Además de las categorías generales, se evaluaron aspectos técnicos propios de
         \begin{tabular}{|l|p{5cm}|p{4.5cm}|}
         \hline
         \textbf{Métrica} & \textbf{Qué mide} & \textbf{Umbral recomendado} \\ \hline
-        LCP (Largest Contentful Paint) & [Descripción] & [Umbral] \\ \hline
-        INP (Interaction to Next Paint) & [Descripción] & [Umbral] \\ \hline
-        CLS (Cumulative Layout Shift) & [Descripción] & [Umbral] \\ \hline
+        LCP (Largest Contentful Paint) & Tiempo en renderizar el contenido principal & Menor a 2.5 segundos \\ \hline
+        INP (Interaction to Next Paint) & Tiempo de respuesta ante clic o escritura & Menor a 200 ms \\ \hline
+        CLS (Cumulative Layout Shift) & Estabilidad visual durante la carga & Menor a 0.1 \\ \hline
         \end{tabular}
         \caption{Métricas Core Web Vitals.}
         \label{tab:core_web_vitals}
         \end{table}
-        \item [Describir gestión de estado, almacenamiento local y consumo de APIs.]
+        \item Gestión de estado, almacenamiento local y persistencia de datos ante recarga.
+        \item Consumo de APIs y manejo de errores HTTP ante timeouts.
     \end{itemize}
     \item \textbf{Cliente móvil — iOS y Android}
     \begin{itemize}
-        \item [Describir gestión de recursos, integración con SO y persistencia segura.]
+        \item Gestión de recursos de hardware, fugas de memoria y comportamiento en segundo plano.
+        \item Integración con el sistema operativo y persistencia local segura.
     \end{itemize}
     \item \textbf{Backend / API — Integración entre plataformas}
     \begin{itemize}
-        \item [Describir concurrencia, sincronización y consistencia de reglas de negocio.]
+        \item Concurrencia y sincronización en tiempo real.
+        \item Consistencia de reglas de negocio y validación de campos idénticos entre clientes.
     \end{itemize}
 \end{itemize}
 
@@ -349,9 +362,9 @@ Bloqueados (Blocked) & [Cantidad] & [\%] & [Observación] \\ \hline
 \paragraph{Reporte de defectos (bug log)}
 Criterios de clasificación:
 \begin{itemize}
-    \item \textbf{Bloqueante / crítico:} [Definir criterio]
-    \item \textbf{Mayor:} [Definir criterio]
-    \item \textbf{Menor / cosmético:} [Definir criterio]
+    \item \textbf{Bloqueante / crítico:} La app se cierra inesperadamente, no permite iniciar sesión o impide flujos esenciales.
+    \item \textbf{Mayor:} Una funcionalidad importante falla, pero existe una alternativa (workaround).
+    \item \textbf{Menor / cosmético:} Errores tipográficos, botones desalineados o detalles visuales menores.
 \end{itemize}
 
 Defectos encontrados:
@@ -388,9 +401,8 @@ Menor / Cosmético & [Cant] & [\%] & [Criterio] \\ \hline
 
 \paragraph{Recomendaciones de QA:}
 \begin{itemize}
-    \item \textbf [Incluir recomendaciones de acción basadas en los resultados.]
+    \item Incluir recomendaciones de acción basadas en los resultados.
 \end{itemize}
-
 
 \noindent\textbf{Veredicto QA:} \textbf{[APTO / NO APTO]} para producción en su estado actual — [condicionado o justificación del veredicto].
 
