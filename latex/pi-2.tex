@@ -350,11 +350,6 @@ Además de las categorías generales, se evaluaron aspectos técnicos propios de
     \end{tabular}
     \label{tab:lighthouse-metrics}
 \end{table}
-    \item \textbf{Cliente móvil — iOS y Android}
-    \begin{itemize}
-        \item Gestión de recursos de hardware, fugas de memoria y comportamiento en segundo plano.
-        \item Integración con el sistema operativo y persistencia local segura.
-    \end{itemize}
     \item \textbf{Backend / API — Integración entre plataformas}
     \begin{itemize}
         \item Concurrencia y sincronización en tiempo real.
@@ -429,6 +424,29 @@ Menor / Cosmético & [Cant] & [\%] & [Criterio] \\ \hline
 
 \noindent\textbf{Veredicto QA:} \textbf{[APTO / NO APTO]} para producción en su estado actual — [condicionado o justificación del veredicto].
 
+\section{Implementación}
+
+\subsection{Repositorios del proyecto y control de versiones}
+El desarrollo del ecosistema \textbf{LecturaMétrica} se gestionó mediante el control de versiones distribuido Git y la plataforma de alojamiento GitHub. 
+
+Para garantizar un bajo acoplamiento arquitectónico, mantener prácticas de Arquitectura Limpia y facilitar el ciclo de despliegue independiente de cada interfaz, el código fuente se encuentra versionado en tres repositorios oficiales:
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|p{3.8cm}|p{6.2cm}|p{4.5cm}|}
+\hline
+\textbf{Módulo del Ecosistema} & \textbf{Responsabilidad y Tecnología} & \textbf{Enlace al Repositorio (GitHub)} \\ \hline
+\textbf{Backend (API RESTful)} & Núcleo lógico del sistema, validación de reglas de negocio, cálculo de rachas y conexión a PostgreSQL. Desarrollado en Java y Spring Boot. & \url{https://github.com/SoftFairies/Backend.git} \\ \hline
+\textbf{Frontend 1: Usuario (PWA)} & Aplicación Web Progresiva para lectores finales con cronómetro de lectura asíncrono y catálogo personal. Desarrollada en Next.js. & \url{https://github.com/SoftFairies/LecturaMetrica-Usuario.git} \\ \hline
+\textbf{Frontend 2: Dashboard Admin} & Interfaz web cerrada (back-office) para la gestión de usuarios, monitoreo del sistema y administración de catálogo. Desarrollada en Next.js. & \url{https://github.com/SoftFairies/LecturaMetrica-Admin.git} \\ \hline
+\end{tabular}
+\caption{Repositorios oficiales y código fuente del sistema LecturaMétrica.}
+\label{tab:repositorios_github}
+\end{table}
+
+\vspace{0.2cm}
+
 \subsection{Despliegue}
 El proceso de despliegue a producción del sistema \textbf{LecturaMétrica} se concibe bajo una estrategia automatizada y desacoplada para garantizar la estabilidad operativa del entorno real:
 \begin{itemize}
@@ -436,6 +454,7 @@ El proceso de despliegue a producción del sistema \textbf{LecturaMétrica} se c
     \item \textbf{Despliegue de los Client-Apps (Frontends):} Las aplicaciones de usuario (PWA) y de administración (Dashboard) desarrolladas en Next.js se sincronizan con las ramas estables de sus respectivos repositorios en GitHub, conectándose a plataformas de alojamiento en la nube con despliegue continuo (Continuous Deployment). Cada actualización ejecuta un proceso de compilación optimizada y asignación automática de rutas estáticas y dinámicas.
 \end{itemize}
 \newpage
+
 
 % ==============================================================================
 % REFERENCIAS (MANTENIDAS PARA LA CONSISTENCIA DEL TRABAJO ACADÉMICO)
@@ -489,77 +508,62 @@ E-Ciencias de la Información. (2020). \textit{Hábitos de lectura en alumnos de
 RIDE. Revista Iberoamericana para la Investigación y Desarrollo Educativo. (2025). \textit{Las creencias de estudiantes de secundaria sobre la lectura}. Vol. 15, N° 30. \url{https://www.scielo.org.mx/scielo.php?script=sci_arttext&pid=S2007-74672025000100135}
 
 \end{thebibliography}
-
 \subsection{Anexos}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{./fotos/sirgei/jmeter-simultaneo-fallido.png}
-    \caption{Prueba de carga simultánea en JMeter con fallos registrados.}
-    \label{fig:jmeter_simultaneo_fallido}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{./fotos/sirgei/jmeter-simultaneo.png}
-    \caption{Resultados exitosos de la prueba de carga simultánea en JMeter.}
-    \label{fig:jmeter_simultaneo}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{./fotos/sirgei/login.png}
+    \includegraphics[width=0.85\textwidth]{/home/minchito/Escritorio/LM_PI_salvavidas/latex/fotos/sirgei/login.jpeg}
     \caption{Interfaz del formulario de inicio de sesión.}
     \label{fig:login}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{./fotos/sirgei/2fa.png}
+    \includegraphics[width=0.85\textwidth]{/home/minchito/Escritorio/LM_PI_salvavidas/latex/fotos/sirgei/2fa.jpeg}
     \caption{Pantalla de verificación de autenticación de dos factores (2FA).}
     \label{fig:2fa}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{./fotos/sirgei/add-2fa.png}
+    \includegraphics[width=0.85\textwidth]{/home/minchito/Escritorio/LM_PI_salvavidas/latex/fotos/sirgei/2fa-2.jpeg}
     \caption{Configuración y adición de nuevo método 2FA.}
     \label{fig:add_2fa}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{./fotos/sirgei/email.png}
-    \caption{Notificación y verificación por correo electrónico.}
-    \label{fig:email}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{./fotos/sirgei/entrar.png}
+    \includegraphics[width=0.85\textwidth]{/home/minchito/Escritorio/LM_PI_salvavidas/latex/fotos/sirgei/entrar.jpeg}
     \caption{Confirmación de acceso al sistema.}
     \label{fig:entrar}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{./fotos/sirgei/login-postman.png}
+    \includegraphics[width=0.85\textwidth]{/home/minchito/Escritorio/LM_PI_salvavidas/latex/fotos/sirgei/login-postman.png}
     \caption{Prueba de la API de inicio de sesión realizada en Postman.}
     \label{fig:login_postman}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{./fotos/sirgei/email-postman.png}
-    \caption{Petición API para envío o validación de correo en Postman.}
-    \label{fig:email_postman}
+    \includegraphics[width=0.85\textwidth]{/home/minchito/Escritorio/LM_PI_salvavidas/latex/fotos/sirgei/2fa-postman.png}
+    \caption{Prueba de la API en la verifiación de dos pasos.}
+    \label{fig:jmeter_simultaneo_fallido}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{./fotos/sirgei/verify-2fa-postman.png}
-    \caption{Verificación del endpoint de autenticación 2FA en Postman.}
-    \label{fig:verify_2fa_postman}
+    \includegraphics[width=0.85\textwidth]{/home/minchito/Escritorio/LM_PI_salvavidas/latex/fotos/sirgei/summary-report.png}
+    \caption{Jmeter resumen de un reporte.}
+    \label{fig:jmeter_simultaneo}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{/home/minchito/Escritorio/LM_PI_salvavidas/latex/fotos/sirgei/view-result-fallido.png}
+    \caption{Jmeter resultados exito y fallo.}
+    \label{fig:jmeter_simultaneo}
 \end{figure}
 
 \end{document}
