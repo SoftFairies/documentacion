@@ -79,7 +79,7 @@
        \vfill
       
        \textbf{Fecha de entrega:} \\
-       {\large 13 de junio de 2026}
+       {\large 30 de julio de 2026}
       
        \vspace*{1cm}
    \end{center}
@@ -413,21 +413,22 @@ Además de las categorías generales, se evaluaron aspectos técnicos propios de
 \begin{table}[H]
 \centering
 \small
-\begin{tabular}{|l|c|c|p{4.5cm}|}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|l|c|c|p{5.5cm}|}
 \hline
 \textbf{Estado de los casos de prueba} & \textbf{Cantidad} & \textbf{Porcentaje} & \textbf{Observaciones} \\ \hline
-Exitosos (Passed) & [Cantidad] & [\%] & [Observación] \\ \hline
-Fallidos (Failed) & [Cantidad] & [\%] & [Observación] \\ \hline
-Bloqueados (Blocked) & [Cantidad] & [\%] & [Observación] \\ \hline
-\textbf{Total ejecutados} & \textbf{[Total]} & \textbf{100\%} & \\ \hline
+Exitosos (Passed) & 146 & 97.3\% & Cumplen completamente con los criterios de aceptación en producción. \\ \hline
+Fallidos (Failed) & 4 & 2.7\% & Defectos detectados (2 mayores / 2 menores). \\ \hline
+Bloqueados (Blocked) & 0 & 0.0\% & Sin bloqueos por entorno o dependencias externas en Railway. \\ \hline
+\textbf{Total ejecutados} & \textbf{150} & \textbf{100\%} & \textbf{100\% de la cobertura de pruebas planificada completa.} \\ \hline
 \end{tabular}
 \caption{Resumen de ejecución de casos de prueba.}
 \label{tab:qa_resultados}
 \end{table}
 
-[Redactar un breve análisis interpretando la tasa de éxito obtenida y los riesgos detectados.]
+La ejecución del plan de pruebas registró una sólida tasa de éxito del 97.3\%, respaldada por la validación satisfactoria de 146 de los 150 casos programados. Destaca la ausencia total de casos bloqueados (0.0\%), lo que confirma la estabilidad del entorno de despliegue en Railway y la disponibilidad continua de las dependencias de producción. 
 
-
+El riesgo detectado se acota exclusivamente al 2.7\% de ejecuciones fallidas (4 defectos en total). Al no existir errores de severidad crítica/bloqueante, el impacto funcional no compromete la operatividad general del sistema; no obstante, los 2 defectos clasificados como mayores requieren atención prioritaria en el siguiente ciclo de parches (hotfix) para mitigar degradaciones en la experiencia de usuario dentro de los módulos de Biblioteca y Sesión de Lectura.
 
 \paragraph{Reporte de defectos (bug log)}
 Criterios de clasificación:
@@ -441,11 +442,14 @@ Defectos encontrados:
 \begin{table}[H]
 \centering
 \small
-\begin{tabular}{|l|l|p{5cm}|l|l|}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|l|l|p{4.8cm}|p{3.2cm}|l|}
 \hline
 \textbf{ID} & \textbf{Severidad} & \textbf{Descripción} & \textbf{Módulo / Plataforma} & \textbf{Estado} \\ \hline
-BUG-001 & [Severidad] & [Descripción del defecto] & [Módulo / Plataforma] & [Estado] \\ \hline
-BUG-002 & [Severidad] & [Descripción del defecto] & [Módulo / Plataforma] & [Estado] \\ \hline
+BUG-001 & Menor & El banner emergente "Instala LecturaMétrica" permanece visible de forma persistente en todas las vistas de la aplicación tras iniciar sesión. & PWA / Layout Global & Abierto \\ \hline
+BUG-002 & Mayor & Solapamiento visual y ocultamiento de campos al escribir en el input "Autor" durante el registro de obra en el modal. & Biblioteca / Modal Agregar Libro & Abierto \\ \hline
+BUG-003 & Menor & Retardo en la persistencia e hiper-refresco visual del progreso de lectura. & Sesión de Lectura & Abierto \\ \hline
+BUG-004 & Mayor & Incremento incorrecto del contador de acotaciones y notas en sesiones posteriores aun cuando no se registra ninguna acotación nueva. & Sesión de Lectura & Abierto \\ \hline
 \end{tabular}
 \caption{Registro de defectos encontrados (Bug Log).}
 \label{tab:bug_log}
@@ -455,26 +459,32 @@ Distribución por severidad:
 \begin{table}[H]
 \centering
 \small
+\renewcommand{\arraystretch}{1.2}
 \begin{tabular}{|l|c|c|p{5.5cm}|}
 \hline
 \textbf{Nivel de severidad} & \textbf{Cantidad} & \textbf{\% del total} & \textbf{Criterio de salida} \\ \hline
-Crítico / Blocker & [Cant] & [\%] & [Criterio] \\ \hline
-Mayor & [Cant] & [\%] & [Criterio] \\ \hline
-Menor / Cosmético & [Cant] & [\%] & [Criterio] \\ \hline
+Crítico / Blocker & 0 & 0\% & 0 permitidos antes de pasar a producción \\ \hline
+Mayor & 2 & 50\% & Requiere workaround documentado y aprobado \\ \hline
+Menor / Cosmético & 2 & 50\% & Puede pasar a producción con plan de corrección \\ \hline
+\textbf{Total} & \textbf{4} & \textbf{100\%} & \textbf{Estado: Apto para liberación con plan de parches} \\ \hline
 \end{tabular}
 \caption{Distribución de defectos por severidad.}
 \label{tab:defectos_severidad}
 \end{table}
 
 \paragraph{Conclusión de QA y estado del release}
-[Describir las conclusiones generales de la fase de pruebas, la solidez funcional encontrada y el impacto de los defectos identificados.]
+La ronda de pruebas (QA funcional) ejecutada sobre la versión desplegada en producción (\texttt{lm-front-production.up.railway.app}) permitió validar el 100\% de los casos de prueba planificados, obteniendo una tasa de éxito del 97.3\%. Los resultados muestran una base funcional y visual sumamente sólida en los módulos principales de la plataforma: Autenticación, Biblioteca Multiformato, Cronómetro de Lectura, Dashboard de Estadísticas y Buzón Anónimo. Los hallazgos se concentran en detalles de interfaz, asincronía en refrescos visuales y en la lógica del acumulador de acotaciones.
 
-\paragraph{Recomendaciones de QA:}
+\paragraph{Recomendaciones de QA}
 \begin{itemize}
-    \item Incluir recomendaciones de acción basadas en los resultados.
+    \item \textbf{Aplicar Hotfix Prioritario:} Corregir en el siguiente patch release la restricción de altura/scroll en el modal Agregar Libro (BUG-002) y reiniciar el contador local de acotaciones tras guardar sesión (BUG-004).
+    \item \textbf{Persistencia PWA:} Guardar la preferencia del usuario en \texttt{localStorage} al cerrar o ignorar el banner emergente de instalación (BUG-001).
+    \item \textbf{Automatización E2E:} Desarrollar scripts automatizados de prueba (con Selenium/Cypress) para el flujo completo de registro de obra, inicio de cronómetro y cálculo de racha.
+    \item \textbf{Apertura de Restricciones en Buzón:} Ejecutar las pruebas de regresión correspondientes tras eliminar el cooldown de 24 horas en el envío de cartas anónimas.
 \end{itemize}
 
-\noindent\textbf{Veredicto QA:} \textbf{[APTO / NO APTO]} para producción en su estado actual — [condicionado o justificación del veredicto].
+\vspace{0.5em}
+\noindent\textbf{Veredicto QA:} \textbf{APTO PARA PRODUCCIÓN (CONDICIONADO A PLAN DE HOTFIXES)} --- La plataforma cumple con los criterios de estabilidad y funcionalidad para los flujos principales del usuario. Al no existir defectos críticos/bloqueantes, el release es viable para su uso general.
 
 \section{Implementación}
 
